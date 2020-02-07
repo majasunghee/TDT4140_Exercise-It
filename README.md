@@ -1,6 +1,6 @@
 # Gruppe 62 - Exercise it!
 
-## Frontend: node.js
+# Frontend: node.js
 
 In the frontend directory, you can run:
 
@@ -40,3 +40,31 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/ad
 ### Deployment
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+# Backend: Django
+
+## Start by creating a virtual environment
+
+```bash
+virtualenv env
+source exercise.api/env/bin/activate
+```
+
+## Install Django and Django REST into virtualenv
+
+```bash
+pip install django
+pip install djangorestframework
+```
+
+## Sync database
+
+```bash
+python manage.py migrate
+```
+
+## Start server
+
+```bash
+python manage.py runserver
+```
