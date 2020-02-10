@@ -1,8 +1,9 @@
 # Gruppe 62 - Exercise it!
-hei
 # Frontend: node.js
 
 In the frontend directory, you can run:
+
+Dette er en test.
 
 ### `npm start`
 
