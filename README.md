@@ -3,7 +3,7 @@
 
 In the frontend directory, you can run:
 
-Dette er en test
+Dette er en test.
 
 ### `npm start`
 
