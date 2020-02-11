@@ -3,8 +3,6 @@
 
 In the frontend directory, you can run:
 
-Dette er en test.
-
 ### `npm start`
 
 Runs the app in the development mode.<br />
