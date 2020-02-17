@@ -13,7 +13,7 @@ import { getLatestWorkouts } from "../../actions/workouts";
 class Feed extends React.Component {
   constructor(props) {
     super(props);
-    //her har vi endret
+
     this.state = {
       musclegroups: {},
       exercises: {},
