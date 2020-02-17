@@ -1,8 +1,8 @@
 import React from "react";
 import Post from "../Post/Post";
 import Card from "../Card/Card";
-import NewExercise from "../NewPost/NewExercise"
-import NewWorkout from "../NewPost/NewWorkout"
+import NewExercise from "../NewPost/NewExercise";
+import NewWorkout from "../NewPost/NewWorkout";
 import Spinner from "../Spinner/Spinner";
 import styles from "../../App.module.css";
 
@@ -13,7 +13,7 @@ import { getLatestWorkouts } from "../../actions/workouts";
 class Feed extends React.Component {
   constructor(props) {
     super(props);
-
+    //her har vi endret
     this.state = {
       musclegroups: {},
       exercises: {},
@@ -30,17 +30,17 @@ class Feed extends React.Component {
   componentDidMount() {
     this.buildFeed();
   }
-  
+
   buildFeed() {
     getMusclegroups()
-    .then(data => this.setState({musclegroups : data}))
-    .then(() => this.setState({loadingMusclegroups : false}));
+      .then(data => this.setState({ musclegroups: data }))
+      .then(() => this.setState({ loadingMusclegroups: false }));
     getLatestExercises()
-    .then(data => this.setState({exercises : data}))
-    .then(() => this.setState({loadingExercises : false}));
+      .then(data => this.setState({ exercises: data }))
+      .then(() => this.setState({ loadingExercises: false }));
     getLatestWorkouts()
-    .then(data => this.setState({workouts : data}))
-    .then(() => this.setState({loadingWorkouts : false}));
+      .then(data => this.setState({ workouts: data }))
+      .then(() => this.setState({ loadingWorkouts: false }));
   }
 
   checkChoosenmuskler = post => {
@@ -63,18 +63,37 @@ class Feed extends React.Component {
   };
 
   render() {
-    if (this.state.loadingMusclegroups || this.state.loadingExercises || this.state.loadingWorkouts) {
-      return (      <div>
-        <div className={styles.feedContainer}><Spinner /></div></div>)
+    if (
+      this.state.loadingMusclegroups ||
+      this.state.loadingExercises ||
+      this.state.loadingWorkouts
+    ) {
+      return (
+        <div>
+          <div className={styles.feedContainer}>
+            <Spinner />
+          </div>
+        </div>
+      );
     }
     return (
       <div>
         <div className={styles.feedContainer}>
           <div className={styles.feed}>
-        <div className={styles.actionBar}>
-          <NewExercise reFetch={() => this.buildFeed()} user={this.props.user} createNew={() => this.props.newExercise()} isCreating={this.props.creatingNewExercise}/>
-          <NewWorkout reFetch={() => this.buildFeed()} user={this.props.user} createNew={() => this.props.newWorkout()} isCreating={this.props.creatingNewWorkout}/>
-          </div>
+            <div className={styles.actionBar}>
+              <NewExercise
+                reFetch={() => this.buildFeed()}
+                user={this.props.user}
+                createNew={() => this.props.newExercise()}
+                isCreating={this.props.creatingNewExercise}
+              />
+              <NewWorkout
+                reFetch={() => this.buildFeed()}
+                user={this.props.user}
+                createNew={() => this.props.newWorkout()}
+                isCreating={this.props.creatingNewWorkout}
+              />
+            </div>
             {this.state.valgteMuskler.length === 0
               ? this.state.workouts.slice(0, 3).map(post => (
                   <div onClick={() => this.props.singlePost(post)}>
@@ -130,32 +149,34 @@ class Feed extends React.Component {
                 {tag.name}
               </div>
             ))}
-            
+
             <h3>
               <strong>Sorter på øvelser</strong>
             </h3>
-            {!this.state.loading ? (this.state.exercises.map(øvelse => (
-              <div
-                onClick={() =>
-                  this.state.valgteØvelser.includes(øvelse.title)
-                    ? this.setState({
-                        valgteØvelser: this.state.valgteØvelser.filter(
-                          a => a !== øvelse.title
-                        )
-                      })
-                    : this.setState(prev => ({
-                        valgteØvelser: [...prev.valgteØvelser, øvelse.title]
-                      }))
-                }
-                className={
-                  this.state.valgteØvelser.includes(øvelse.title)
-                    ? styles.choosenLink
-                    : styles.filterLink
-                }
-              >
-                {øvelse.title}
-              </div>
-            ))) : ''}
+            {!this.state.loading
+              ? this.state.exercises.map(øvelse => (
+                  <div
+                    onClick={() =>
+                      this.state.valgteØvelser.includes(øvelse.title)
+                        ? this.setState({
+                            valgteØvelser: this.state.valgteØvelser.filter(
+                              a => a !== øvelse.title
+                            )
+                          })
+                        : this.setState(prev => ({
+                            valgteØvelser: [...prev.valgteØvelser, øvelse.title]
+                          }))
+                    }
+                    className={
+                      this.state.valgteØvelser.includes(øvelse.title)
+                        ? styles.choosenLink
+                        : styles.filterLink
+                    }
+                  >
+                    {øvelse.title}
+                  </div>
+                ))
+              : ""}
           </div>
         </div>
         <div className={styles.feedContainer}>
@@ -163,25 +184,52 @@ class Feed extends React.Component {
             {this.state.valgteMuskler.length === 0 && !this.state.loading ? (
               <div>
                 <div className={styles.cardContainer}>
-                  <div className={this.state.scroller !== 0 ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller !== 0 ? this.setState({scroller: this.state.scroller - 4}) : ''}>{"<"}</div>
-                  {this.state.exercises.slice(this.state.scroller, this.state.scroller+4).map(post => (
-                    <div onClick={() => this.props.singlePost(post)}>
-                      <Card
-                        url={post.url}
-                        user={post.user}
-                        date={post.date}
-                        title={post.title}
-                        image={post.image}
-                        content={post.content}
-                        sets={post.sets}
-                        reps={post.reps}
-                      />
-                    </div>
-                  ))}
-                  <div className={ this.state.scroller+4 < this.state.exercises.length ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller+4 < this.state.exercises.length ? this.setState({scroller: this.state.scroller + 4}) : ''}>{">"}</div>
+                  <div
+                    className={
+                      this.state.scroller !== 0
+                        ? styles.arrow
+                        : styles.arrowDisabled
+                    }
+                    onClick={() =>
+                      this.state.scroller !== 0
+                        ? this.setState({ scroller: this.state.scroller - 4 })
+                        : ""
+                    }
+                  >
+                    {"<"}
+                  </div>
+                  {this.state.exercises
+                    .slice(this.state.scroller, this.state.scroller + 4)
+                    .map(post => (
+                      <div onClick={() => this.props.singlePost(post)}>
+                        <Card
+                          url={post.url}
+                          user={post.user}
+                          date={post.date}
+                          title={post.title}
+                          image={post.image}
+                          content={post.content}
+                          sets={post.sets}
+                          reps={post.reps}
+                        />
+                      </div>
+                    ))}
+                  <div
+                    className={
+                      this.state.scroller + 4 < this.state.exercises.length
+                        ? styles.arrow
+                        : styles.arrowDisabled
+                    }
+                    onClick={() =>
+                      this.state.scroller + 4 < this.state.exercises.length
+                        ? this.setState({ scroller: this.state.scroller + 4 })
+                        : ""
+                    }
+                  >
+                    {">"}
+                  </div>
                 </div>
-                <div className={styles.cardContainer}>
-                </div>
+                <div className={styles.cardContainer}></div>
                 {this.state.workouts.slice(3).map(post => (
                   <div onClick={() => this.props.singlePost(post)}>
                     <Post
