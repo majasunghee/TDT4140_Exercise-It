@@ -31,3 +31,20 @@ export const getLatestExercises = async () => {
   console.log("getting latest exercises..");
   return data;
 };
+
+export const updateExercise = async newdata => {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+
+  var parameters = {
+    method: "PUT",
+    headers: headers,
+    redirect: "follow",
+    body: JSON.stringify(newdata)
+  };
+
+  const response = await fetch("http://localhost:8000/exercises/", parameters);
+  const data = await response.json();
+  console.log("updating existing exercise..");
+  return data;
+};
