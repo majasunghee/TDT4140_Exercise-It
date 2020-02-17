@@ -25,14 +25,14 @@ SECRET_KEY = 'r&^tq2a#ublb404sk^$c=askk$(a6$h@%9p^#9r%-aa0nk7j_%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'rest_framework',
-    'corsheaders', 
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'rest_framework.authtoken',
@@ -99,7 +99,7 @@ REST_FRAMEWORK = {
     ],
 }
 
-AUTH_USER_MODEL = "quickstart.CustomUser" 
+AUTH_USER_MODEL = "quickstart.CustomUser"
 
 
 # Password validation
@@ -138,7 +138,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CORS_ORIGIN_WHITELIST = (
-        'http://localhost:3000',
-    )
+    'http://localhost:3000',
+)
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '')
