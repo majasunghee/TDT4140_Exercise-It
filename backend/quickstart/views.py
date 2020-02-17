@@ -61,8 +61,12 @@ class ExerciseViewSet(viewsets.ModelViewSet):
 
     parser_classes = (MultiPartParser, FormParser)
 
-    queryset = Exercise.objects.all().order_by('date')
+    queryset = Exercise.objects.all().order_by('-date')
     serializer_class = ExerciseSerializer
+
+    # def post(self, request):
+    #     musclegroups = Musclegroup.objects.get(id in request.musclegroups)
+    #     return Response({'date': date, 'title': title, 'content': content, 'image': image, 'sets': sets, 'reps': reps, 'musclegroups': musclegroups})
 
 
 class WorkoutViewSet(viewsets.ModelViewSet):
@@ -70,7 +74,7 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     authentication_classes = ()
 
     parser_classes = (MultiPartParser, FormParser)
-    
+
     queryset = Workout.objects.all().order_by('-date')
     serializer_class = WorkoutSerializer
 
