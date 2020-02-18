@@ -3,7 +3,7 @@ import styles from "../../App.module.css";
 
 const defaultState = {
   title: "",
-  musclegroups: [],
+  musclegroups: "",
   image: "",
   content: "",
   sets: "",
@@ -22,7 +22,7 @@ export default class NewExercise extends React.Component {
       var date = new Date();
       var dateFormat =
         date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-
+      console.log(this.props.user)
       const formdata = new FormData();
       formdata.append("title", this.state.title);
       formdata.append("date", dateFormat);
@@ -30,8 +30,8 @@ export default class NewExercise extends React.Component {
       formdata.append("sets", this.state.sets);
       formdata.append("reps", this.state.reps);
       formdata.append("image", this.state.image, this.state.image.name);
-      formdata.append("musclegroups", this.state.musclegroups);
-      console.log(this.state);
+      formdata.append("relations", this.state.musclegroups);
+      formdata.append("username", this.props.user.username)
 
       var parameters = {
         method: "POST",

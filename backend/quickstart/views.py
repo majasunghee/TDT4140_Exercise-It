@@ -64,10 +64,6 @@ class ExerciseViewSet(viewsets.ModelViewSet):
     queryset = Exercise.objects.all().order_by('-date')
     serializer_class = ExerciseSerializer
 
-    # def post(self, request):
-    #     musclegroups = Musclegroup.objects.get(id in request.musclegroups)
-    #     return Response({'date': date, 'title': title, 'content': content, 'image': image, 'sets': sets, 'reps': reps, 'musclegroups': musclegroups})
-
 
 class WorkoutViewSet(viewsets.ModelViewSet):
     permission_classes = ()

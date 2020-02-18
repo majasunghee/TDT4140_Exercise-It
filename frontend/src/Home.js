@@ -46,7 +46,7 @@ class Home extends React.Component {
               token={this.props.token}
             />
           ) : (
-            <PostContainer user={this.props.user} post={this.state.post} />
+            <PostContainer user={this.props.user} post={this.state.post} token={this.props.token} />
           )}
         </div>
       </div>

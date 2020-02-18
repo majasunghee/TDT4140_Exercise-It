@@ -78,30 +78,63 @@ class MusclegroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ExerciseSerializer(serializers.ModelSerializer):
-
-    def create(self, validated_data):
-        exercise = Exercise(
-            date=validated_data['date'],
-            title=validated_data['title'],
-            content=validated_data['content'],
-            sets=validated_data['sets'],
-            reps=validated_data['reps'],
-            image=Base64ImageField(max_length=None, use_url=True,),
-        )
-        exercise.save()
-        return exercise
+    image = Base64ImageField(max_length=None, use_url=True,)
+    musclegroups = MusclegroupSerializer(many=True, read_only=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Exercise
-        fields = ('date', 'title', 'image', 'content', 'reps', 'sets', 'user')
+        fields = ('__all__')
+    
+    def create(self, data):
+        exercise = super().create(data)
+        musclegroups = data.pop("relations")
+        if (len(musclegroups) > 0):
+            for mid in musclegroups.split(" "):
+                group = Musclegroup.objects.get(id=mid)
+                exercise.musclegroups.add(group)
+       
+        pusername = data.pop("username")
+        if (len(pusername) > 0):
+            person = CustomUser.objects.get(username=pusername)
+            setattr(exercise, 'user', person)
+
+        exercise.save()
+        return exercise
+
+class SimpleExerciseSerializer(serializers.ModelSerializer):
+    musclegroups = MusclegroupSerializer(many=True)
+
+    class Meta:
+        model = Exercise
+        fields = ('id','date','title','content','reps','sets','relations','musclegroups')
+
 
 
 class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
     image = Base64ImageField(max_length=None, use_url=True,)
+    exercises = SimpleExerciseSerializer(many=True, read_only=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Workout
-        fields = ('date', 'title', 'image', 'content', 'duration', 'user')
+        fields = ('__all__')
+
+    def create(self, data):
+        workout = super().create(data)
+        exercises = data.pop("relations")
+        if (len(exercises) > 0):
+            for eid in exercises.split(" "):
+                group = Exercise.objects.get(id=eid)
+                workout.exercises.add(group)
+
+        pusername = data.pop("username")
+        if (len(pusername) > 0):
+            person = CustomUser.objects.get(username=pusername)
+            setattr(workout, 'user', person)
+
+        workout.save()
+        return workout
 
 
 class FeedbackSerializer(serializers.HyperlinkedModelSerializer):

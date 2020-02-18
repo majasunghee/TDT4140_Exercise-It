@@ -43,6 +43,23 @@ class Feed extends React.Component {
     .then(() => this.setState({loadingWorkouts : false}));
   }
 
+  formatData(data) {
+    var usableData = [];
+    var i, user, temp;
+    for(i=0;i<data.length;i++){
+      var userArray = [];
+      temp=data[i];
+
+      console.log(temp)
+      user = temp.user
+      delete temp.user
+      userArray.push(user);
+      temp['user'] = userArray
+      usableData.push(temp);
+    }
+    return usableData;
+  }
+
   checkChoosenmuskler = post => {
     var alleØvelser = [];
     var alleMuskler = [];

@@ -9,7 +9,7 @@ const PostContainer = props => {
           <strong>{props.post.title}</strong>
         </div>
         <div>
-          {props.post.user} - {props.post.date}
+        {props.post.user ? props.post.user.username : 'Anonym'} - {props.post.date}
         </div>
         <img src={props.post.image.split('public')[1]} alt="Bilde" />
         <div>{props.post.content}</div>

@@ -29,6 +29,7 @@ export const getLatestExercises = async () => {
   const response = await fetch("http://localhost:8000/exercises/", parameters);
   const data = await response.json();
   console.log("getting latest exercises..");
+  console.log(data);
   return data;
 };
 

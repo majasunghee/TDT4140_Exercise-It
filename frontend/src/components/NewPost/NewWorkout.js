@@ -21,14 +21,15 @@ export default class NewWorkout extends React.Component {
         var date = new Date();
         var dateFormat =
           date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    
+        console.log(this.props.user)
         const formdata = new FormData();
         formdata.append('title', this.state.title);
         formdata.append('date', dateFormat);
         formdata.append('content', this.state.content);
         formdata.append('duration', this.state.duration);
         formdata.append('image', this.state.image, this.state.image.name);
-        formdata.append('exercises', this.state.exercises);
+        formdata.append('relations', this.state.exercises);
+        formdata.append('username', this.props.user.username)
     
         var parameters = {
           method: "POST",

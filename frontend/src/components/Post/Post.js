@@ -9,7 +9,7 @@ const Post = props => {
         <div className={styles.subtitle}><strong>Treningsøkt</strong></div>
       </div>
       <div>
-        Av {props.user} - {props.date}
+       {props.user ? 'Av' + props.user.username : 'Anonym'} - {props.date}
       </div>
       <img src={props.image.split('public')[1]} alt="Bilde" />
       <div>{props.content.slice(0, 80)}..</div>
