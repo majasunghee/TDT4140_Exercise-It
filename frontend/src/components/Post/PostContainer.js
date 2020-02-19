@@ -4,17 +4,17 @@ import styles from "../../App.module.css";
 const PostContainer = props => {
   return (
     <div>
+          <div className={styles.mainHeader}><h1>{props.post.title}</h1></div>
       <div className={styles.singlePostWrapper}>
-        <div className={styles.title}>
-          <strong>{props.post.title}</strong>
-        </div>
         <div>
         {props.post.user ? props.post.user.username : 'Anonym'} - {props.post.date}
         </div>
-        <img src={props.post.image.split('public')[1]} alt="Bilde" />
+        <div className={styles.singlePostImage} style={{  
+      backgroundImage: "url("+props.post.image.split('public/')[1]+")",
+    }}/>
         <div>{props.post.content}</div>
       </div>
-      <div className={styles.kommentarer}>
+      {/* <div className={styles.kommentarer}>
         <strong>Kommentar</strong>
         <div>
           <input placeholder="Skriv her" className={styles.inputField} />{" "}
@@ -26,7 +26,7 @@ const PostContainer = props => {
               <strong>Brukernavn {a.username}</strong> - {a.kommentar}
             </div>
           ))}
-      </div>
+      </div> */}
     </div>
   );
 };

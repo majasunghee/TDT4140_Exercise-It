@@ -56,6 +56,7 @@ class App extends React.Component {
     return (
       <Router>
       <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"></link>
+      <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet"></link>
         <div>
           <Switch>
             <Route exact path="/login">

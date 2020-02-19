@@ -43,23 +43,6 @@ class Feed extends React.Component {
     .then(() => this.setState({loadingWorkouts : false}));
   }
 
-  formatData(data) {
-    var usableData = [];
-    var i, user, temp;
-    for(i=0;i<data.length;i++){
-      var userArray = [];
-      temp=data[i];
-
-      console.log(temp)
-      user = temp.user
-      delete temp.user
-      userArray.push(user);
-      temp['user'] = userArray
-      usableData.push(temp);
-    }
-    return usableData;
-  }
-
   checkChoosenmuskler = post => {
     var alleØvelser = [];
     var alleMuskler = [];
@@ -87,13 +70,12 @@ class Feed extends React.Component {
     return (
       <div>
         <div className={styles.feedContainer}>
+          <div className={styles.mainHeader}><h1>{this.props.user.username ? 'Hei, '+this.props.user.username+'!' : 'Velkommen!'}</h1></div>
           <div className={styles.feed}>
         <div className={styles.actionBar}>
-          <NewExercise reFetch={() => this.buildFeed()} user={this.props.user} createNew={() => this.props.newExercise()} isCreating={this.props.creatingNewExercise}/>
-          <NewWorkout reFetch={() => this.buildFeed()} user={this.props.user} createNew={() => this.props.newWorkout()} isCreating={this.props.creatingNewWorkout}/>
           </div>
             {this.state.valgteMuskler.length === 0
-              ? this.state.workouts.slice(0, 3).map(post => (
+              ? this.state.workouts.slice(0, 2).map(post => (
                   <div onClick={() => this.props.singlePost(post)}>
                     <Post
                       user={post.user}
@@ -120,68 +102,14 @@ class Feed extends React.Component {
                   )
                 )}
           </div>
-          <div className={styles.filter}>
-            <h3>
-              <strong>Sorter på muskelgrupper</strong>
-            </h3>
-            <br />
-            {this.state.musclegroups.map(tag => (
-              <div
-                onClick={() =>
-                  this.state.valgteMuskler.includes(tag)
-                    ? this.setState({
-                        valgteMuskler: this.state.valgteMuskler.filter(
-                          a => a !== tag
-                        )
-                      })
-                    : this.setState(prev => ({
-                        valgteMuskler: [...prev.valgteMuskler, tag]
-                      }))
-                }
-                className={
-                  this.state.valgteMuskler.includes(tag)
-                    ? styles.choosenLink
-                    : styles.filterLink
-                }
-              >
-                {tag.name}
-              </div>
-            ))}
-            
-            <h3>
-              <strong>Sorter på øvelser</strong>
-            </h3>
-            {!this.state.loading ? (this.state.exercises.map(øvelse => (
-              <div
-                onClick={() =>
-                  this.state.valgteØvelser.includes(øvelse.title)
-                    ? this.setState({
-                        valgteØvelser: this.state.valgteØvelser.filter(
-                          a => a !== øvelse.title
-                        )
-                      })
-                    : this.setState(prev => ({
-                        valgteØvelser: [...prev.valgteØvelser, øvelse.title]
-                      }))
-                }
-                className={
-                  this.state.valgteØvelser.includes(øvelse.title)
-                    ? styles.choosenLink
-                    : styles.filterLink
-                }
-              >
-                {øvelse.title}
-              </div>
-            ))) : ''}
-          </div>
         </div>
         <div className={styles.feedContainer}>
           <div className={styles.feed}>
             {this.state.valgteMuskler.length === 0 && !this.state.loading ? (
               <div>
                 <div className={styles.cardContainer}>
-                  <div className={this.state.scroller !== 0 ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller !== 0 ? this.setState({scroller: this.state.scroller - 4}) : ''}>{"<"}</div>
-                  {this.state.exercises.slice(this.state.scroller, this.state.scroller+4).map(post => (
+                  <div className={this.state.scroller !== 0 ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller !== 0 ? this.setState({scroller: this.state.scroller - 3}) : ''}>{"<"}</div>
+                  {this.state.exercises.slice(this.state.scroller, this.state.scroller+3).map(post => (
                     <div onClick={() => this.props.singlePost(post)}>
                       <Card
                         url={post.url}
@@ -195,11 +123,11 @@ class Feed extends React.Component {
                       />
                     </div>
                   ))}
-                  <div className={ this.state.scroller+4 < this.state.exercises.length ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller+4 < this.state.exercises.length ? this.setState({scroller: this.state.scroller + 4}) : ''}>{">"}</div>
+                  <div className={ this.state.scroller+3 < this.state.exercises.length ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller+4 < this.state.exercises.length ? this.setState({scroller: this.state.scroller + 3}) : ''}>{">"}</div>
                 </div>
                 <div className={styles.cardContainer}>
                 </div>
-                {this.state.workouts.slice(3).map(post => (
+                {this.state.workouts.slice(2).map(post => (
                   <div onClick={() => this.props.singlePost(post)}>
                     <Post
                       user={post.user}

@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./components/Header/Header";
+import Settings from "./components/Settings/Settings";
 import Feed from "./components/Feed/Feed";
 import PostContainer from "./components/Post/PostContainer";
 
@@ -25,7 +25,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className={this.state.light ? styles.lightMode : ""}>
-        <Header
+        <Settings
           user={this.props.user}
           goHome={() => this.homeButton()}
           toggleTheme={() => this.setState({ light: !this.state.light })}

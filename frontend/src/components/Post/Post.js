@@ -9,10 +9,12 @@ const Post = props => {
         <div className={styles.subtitle}><strong>Treningsøkt</strong></div>
       </div>
       <div>
-       {props.user ? 'Av' + props.user.username : 'Anonym'} - {props.date}
+       {props.user ? 'Av ' + props.user.username : 'Anonym'} - {props.date}
       </div>
-      <img src={props.image.split('public')[1]} alt="Bilde" />
-      <div>{props.content.slice(0, 80)}..</div>
+      <div className={styles.postImage} style={{  
+      backgroundImage: "url("+props.image.split('public/')[1]+")",
+    }}><div className={styles.gradient}/></div>
+      <div>{props.content.slice(0, 210)}..</div>
     </div>
   );
 };

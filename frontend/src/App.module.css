@@ -1,24 +1,46 @@
 .container {
-  padding-left: 50%;
-  margin-left: -500px;
-  background-color: rgb(44, 44, 44);
+  margin-left: 400px;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(216, 216, 216);
   padding-bottom: 100px;
-  padding-top: 190px;
-  min-height: 78vh;
+  padding-top: 20px;
+  min-height: 96vh;
   transition: 0.5s;
 }
 
-.logo {
-  height: 110px;
-  width: 110px;
-  margin-top: 15px;
-  transition: 0.2s;
+.mainHeader {
+  font-size: 1.6em;
+  color:#5d5d5d;
+  cursor: default;
+  margin-bottom: -10px;
 }
 
-.shiny {
-  overflow: hidden;
-  transition: 0.2s;
+.mainHeader:hover {
+  background: -webkit-linear-gradient(30deg, #5d5d5d, #6700a7 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.logo {
+  background-image: linear-gradient(140deg, rgb(224, 108, 0), #44006e);
+  height: 50px;
+  width: 240px;
+  margin: 20px;
+  font-size: 2.5em;
+  border-radius: 20px 20px 20px 0;
+  color: white;
+  padding: 25px;
+  font-weight: bold;
+  font-family: 'Work Sans', sans-serif;
+  transition: 0.1s;
+}
+
+.logo:hover {
+  background-image: linear-gradient(130deg, rgb(224, 108, 0), #44006e);
   cursor: pointer;
+  margin-left: 28px;
 }
 
 .backButton {
@@ -34,39 +56,6 @@
   color: rgb(211, 211, 211);
 }
 
-.shiny:hover > .logo {
-  height: 120px;
-  width: 120px;
-  padding-left: -5px;
-  margin-top: 8px;
-  margin-right: -5px;
-}
-
-.shiny:hover {
-  margin-left: -5px;
-  margin-right: -5px;
-}
-
-.showoff {
-  width: 120px;
-  height: 605px;
-  position: relative;
-  top: -200px;
-  left: -580px;
-  transition: 2s;
-  transform: rotate(-30deg);
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 50%,
-    rgba(255, 255, 255, 0.7) 100%
-  );
-}
-
-.shiny:hover .showoff {
-  left: 550px;
-  top: -445px;
-}
-
 .userText {
   margin-top: 30px;
   margin-bottom: 20px;
@@ -78,24 +67,10 @@
 .buttonRow {
   width: 265px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
-.headerButton {
-  text-align: center;
-  width: 90px;
-  padding: 20px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-radius: 4px;
-  background-color: rgb(42, 42, 42);
-  transition: 0.2s;
-}
-
-.headerButton:hover {
-  background-color: rgb(56, 56, 56);
-  cursor: pointer;
-}
 
 .icon,
 .icon2 {
@@ -146,28 +121,48 @@
   cursor: pointer;
 }
 
-.appHeader {
-  background-image: linear-gradient(177deg, #fb4f00a9, rgb(36, 36, 36));
-  height: 140px;
-  padding-left: 50%;
-  margin-left: -500px;
+.settings {
+  background-color: rgb(20, 20, 20);
+  height: 100vh;
   display: flex;
-  color: rgb(221, 44, 0);
+  flex-direction: column;
+  color: rgb(146, 146, 146);
   position: fixed;
-  width: 990px;
+  width: 400px;
   justify-content: space-between;
-  padding-right: 50%;
-  transition: 2s;
-  z-index: 10;
+  left: 0;
+  top: 0;
+  font-family: 'Work Sans', sans-serif;
 }
 
-.appHeader:hover {
-  background-color: #fb4f00c7;
+.loginSetting,
+.setting {
+  text-align: center;
+  width: 400px;
+  text-align: center;
+  font-size: 1.1em;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  background-color: rgb(26, 26, 26);
+  transition: 0.2s;
+  border-bottom: 1px solid rgb(37, 37, 37);
+}
+
+.loginSetting:hover,
+.setting:hover {
+  padding-left: 10px;
+  width: 390px;
+  cursor: pointer;
+  color: #a700ff;
+  background-color: rgb(24, 24, 24);
+}
+
+.loginSetting:hover {
+  color: rgb(224, 108, 0);
 }
 
 .cardWrapper {
-  width: 11vw;
-  min-width: 210px;
+  width: 280px;
   height: 500px;
   margin-top: 55px;
   padding: 0px;
@@ -189,15 +184,13 @@
 }
 
 .cardContainer {
-  width: 50vw;
+  width: 960px;
   display: flex;
   justify-content: space-between;
-  margin-left: -25vw;
-  padding-left: 400px;
-  min-width: 1000px;
   transition: 0.2s;
   margin-bottom: 40px;
   margin-top: 15px;
+  margin-left: -40px;
 }
 
 .cardWrapper > .title {
@@ -209,15 +202,22 @@
 }
 
 .postWrapper {
-  width: 600px;
+  width: 850px;
+  font-size: 1.1em;
   margin-top: 30px;
   border: 1px solid rgb(206, 206, 206);
-  padding: 15px;
-  border-radius: 4px;
-  box-shadow: 0px 0px 75px -38px rgb(95, 95, 95);
+  padding: 20px;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 75px -38px rgb(82, 82, 82);
   background-color: rgb(248, 248, 248);
   transition: 0.2s;
-  filter: brightness(92%);
+}
+
+.postWrapper:hover {
+  cursor: pointer;
+  box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
 }
 
 .postWrapper > .title {
@@ -234,19 +234,21 @@
   font-size: 1.4em;
 }
 
-.kommentarer,
 .singlePostWrapper {
   display: flex;
+  font-size: 1.1em;
   flex-direction: column;
-  width: 977px;
+  width: 1100px;
   border: 1px solid rgb(206, 206, 206);
-  padding: 15px;
-  border-radius: 4px;
-  padding-right: 0;
+  border-radius: 8px;
+  padding: 20px;
+  padding-top: 25px;
+  padding-bottom: 25px;
   box-shadow: 0px 0px 10px -4px rgba(0, 0, 0, 0.75);
   background-color: rgb(248, 248, 248);
   line-height: 2em;
-  box-shadow: 0px 0px 75px -38px rgb(95, 95, 95);
+  box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
+  margin-top: 50px;
 }
 
 .kommentarer {
@@ -257,20 +259,33 @@
   font-style: italic;
 }
 
-.postWrapper:hover {
-  cursor: pointer;
-  margin-left: 5px;
-  margin-right: -5px;
-  filter: brightness(100%);
-  box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
+.singlePostImage,
+.postImage {
+  width: 890px;
+  height: 500px;
+  margin: -20px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  transition: 0.3s;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
-.postWrapper > img {
-  width: 632px;
-  margin: -16px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  transition: 0.3s;
+.singlePostImage {
+  width: 1140px;
+  height: 600px;
+}
+
+.gradient {
+  background-image: linear-gradient(140deg, rgba(224, 108, 0, 0.212), #44006e3f);
+  width: 890px;
+  height: 500px;
+  transition: 1s;
+}
+
+.postWrapper:hover > .postImage > .gradient {
+  filter: opacity(0%)
 }
 
 .singlePostWrapper > img {
@@ -287,33 +302,25 @@
   flex-wrap: wrap;
 }
 
-.feedContainer {
-  display: flex;
-}
-
 .hidden {
   display: none;
 }
 
 .filter {
-  margin: 30px;
-  margin-top: 0;
-  border: 1px solid rgb(206, 206, 206);
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0px 0px 10px -4px rgba(0, 0, 0, 0.75);
-  min-height: 600px;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(136, 136, 136);
+  margin: 0;
+  padding: 25px;
+  font-size: 1.1em;
   height: 600px;
-  width: 285px;
-  min-width: 285px;
-  background-color: rgb(248, 248, 248);
-  box-shadow: 0px 0px 75px -38px rgb(95, 95, 95);
+  width: 350px;
+  background-color: transparent;
   display: flex;
   flex-wrap: wrap;
 }
 
 .filter > h3 {
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 0px;
   width: 250px;
 }
@@ -587,23 +594,4 @@
   margin-bottom: 40px;
   font-size: 1.7em;
   color: #f8f8f8a9;
-}
-
-.lightMode > .container {
-  background-color: rgb(200, 200, 200);
-}
-
-.lightMode > .container > div > .feedContainer > .feed > .triggerPost,
-.lightMode > .container > div > .feedContainer > .feed > .newPost,
-.lightMode > .container > div > .singlePostWrapper,
-.lightMode > .container > div > .kommentarer,
-.lightMode > .container > div > .feedContainer > .filter,
-.lightMode > .container > div > .feedContainer > .feed > div > .postWrapper {
-  background-color: rgb(221, 221, 221);
-  border: 1px solid transparent;
-}
-
-.lightMode > .appHeader {
-  background-image: linear-gradient(177deg, #ff5608, rgb(204, 45, 6));
-  color: white;
 }
