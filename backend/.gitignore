@@ -2,3 +2,5 @@
 
 # dependencies
 /env
+/quickstart/__pycache__
+/__pycache__

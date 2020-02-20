@@ -57,16 +57,16 @@ const Settings = props => {
             ))) : ''}
           </div> */}
         <div className={styles.buttonRow}>
-        <div onClick={() => {}} className={styles.setting}>
+        <div onClick={() => props.hideExercises()} className={props.hiddenExercises ? styles.settingActive : styles.setting}>
            Skjul øvelser
         </div>
-        <div onClick={() => {}} className={styles.setting}>
+        <div onClick={() => props.hideWorkouts()} className={props.hiddenWorkouts ? styles.settingActive : styles.setting}>
            Skjul treningsøkter
         </div>
-        <div onClick={() => {}} className={styles.setting}>
+        <div onClick={() => props.newExercise()} className={props.creatingNewExercise ? styles.settingActive : styles.setting}>
            Legg til ny øvelse +
         </div>
-        <div onClick={() => {}} className={styles.setting}>
+        <div onClick={() => props.newWorkout()} className={props.creatingNewWorkout ? styles.settingActive : styles.setting}>
            Opprett treningsøkt +
         </div>
         <div onClick={() => {}} className={styles.setting}>
@@ -76,10 +76,7 @@ const Settings = props => {
            {props.user.username ? 'Logg ut' : 'Logg inn'}
         </div>
       </div>
-      {/* <NewExercise reFetch={() => this.buildFeed()} user={this.props.user} createNew={() => this.props.newExercise()} isCreating={this.props.creatingNewExercise}/>
-      <NewWorkout reFetch={() => this.buildFeed()} user={this.props.user} createNew={() => this.props.newWorkout()} isCreating={this.props.creatingNewWorkout}/>
-     */}
-    </div>
+      </div>
   );
 };
 
