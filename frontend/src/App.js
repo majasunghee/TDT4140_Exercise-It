@@ -1,6 +1,7 @@
 import React from "react";
 import Home from "./Home";
 import Login from "./components/Login/Login";
+import Info from "./components/Info/Info";
 
 import { getUser } from "./actions/user";
 
@@ -14,7 +15,8 @@ import {
 const defaultState = {
   user: {},
   token: "",
-  login: false
+  login: false,
+  info: false
 };
 
 let authenticatedUser = {};
@@ -47,6 +49,11 @@ class App extends React.Component {
     this.setState({ login: true });
   };
 
+  goToInfo = () => {
+    this.setState({ defaultState });
+    this.setState({ info: !this.state.info });
+  };
+
   leaveLogin = () => {
     localStorage.removeItem("token");
     this.setState(defaultState);
@@ -55,8 +62,14 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-      <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"></link>
-      <link href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap" rel="stylesheet"></link>
+        <link
+          href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap"
+          rel="stylesheet"
+        ></link>
         <div>
           <Switch>
             <Route exact path="/login">
@@ -65,17 +78,32 @@ class App extends React.Component {
                 onCancel={() => this.leaveLogin()}
               />
             </Route>
-            <Route path="/">
+            <Route exact path="/">
               <Home
                 user={this.state.user}
                 token={this.state.token}
                 onLogin={() => this.goToLogin()}
+                onInfo={() => this.goToInfo()}
                 state={this.state}
+              />
+            </Route>
+            <Route exact path="/info">
+              <Info
+                user={this.state.user}
+                onLogin={() => this.goToLogin()}
+                onInfo={() => this.goToInfo()}
+                homeButton={() => this.setState({ info: false })}
               />
             </Route>
           </Switch>
         </div>
-        {this.state.login ? <Redirect to="/login" /> : <Redirect to="/" />}
+        {this.state.login ? (
+          <Redirect to="/login" />
+        ) : this.state.info ? (
+          <Redirect to="/info" />
+        ) : (
+          <Redirect to="/" />
+        )}
       </Router>
     );
   }

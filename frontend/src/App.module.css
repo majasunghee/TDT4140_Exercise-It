@@ -3,7 +3,7 @@
   width: auto;
   display: flex;
   justify-content: center;
-  background-color: rgb(216, 216, 216);
+  background-color: rgb(228, 228, 228);
   padding-bottom: 100px;
   padding-top: 20px;
   min-height: 96vh;
@@ -11,13 +11,22 @@
 }
 
 .mainHeader {
-  font-size: 1.6em;
-  color:#5d5d5d;
+  font-size: 1.4em;
+  color: #5d5d5d;
   cursor: default;
   margin-bottom: -10px;
 }
 
 .loginHeader {
+  font-size: 80px;
+  font-family: "Work Sans", sans-serif;
+  margin-bottom: 50px;
+  margin-left: -5px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.loginSubheader {
   font-size: 2em;
   color: rgb(182, 182, 182);
   cursor: default;
@@ -31,22 +40,29 @@
   -webkit-text-fill-color: transparent;
 }
 
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 .logo {
-  background-image: linear-gradient(140deg, rgb(224, 108, 0), #44006e);
-  height: 50px;
-  width: 260px;
-  margin: 20px;
+  background-image: linear-gradient(140deg, rgb(241, 96, 0), #510083);
+  height: 60px;
+  width: 320px;
   font-size: 2.5em;
-  border-radius: 20px 20px 20px 0;
+  border-radius: 0px 0px;
   color: white;
-  padding: 25px;
+  padding: 10px;
+  padding-top: 20px;
+  padding-right: 30px;
+  text-align: center;
   font-weight: bold;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
   transition: 0.1s;
 }
 
 .logo:hover {
-  background-image: linear-gradient(120deg, rgb(224, 108, 0), #44006e);
+  background-image: linear-gradient(120deg, rgb(241, 96, 0), #510083);
   cursor: pointer;
 }
 
@@ -77,13 +93,20 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
-
 .icon {
   height: 50px;
   max-width: 50px;
   margin-right: 15px;
   margin-bottom: -53px;
+}
+
+.iconLarge {
+  padding-left: 15px;
+  margin-right: 15px;
+  height: 60px;
+  max-width: 60px;
+  margin-bottom: -20px;
+  position: absolute;
 }
 
 .arrowDisabled,
@@ -120,7 +143,7 @@
   justify-content: space-between;
   left: 0;
   top: 0;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
 }
 
 .settingActive,
@@ -235,7 +258,8 @@
 }
 
 .description,
-.postWrapper > .title {
+.postWrapper > .title,
+.singlePostWrapper > .title {
   margin-left: 70px;
 }
 
@@ -251,20 +275,25 @@
 }
 
 .singlePostWrapper > .title {
-  font-size: 1.4em;
+  margin-left: 80px;
+  margin-bottom: -5px;
+}
+
+.singlePostWrapper > .description {
+  margin-left: 80px;
+  margin-bottom: -12px;
 }
 
 .singlePostWrapper {
   display: flex;
-  font-size: 1.1em;
+  font-size: 1.3em;
   flex-direction: column;
-  width: 1100px;
+  width: 1000px;
   border: 1px solid rgb(206, 206, 206);
   border-radius: 8px;
   padding: 20px;
-  padding-top: 25px;
+  padding-top: 15px;
   padding-bottom: 25px;
-  box-shadow: 0px 0px 10px -4px rgba(0, 0, 0, 0.75);
   background-color: rgb(248, 248, 248);
   line-height: 2em;
   box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
@@ -299,18 +328,26 @@
 }
 
 .singlePostImage {
-  width: 1140px;
+  width: 1040px;
   height: 600px;
 }
 
 .gradientLoading {
-  background-image: linear-gradient(140deg, rgba(224, 108, 0, 0.438), #44006e73);
+  background-image: linear-gradient(
+    140deg,
+    rgba(224, 108, 0, 0.438),
+    #44006e73
+  );
   width: 890px;
   height: 500px;
 }
 
 .gradientPublish {
-  background-image: linear-gradient(140deg, rgba(224, 108, 0, 0.438), #44006e73);
+  background-image: linear-gradient(
+    140deg,
+    rgba(224, 108, 0, 0.438),
+    #44006e73
+  );
   width: 850px;
   height: 180px;
   padding: 20px;
@@ -319,20 +356,24 @@
 }
 
 .gradient {
-  background-image: linear-gradient(140deg, rgba(224, 108, 0, 0.212), #44006e3f);
+  background-image: linear-gradient(
+    140deg,
+    rgba(224, 108, 0, 0.212),
+    #44006e3f
+  );
   width: 890px;
   height: 500px;
   transition: 1s;
 }
 
 .postWrapper:hover > .postImage > .gradient {
-  filter: opacity(0%)
+  filter: opacity(0%);
 }
 
 .singlePostWrapper > img {
   width: 994px;
   margin: -16px;
-  margin-top: 10px;
+  margin-top: 5px;
   margin-bottom: 10px;
 }
 
@@ -348,7 +389,7 @@
 }
 
 .filter {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: rgb(136, 136, 136);
   margin: 0;
   padding: 25px;
@@ -379,7 +420,7 @@
   height: 410px;
   transition: 0.3s;
   margin-bottom: 20px;
-  filter: brightness(92%)
+  filter: brightness(92%);
 }
 
 .triggerPost {
@@ -401,7 +442,7 @@
   border: 0;
   font-size: 1em;
   border-bottom: 2px solid #acacaca9;
-  width: 525px;
+  width: 520px;
   margin-top: 15px;
   margin-right: 20px;
   line-height: 2.2em;
@@ -438,7 +479,7 @@
   line-height: 2em;
   color: rgb(223, 223, 223);
   transition: 0.2s;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
 }
 
 .inputLogin:hover {
@@ -447,7 +488,6 @@
   color: rgb(224, 108, 0);
   background-color: rgb(24, 24, 24);
 }
-
 
 .toggleTrue,
 .toggleFalse {
@@ -462,7 +502,7 @@
   transition: 0.2s;
   cursor: default;
   margin-top: 20px;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
 }
 
 .toggleFalse {
@@ -488,7 +528,7 @@
   transition: 0.2s;
   cursor: pointer;
   width: 500px;
-  font-family: 'Work Sans', sans-serif;
+  font-family: "Work Sans", sans-serif;
 }
 
 .buttonLoginDisabled {
@@ -508,7 +548,7 @@
   width: 815px;
   margin-right: 15px;
   height: 70px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   padding: 15px;
   background-color: rgb(240, 240, 240);
   transition: 0.2s;
@@ -596,7 +636,7 @@
 
 .loginWrapper {
   display: flex;
-  background-color: rgb(195, 195, 195);
+  background-color: rgb(228, 228, 228);
 }
 
 .loginLogoActivated,
@@ -645,21 +685,21 @@
 
 .bannerPurple {
   background-color: #1976d2;
-  background: linear-gradient(70deg,  rgb(130, 55, 200) 30%, #580092);
-  color: #fff;
+  background: linear-gradient(70deg, rgb(134, 59, 204) 30%, #580092);
   width: 100%;
   height: 900px;
   padding-left: 200px;
   padding-top: 50px;
-  font-size: 80px;
+  color: #fff;
+  font-size: 32px;
+  line-height: 58px;
 }
 
 .bannerOrange {
   background-color: #1976d2;
-  background: linear-gradient(70deg,  rgb(219, 80, 0) 30%, #ff1e00);
-  color: #fff;
+  background: linear-gradient(70deg, rgb(219, 80, 0) 30%, #ff1e00);
+  color: rgb(228, 228, 228);
   font-weight: bold;
-  font-family: 'Work Sans', sans-serif;
   width: 100%;
   height: 900px;
 }
@@ -705,4 +745,9 @@
   transform: skewY(-10deg);
   -webkit-transform-origin: 100%;
   transform-origin: 100%;
+  transition: 6s;
+}
+
+.loginWrapper:hover > .loginLogoWrapper > .hero2 {
+  top: 32%;
 }
