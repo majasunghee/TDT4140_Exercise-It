@@ -107,7 +107,7 @@ class SimpleExerciseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Exercise
-        fields = ('id','date','title','content','reps','sets','relations','musclegroups')
+        fields = ('__all__')
 
 
 

@@ -1,5 +1,4 @@
 import React from "react";
-import Logo from "../../logo.png";
 import Spinner from "../Spinner/Spinner";
 
 import styles from "../../App.module.css";
@@ -51,7 +50,7 @@ class Login extends React.Component {
   authenticateUser() {
     this.setState({loading: true})
     if (this.state.register) {
-      registerUser(this.getUserFields()).then(
+      registerUser(this.getUserFields()).then(res =>
         loginUser(this.getUserFields())
           .then(data => this.props.onAuth(data))
           .then(() => this.setState({ error: true }))
@@ -67,36 +66,26 @@ class Login extends React.Component {
     return (
       <div className={styles.loginWrapper}>
         <div className={styles.loginLogoWrapper}>
-          <img
-            alt="Exercise-it!"
-            className={
-              !this.buttonEnabled()
-                ? styles.loginLogo
-                : styles.loginLogoActivated
-            }
-            src={Logo}
-          />
+          <div className={styles.hero}>
+           <div className={styles.bannerPurple}><div className={styles.antiHero}>Exercise-It!</div></div>
+        </div>
+        <div className={styles.hero2}>
+           <div className={styles.bannerOrange}/>
+        </div>
         </div>
         <div className={styles.loginFormWrapper}>
         {this.state.loading ? (<div className={styles.loginForm}><Spinner /></div>) :
           (<div className={styles.loginForm}>
-            <div
-              className={styles.backButton}
-              onClick={() => this.props.onCancel()}
-            >
-              Hopp over
-            </div>
-            {this.state.register ? <h2>Kom i gang!</h2> : <h2>Logg inn!</h2>}
-            <h3> Brukernavn</h3>
+            {this.state.register ? <div className={styles.loginHeader} >Kom i gang!</div> 
+            : <div className={styles.loginHeader} >Logg inn!</div>}
             <input
               name="username"
               onChange={this.onChange}
-              placeholder="Navn"
+              placeholder="Brukernavn"
               className={styles.inputLogin}
             />
             {this.state.register ? (
               <div>
-                <h3> E-post</h3>
                 <input
                   name="email"
                   onChange={this.onChange}
@@ -114,7 +103,6 @@ class Login extends React.Component {
             ) : (
               ""
             )}
-            <h3> Passord</h3>
             <input
               name="password"
               onChange={this.onChange}
@@ -127,11 +115,10 @@ class Login extends React.Component {
             />
             {this.state.register ? (
               <div>
-                <h3> Gjenta passord</h3>
                 <input
                   name="repeatPassword"
                   onChange={this.onChange}
-                  placeholder="Passord"
+                  placeholder="Gjenta passord"
                   type="password"
                   onKeyPress={event =>
                     event.key === "Enter" ? this.authenticateUser() : ""
@@ -150,7 +137,6 @@ class Login extends React.Component {
             )}
             {this.state.register ? (
               <div>
-                <h3> Min rolle</h3>
                 <div>
                   <button
                     onClick={() => this.setState({ role: false })}
@@ -158,7 +144,7 @@ class Login extends React.Component {
                       !this.state.role ? styles.toggleTrue : styles.toggleFalse
                     }
                   >
-                    Hobbytrening
+                    Amatør
                   </button>
                   <button
                     onClick={() => this.setState({ role: true })}
@@ -166,7 +152,7 @@ class Login extends React.Component {
                       this.state.role ? styles.toggleTrue : styles.toggleFalse
                     }
                   >
-                    Treningsekspert
+                    Profesjonell
                   </button>
                 </div>
               </div>
@@ -179,8 +165,8 @@ class Login extends React.Component {
                 onClick={() => this.authenticateUser()}
                 className={
                   this.buttonEnabled()
-                    ? styles.buttonRegister
-                    : styles.buttonRegisterDisabled
+                    ? styles.buttonLogin
+                    : styles.buttonLoginDisabled
                 }
               >
                 Fortsett
@@ -193,6 +179,12 @@ class Login extends React.Component {
               >
                 {this.state.register ? "Jeg har bruker" : "Registrer deg"}
               </button>
+              <button
+              className={styles.link}
+              onClick={() => this.props.onCancel()}
+            >
+              Hopp over
+            </button>
             </div>
             {this.state.error ? (
               <div className={styles.error}>Noe gikk galt..</div>
