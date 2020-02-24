@@ -2,9 +2,11 @@ import React from 'react';
 import styles from '../../App.module.css'
 import './spinner.scss'
 
-const Spinner = () => {
+const SpinnerPost = () => {
     return (
-        <div className={styles.spinnerContainer}>
+        <div className={styles.postWrapperSpinner}>
+        <div className={styles.loadingTitle}>
+            <strong>Laster inn..</strong>
             <div className="spinner">
             <div className="outer">
                 <div className="body">
@@ -14,9 +16,14 @@ const Spinner = () => {
                     <div className="leg front"/>
                 </div>
             </div>
+        </div></div>
+        <div>Vennligst vent</div>
+        <div className={styles.postImage} style={{ backgroundImage: ""}}>
+        <div className={styles.gradientLoading}/>
         </div>
-        </div>
+        <div>...</div>
+      </div>
    )
 }
 
-export default Spinner;
+export default SpinnerPost;

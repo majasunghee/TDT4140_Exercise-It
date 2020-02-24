@@ -3,7 +3,7 @@ import Post from "../Post/Post";
 import Card from "../Card/Card";
 import NewExercise from "../NewPost/NewExercise"
 import NewWorkout from "../NewPost/NewWorkout"
-import Spinner from "../Spinner/Spinner";
+import SpinnerPost from "../Spinner/SpinnerPost";
 import styles from "../../App.module.css";
 
 import { getLatestExercises } from "../../actions/exercises";
@@ -18,8 +18,8 @@ class Feed extends React.Component {
       musclegroups: {},
       exercises: {},
       workouts: {},
-      valgteMuskler: [],
-      valgteØvelser: [],
+      selectedFilters: [],
+      filter: '',
       loadingExercises: true,
       loadingMusclegroups: true,
       loadingWorkouts: true,
@@ -32,6 +32,7 @@ class Feed extends React.Component {
   }
   
   buildFeed() {
+    this.props.defaultHome();
     getMusclegroups()
     .then(data => this.setState({musclegroups : data}))
     .then(() => this.setState({loadingMusclegroups : false}));
@@ -43,38 +44,69 @@ class Feed extends React.Component {
     .then(() => this.setState({loadingWorkouts : false}));
   }
 
-  checkChoosenmuskler = post => {
-    var alleØvelser = [];
-    var alleMuskler = [];
+  filterFound = () => {
+    var match = '';
+    if (!this.state.selectedFilters.includes(this.state.filter)) {
+    this.state.musclegroups.forEach(a => this.state.filter === a.name ? match = a.name : '') || this.state.exercises.forEach(a => this.state.filter === a.title ? match = a.title : '')
+    return match;
+    }
+  }
+
+  addFilter() {
+    if (this.filterFound()) {
+    this.setState({selectedFilters: [...this.state.selectedFilters, this.state.filter], filter: ''})
+    }
+  }
+
+  removeFilter(filter) {
+    var allFilters = this.state.selectedFilters;
+    this.setState({selectedFilters: []})
+    if (this.filterFound()) {
+    allFilters.forEach(a => a !== filter ?
+    this.setState({selectedFilters: [...this.state.selectedFilters, a] }) : '')
+    }
+  }
+
+  checkSelectedFilters = post => {
+    var postExercises = [];
+    var postMusclegroups = [];
     var match = 0;
-    post.exercises.forEach(a => alleØvelser.push(a));
-    alleØvelser.forEach(a =>
-      this.state.øvelser[Number.parseInt(a, 10)]
-        ? (alleMuskler = [
-            ...alleMuskler,
-            ...this.state.øvelser[Number.parseInt(a, 10)].muskler
-          ])
-        : ""
+    if (post.exercises) {
+      post.exercises.forEach(a => postExercises.push(a));
+      postExercises.forEach(exercise =>
+        exercise.musclegroups.forEach(musclegroup =>
+        postMusclegroups.push(musclegroup)
+      ));
+    }
+    else if (post.musclegroups) {
+      postExercises.push(post);
+      post.musclegroups.forEach(musclegroup =>
+        postMusclegroups.push(musclegroup)
+      );
+    }
+    postExercises.forEach(a =>
+      this.state.selectedFilters.includes(a.title) ? (match = match + 1) : ""
     );
-    alleMuskler.forEach(a =>
-      this.state.valgteMuskler.includes(a) ? (match = match + 1) : ""
+    postMusclegroups.forEach(a =>
+      this.state.selectedFilters.includes(a.name) ? (match = match + 1) : ""
     );
-    return match === this.state.valgteMuskler.length;
+    return match >= this.state.selectedFilters.length;
   };
 
   render() {
     if (this.state.loadingMusclegroups || this.state.loadingExercises || this.state.loadingWorkouts) {
       return (      <div>
-        <div className={styles.feedContainer}><Spinner /></div></div>)
+        <div className={styles.feedContainer}><SpinnerPost /></div></div>)
     }
     return (
       <div>
         <div className={styles.feedContainer}>
           <div className={styles.mainHeader}><h1>{this.props.user.username ? 'Hei, '+this.props.user.username+'!' : 'Velkommen!'}</h1></div>
+          <NewExercise reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewExercise}/>
+      <NewWorkout reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewWorkout}/>         
           <div className={styles.feed}>
-        <div className={styles.actionBar}>
-          </div>
-            {this.state.valgteMuskler.length === 0
+          {!this.props.hiddenWorkouts ?
+          (this.state.selectedFilters.length === 0
               ? this.state.workouts.slice(0, 2).map(post => (
                   <div onClick={() => this.props.singlePost(post)}>
                     <Post
@@ -87,7 +119,7 @@ class Feed extends React.Component {
                   </div>
                 ))
               : this.state.workouts.map(post =>
-                  this.checkChoosenmuskler(post) ? (
+                  this.checkSelectedFilters(post) ? (
                     <div onClick={() => this.props.singlePost(post)}>
                       <Post
                         user={post.user}
@@ -100,16 +132,17 @@ class Feed extends React.Component {
                   ) : (
                     ""
                   )
-                )}
+                )) : ''}
           </div>
         </div>
         <div className={styles.feedContainer}>
           <div className={styles.feed}>
-            {this.state.valgteMuskler.length === 0 && !this.state.loading ? (
+            {!this.state.loading ? (
               <div>
-                <div className={styles.cardContainer}>
+               {!this.props.hiddenExercises ? (<div className={styles.cardContainer}>
                   <div className={this.state.scroller !== 0 ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller !== 0 ? this.setState({scroller: this.state.scroller - 3}) : ''}>{"<"}</div>
                   {this.state.exercises.slice(this.state.scroller, this.state.scroller+3).map(post => (
+                    this.checkSelectedFilters(post) ?
                     <div onClick={() => this.props.singlePost(post)}>
                       <Card
                         url={post.url}
@@ -121,13 +154,13 @@ class Feed extends React.Component {
                         sets={post.sets}
                         reps={post.reps}
                       />
-                    </div>
+                    </div> : ''
                   ))}
                   <div className={ this.state.scroller+3 < this.state.exercises.length ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller+4 < this.state.exercises.length ? this.setState({scroller: this.state.scroller + 3}) : ''}>{">"}</div>
-                </div>
+                </div>) : ''}
                 <div className={styles.cardContainer}>
                 </div>
-                {this.state.workouts.slice(2).map(post => (
+               { this.state.selectedFilters.length === 0 && !this.props.hiddenWorkouts && this.state.workouts.slice(2).map(post => (
                   <div onClick={() => this.props.singlePost(post)}>
                     <Post
                       user={post.user}
@@ -144,6 +177,31 @@ class Feed extends React.Component {
             )}
           </div>
         </div>
+        <div className={styles.filterContainer}>
+      <input 
+      placeholder="Filtrer på muskelgrupper og øvelser"
+      name="Filter"
+      autocomplete="off"
+      value={this.state.filter.charAt(0).toUpperCase() + this.state.filter.slice(1)}
+      onChange={change => this.setState({ filter: change.target.value })}
+      className={this.filterFound() ? styles.filterEnabled : styles.filterDisabled}
+      onKeyPress={event =>
+                  event.key === "Enter" ? this.addFilter() : ""
+                }/>
+            <button
+                  disabled={!this.filterFound()}
+                  onClick={() => this.addFilter()}
+                  className={
+                    this.filterFound()
+                      ? styles.buttonFilter
+                      : styles.buttonFilterDisabled
+                  }
+                >
+                  Legg til
+                </button>
+      {this.state.selectedFilters.map(filter =>
+      <div className={styles.filterList} onClick={() => this.removeFilter(filter)} >{filter}</div>)}
+      </div>
       </div>
     );
   }

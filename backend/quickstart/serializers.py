@@ -107,8 +107,7 @@ class SimpleExerciseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Exercise
-        fields = ('id','date','title','content','reps','sets','relations','musclegroups')
-
+        fields = ('__all__')
 
 
 class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
@@ -118,7 +117,7 @@ class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Workout
-        fields = ('__all__')
+        fields = ('id','image','exercises','user','date','username','title','content','relations','duration')
 
     def create(self, data):
         workout = super().create(data)

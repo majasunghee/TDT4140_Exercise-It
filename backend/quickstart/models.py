@@ -35,8 +35,8 @@ class Post(models.Model):
     relations = models.CharField(max_length=60, null=True, blank=True)
 
 class Exercise(Post):
-    reps = models.IntegerField()
-    sets = models.IntegerField()
+    reps = models.IntegerField(null=True, blank=True)
+    sets = models.IntegerField(null=True, blank=True)
     musclegroups = models.ManyToManyField(Musclegroup, null=True, blank=True)
 
     def __str__(self):
