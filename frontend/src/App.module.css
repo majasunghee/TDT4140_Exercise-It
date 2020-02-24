@@ -170,12 +170,13 @@ a {
   padding-left: 10px;
   width: 350px;
   cursor: pointer;
-  color: #a700ff;
+  color: rgb(224, 108, 0);
   background-color: rgb(24, 24, 24);
 }
 
 .loginSetting:hover {
-  color: rgb(224, 108, 0);
+  color: #a700ff;
+  /*rgb(224, 108, 0);*/
 }
 
 .cardWrapper {
@@ -457,7 +458,7 @@ a {
 
 .inputSmall:hover,
 .input:hover {
-  border-bottom: 2px solid #ff6924;
+  border-bottom: 2px solid rgb(224, 108, 0);
 }
 
 .inputSmall {
@@ -485,7 +486,7 @@ a {
   border-bottom: 1px solid rgb(60, 60, 60);
   width: 460px;
   line-height: 2em;
-  color: rgb(223, 223, 223);
+  color: rgb(248, 248, 248);
   transition: 0.2s;
   font-family: "Work Sans", sans-serif;
   outline: none;
@@ -550,7 +551,7 @@ a {
   cursor: default;
   margin-top: 20px;
   font-family: "Work Sans", sans-serif;
-  outline:none;
+  outline: none;
 }
 
 .toggleFalse {
@@ -568,7 +569,7 @@ a {
 .buttonLoginDisabled,
 .buttonLogin {
   background-color: rgb(38, 38, 38);
-  color: #a200fa;
+  color: rgb(224, 108, 0);
   font-size: 1.1em;
   border-radius: 4px;
   padding: 20px;
@@ -579,7 +580,7 @@ a {
   cursor: pointer;
   width: 500px;
   font-family: "Work Sans", sans-serif;
-  outline:none;
+  outline: none;
 }
 
 .buttonFilter,
@@ -600,8 +601,6 @@ a {
 .buttonLogin:hover {
   padding-left: 26px;
 }
-
-
 
 .inputField {
   font-size: 1em;
@@ -749,7 +748,7 @@ a {
 
 .bannerPurple {
   background-color: #1976d2;
-  background: linear-gradient(70deg, rgb(134, 59, 204) 30%, #580092);
+  background: linear-gradient(70deg, rgb(219, 80, 0) 30%, #ff1e00);
   width: 100%;
   height: 900px;
   padding-left: 200px;
@@ -762,7 +761,7 @@ a {
 
 .bannerOrange {
   background-color: #1976d2;
-  background: linear-gradient(70deg, rgb(219, 80, 0) 30%, #ff1e00);
+  background: linear-gradient(70deg, rgb(134, 59, 204) 30%, #580092);
   color: rgb(228, 228, 228);
   font-weight: bold;
   width: 100%;
