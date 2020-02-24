@@ -11,7 +11,6 @@ const Card = props => {
         <strong>Øvelse</strong>
       </div>
       </div>
-     
     </div>
   );
 };

@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -12,7 +13,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import CustomUser, Musclegroup, Exercise, Workout, Post, Feedback
 from rest_framework import viewsets
 from .serializers import UserSerializer, MusclegroupSerializer, ExerciseSerializer, WorkoutSerializer, FeedbackSerializer
-
+from django.views import View
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -61,7 +62,7 @@ class ExerciseViewSet(viewsets.ModelViewSet):
 
     parser_classes = (MultiPartParser, FormParser)
 
-    queryset = Exercise.objects.all().order_by('date')
+    queryset = Exercise.objects.all().order_by('-id')
     serializer_class = ExerciseSerializer
 
 
@@ -70,9 +71,24 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     authentication_classes = ()
 
     parser_classes = (MultiPartParser, FormParser)
-    
-    queryset = Workout.objects.all().order_by('-date')
+
+    queryset = Workout.objects.all().order_by('-id')
     serializer_class = WorkoutSerializer
+
+
+class GetSingleWorkout(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
+    def post(self, request, *args, **kwargs):
+        post = Workout.objects.get(id=request.data['id'])
+        pusername = ''
+        prole = False
+        if (post.user):
+            pusername = post.user.username
+        if (post.user):
+            prole = post.user.role
+        return Response({'title': post.title, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole})
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):

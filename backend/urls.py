@@ -20,4 +20,5 @@ urlpatterns = [
     url('', include(router.urls)),
     url('admin/', admin.site.urls),
     url('login/', views.LoginView.as_view()),
+    url('workout', views.GetSingleWorkout.as_view())
 ]
