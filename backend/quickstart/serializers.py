@@ -110,7 +110,6 @@ class SimpleExerciseSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 
-
 class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
     image = Base64ImageField(max_length=None, use_url=True,)
     exercises = SimpleExerciseSerializer(many=True, read_only=True)
@@ -118,7 +117,7 @@ class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Workout
-        fields = ('__all__')
+        fields = ('id','image','exercises','user','date','username','title','content','relations','duration')
 
     def create(self, data):
         workout = super().create(data)

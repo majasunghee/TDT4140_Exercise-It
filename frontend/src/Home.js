@@ -3,6 +3,15 @@ import Settings from "./components/Settings/Settings";
 import Feed from "./components/Feed/Feed";
 import PostContainer from "./components/Post/PostContainer";
 
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+
+
 import styles from "./App.module.css";
 
 class Home extends React.Component {
@@ -10,7 +19,6 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      feed: true,
       post: {},
       newExercise: false,
       newWorkout: false,
@@ -20,7 +28,7 @@ class Home extends React.Component {
   }
 
   homeButton = () => {
-    this.setState({ feed: true, newExercise: false, newWorkout: false });
+    this.setState({ newExercise: false, newWorkout: false });
   };
 
   newExercise = () => {
@@ -41,7 +49,7 @@ class Home extends React.Component {
 
   render() {
     return (
-      <div className={this.state.light ? styles.lightMode : ""}>
+      <div>
         <Settings
           user={this.props.user}
           goHome={() => this.homeButton()}
@@ -71,7 +79,6 @@ class Home extends React.Component {
           hiddenWorkouts={this.state.hideWorkouts}
         />
         <div className={styles.container}>
-          {this.state.feed ? (
             <Feed
               defaultHome={() =>
                 this.setState({ newExercise: false, newWorkout: false })
@@ -82,17 +89,10 @@ class Home extends React.Component {
               hiddenExercises={this.state.hideExercises}
               hiddenWorkouts={this.state.hideWorkouts}
               singlePost={post => {
-                this.setState({ feed: false, post: post });
+                this.props.singlePost(post);
               }}
               token={this.props.token}
             />
-          ) : (
-            <PostContainer
-              user={this.props.user}
-              post={this.state.post}
-              token={this.props.token}
-            />
-          )}
         </div>
       </div>
     );

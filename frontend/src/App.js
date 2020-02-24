@@ -2,6 +2,7 @@ import React from "react";
 import Home from "./Home";
 import Login from "./components/Login/Login";
 import Info from "./components/Info/Info";
+import PostContainer from "./components/Post/PostContainer";
 
 import { getUser } from "./actions/user";
 
@@ -16,7 +17,10 @@ const defaultState = {
   user: {},
   token: "",
   login: false,
-  info: false
+  info: false,
+  feed: true,
+  post: {},
+  postUrl: window.location.href.split("posts/")[1] ? window.location.href.split("posts/")[1].toString() : ''
 };
 
 let authenticatedUser = {};
@@ -85,6 +89,7 @@ class App extends React.Component {
                 onLogin={() => this.goToLogin()}
                 onInfo={() => this.goToInfo()}
                 state={this.state}
+                singlePost={post => this.setState({ feed: false, post: post})}
               />
             </Route>
             <Route exact path="/info">
@@ -95,15 +100,26 @@ class App extends React.Component {
                 homeButton={() => this.setState({ info: false })}
               />
             </Route>
-          </Switch>
+            <Route path="/posts">
+              <PostContainer
+              user={this.state.user}
+              token={this.state.token}
+              onLogin={() => this.goToLogin()}
+              onInfo={() => this.goToInfo()}
+              setRoute={() => this.setState({feed: false})}
+              homeButton={() => this.setState({feed: true})}
+              />
+              </Route> 
+           </Switch>
         </div>
         {this.state.login ? (
           <Redirect to="/login" />
         ) : this.state.info ? (
           <Redirect to="/info" />
-        ) : (
-          <Redirect to="/" />
-        )}
+        ) : this.state.feed ? (
+          <Redirect to="/" /> ) : <Redirect to={"/posts/" + ( this.state.postUrl
+          ? this.state.postUrl : this.state.post.id )} />
+        }
       </Router>
     );
   }

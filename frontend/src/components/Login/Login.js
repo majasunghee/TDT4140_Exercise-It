@@ -50,15 +50,15 @@ class Login extends React.Component {
   authenticateUser() {
     this.setState({ loading: true });
     if (this.state.register) {
-      registerUser(this.getUserFields()).then(res =>
+      registerUser(this.getUserFields()).then(res => res ?
         loginUser(this.getUserFields())
           .then(data => this.props.onAuth(data))
-          .then(() => this.setState({ error: true }))
+          .then(() => this.setState({ error: true })) : this.setState({ error: true, loading: false })
       );
     } else {
       loginUser(this.getUserFields())
         .then(data => this.props.onAuth(data))
-        .then(() => this.setState({ error: true }));
+        .then(res => !res && this.setState({ error: true, loading: false }));
     }
   }
 
@@ -200,12 +200,13 @@ class Login extends React.Component {
                 >
                   Hopp over
                 </button>
-              </div>
-              {this.state.error ? (
-                <div className={styles.error}>Noe gikk galt..</div>
+                {this.state.error ? (
+                  this.state.register ? <div className={styles.error}>Ugyldig brukerinfo..</div> :
+                <div className={styles.error}>Feil navn eller passord..</div>
               ) : (
                 ""
               )}
+              </div>
             </div>
           )}
         </div>

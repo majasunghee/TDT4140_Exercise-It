@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -12,7 +13,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import CustomUser, Musclegroup, Exercise, Workout, Post, Feedback
 from rest_framework import viewsets
 from .serializers import UserSerializer, MusclegroupSerializer, ExerciseSerializer, WorkoutSerializer, FeedbackSerializer
-
+from django.views import View
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -73,6 +74,15 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 
     queryset = Workout.objects.all().order_by('-id')
     serializer_class = WorkoutSerializer
+
+
+class GetSingleWorkout(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
+    def post(self, request, *args, **kwargs):
+        post = Workout.objects.get(id=request.data['id'])
+        return Response({'title': post.title, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': post.username, 'userrole': post.user.role})
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):

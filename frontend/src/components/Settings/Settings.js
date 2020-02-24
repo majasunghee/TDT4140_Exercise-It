@@ -7,6 +7,11 @@ const Settings = props => {
     <div className={styles.settings}>
       <div onClick={() => props.goHome()}>
         <div className={styles.logo}>Exercise-It!</div>
+
+      <input className={styles.inputSetting}
+      placeholder="Muskelgrupper"/>
+      <input className={styles.inputSetting}
+      placeholder="Øvelse"/>
       </div>
       {/* <div className={styles.filter}>
         <h3><strong>Sorter postene:</strong></h3>

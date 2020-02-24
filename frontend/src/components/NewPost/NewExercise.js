@@ -31,7 +31,7 @@ export default class NewExercise extends React.Component {
       formdata.append("image", this.state.image, this.state.image.name);
       formdata.append("relations", this.state.musclegroups);
       formdata.append("username", this.props.user.username ? this.props.user.username : '')
-
+      console.log(formdata)
       var parameters = {
         method: "POST",
         body: formdata,
