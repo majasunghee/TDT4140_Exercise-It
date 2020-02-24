@@ -10,10 +10,10 @@ class MusclegroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'latin')
 
 class ExerciseAdmin(admin.ModelAdmin):
-    list_display = ('date', 'user', 'title', 'image', 'content', 'reps', 'sets')
+    list_display = ('title', 'user', 'date', 'image', 'content', 'reps', 'sets')
 
 class WorkoutAdmin(admin.ModelAdmin):
-    list_display = ('date', 'user', 'title', 'image', 'content', 'duration')
+    list_display = ('title', 'user', 'date', 'image', 'content', 'duration')
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Musclegroup, MusclegroupAdmin)
