@@ -1,7 +1,5 @@
 import React from "react";
 import Settings from "../Settings/Settings";
-import Feed from "../Feed/Feed";
-import PostContainer from "../Post/PostContainer";
 
 import styles from "../../App.module.css";
 

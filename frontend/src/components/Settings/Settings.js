@@ -7,60 +7,7 @@ const Settings = props => {
     <div className={styles.settings}>
       <div onClick={() => props.goHome()}>
         <div className={styles.logo}>Exercise-It!</div>
-
-      <input className={styles.inputSetting}
-      placeholder="Muskelgrupper"/>
-      <input className={styles.inputSetting}
-      placeholder="Øvelse"/>
       </div>
-      {/* <div className={styles.filter}>
-        <h3><strong>Sorter postene:</strong></h3>
-            <br />
-            {this.state.musclegroups.map(tag => (
-              <div
-                onClick={() =>
-                  this.state.valgteMuskler.includes(tag)
-                    ? this.setState({
-                        valgteMuskler: this.state.valgteMuskler.filter(
-                          a => a !== tag
-                        )
-                      })
-                    : this.setState(prev => ({
-                        valgteMuskler: [...prev.valgteMuskler, tag]
-                      }))
-                }
-                className={
-                  this.state.valgteMuskler.includes(tag)
-                    ? styles.choosenLink
-                    : styles.filterLink
-                }
-              >
-                {tag.name}
-              </div>
-            ))}
-            {!this.state.loading ? (this.state.exercises.map(øvelse => (
-              <div
-                onClick={() =>
-                  this.state.valgteØvelser.includes(øvelse.title)
-                    ? this.setState({
-                        valgteØvelser: this.state.valgteØvelser.filter(
-                          a => a !== øvelse.title
-                        )
-                      })
-                    : this.setState(prev => ({
-                        valgteØvelser: [...prev.valgteØvelser, øvelse.title]
-                      }))
-                }
-                className={
-                  this.state.valgteØvelser.includes(øvelse.title)
-                    ? styles.choosenLink
-                    : styles.filterLink
-                }
-              >
-                {øvelse.title}
-              </div>
-            ))) : ''}
-          </div> */}
       <div className={styles.buttonRow}>
         {!props.showInfo ? (
           <div>
@@ -109,7 +56,7 @@ const Settings = props => {
         ) : (
           <div
             onClick={() => props.info()}
-            className={props.showInfo ? styles.settingActive : styles.setting}
+            className={window.location.href.indexOf("info") > -1 ? styles.settingActive : styles.setting}
           >
             Informasjon
           </div>

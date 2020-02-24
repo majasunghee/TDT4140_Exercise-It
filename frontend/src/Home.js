@@ -1,16 +1,6 @@
 import React from "react";
 import Settings from "./components/Settings/Settings";
 import Feed from "./components/Feed/Feed";
-import PostContainer from "./components/Post/PostContainer";
-
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
-
 
 import styles from "./App.module.css";
 
