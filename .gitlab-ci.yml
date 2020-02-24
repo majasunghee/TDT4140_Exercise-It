@@ -1,1 +1,28 @@
-#comment in yml
+#A.) Build
+#     i. Install NPM Dependencies
+#     ii. Run ES-Linter
+#     iii. Run Code-Minifier
+#B.) Test
+#     i. Run unit, functional and end-to-end test.
+#     ii. Run pkg to compile Node.js application
+#C.) Deploy
+#     i. Production
+#        1.) Launch EC2 instance on AWS
+#     ii. Staging
+#        1.) Launch on local development server
+
+image: node:10.5.0
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - npm install
+
+build-project: 
+ stage: build
+ script: 
+  #TODO
+
