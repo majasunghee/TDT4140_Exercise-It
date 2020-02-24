@@ -190,24 +190,24 @@ a {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: brightness(92%);
 }
 
 .cardWrapper:hover {
-  margin-top: 52px;
-  filter: brightness(100%);
+  margin-top: 50px;
   box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
   cursor: pointer;
 }
 
 .cardContainer {
-  width: 960px;
+  width: 1000px;
   display: flex;
   justify-content: space-between;
   transition: 0.2s;
-  margin-bottom: 40px;
+  margin-bottom: 80px;
   margin-top: 15px;
-  margin-left: -40px;
+  margin-left: -89px;
+  margin-right: -89px;
+  padding-left: 35px;
 }
 
 .cardWrapper > .title {
@@ -241,7 +241,6 @@ a {
 .postWrapperSpinner {
   padding-top: 24px;
   margin-top: 134px;
-  margin-left: -28px;
 }
 
 .postWrapperSpinner:hover,
@@ -498,7 +497,7 @@ a {
 
 .filterList {
   margin-top: 15px;
-  margin-left: 15px;
+  margin-left: 10px;
   margin-right: 10px;
   color: rgb(145, 145, 145);
   transition: 0.2s;
