@@ -5,7 +5,6 @@ import professional from "../../icons/professional.png"
 import amateur from "../../icons/amateur.png"
 
 const Post = props => {
-  console.log(props.image)
   return (
     <div className={styles.postWrapper}>
            <img

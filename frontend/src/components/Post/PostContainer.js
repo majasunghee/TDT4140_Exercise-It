@@ -40,6 +40,7 @@ class PostContainer extends React.Component {
   return (
     <div>
         <Settings
+          showInfo
           user={this.props.user}
           goHome={() => this.props.homeButton()}
           login={() => this.props.onLogin()}
@@ -91,6 +92,7 @@ class PostContainer extends React.Component {
         </div>
         <div className={styles.description}>{postData.date}</div>
         <img
+          alt="Bilde"
           className={styles.singlePostImage}
           src={
              (postData.image).toString().split("public")[1] 

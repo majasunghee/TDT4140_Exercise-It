@@ -82,7 +82,13 @@ class GetSingleWorkout(APIView):
 
     def post(self, request, *args, **kwargs):
         post = Workout.objects.get(id=request.data['id'])
-        return Response({'title': post.title, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': post.username, 'userrole': post.user.role})
+        pusername = ''
+        prole = False
+        if (post.user):
+            pusername = post.user.username
+        if (post.user):
+            prole = post.user.role
+        return Response({'title': post.title, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole})
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):

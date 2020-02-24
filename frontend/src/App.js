@@ -20,7 +20,7 @@ const defaultState = {
   info: false,
   feed: true,
   post: {},
-  postUrl: window.location.href.split("posts/")[1] ? window.location.href.split("posts/")[1].toString() : ''
+  postUrl: ''
 };
 
 let authenticatedUser = {};
@@ -47,6 +47,11 @@ class App extends React.Component {
     }
   };
 
+  getSinglePostUrl = () => {
+    this.setState({postUrl: window.location.href.split("posts/")[1] ? window.location.href.split("posts/")[1].toString() : ''})
+    this.setState({feed: false})
+  }
+
   goToLogin = () => {
     localStorage.removeItem("token");
     this.setState(defaultState);
@@ -65,7 +70,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <Router >
         <link
           href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
           rel="stylesheet"
@@ -106,7 +111,7 @@ class App extends React.Component {
               token={this.state.token}
               onLogin={() => this.goToLogin()}
               onInfo={() => this.goToInfo()}
-              setRoute={() => this.setState({feed: false})}
+              setRoute={() => this.getSinglePostUrl()}
               homeButton={() => this.setState({feed: true})}
               />
               </Route> 
@@ -117,8 +122,8 @@ class App extends React.Component {
         ) : this.state.info ? (
           <Redirect to="/info" />
         ) : this.state.feed ? (
-          <Redirect to="/" /> ) : <Redirect to={"/posts/" + ( this.state.postUrl
-          ? this.state.postUrl : this.state.post.id )} />
+          <Redirect to="/" /> ) : <Redirect to={"/posts/" + ( this.state.post.id
+          ? this.state.post.id : this.state.postUrl)} />
         }
       </Router>
     );
