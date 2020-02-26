@@ -21,6 +21,10 @@
   margin-bottom: -10px;
 }
 
+.infoHeader {
+  flex-direction: column;
+}
+
 .loginHeader {
   font-size: 80px;
   font-family: "Work Sans", sans-serif;
