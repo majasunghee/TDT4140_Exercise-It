@@ -1,3 +1,7 @@
+:root {
+  --mainColor: rgb(241, 96, 0);
+}
+
 .container {
   margin-left: 360px;
   width: auto;
@@ -51,7 +55,7 @@ a {
 }
 
 .logo {
-  background-image: linear-gradient(140deg, rgb(241, 96, 0), #510083);
+  background-image: linear-gradient(140deg, var(--mainColor), #510083);
   height: 60px;
   width: 320px;
   font-size: 2.5em;
@@ -67,7 +71,7 @@ a {
 }
 
 .logo:hover {
-  background-image: linear-gradient(120deg, rgb(241, 96, 0), #510083);
+  background-image: linear-gradient(120deg, var(--mainColor), #510083);
   cursor: pointer;
 }
 
@@ -549,7 +553,7 @@ a {
   cursor: default;
   margin-top: 20px;
   font-family: "Work Sans", sans-serif;
-  outline:none;
+  outline: none;
 }
 
 .toggleFalse {
@@ -578,7 +582,7 @@ a {
   cursor: pointer;
   width: 500px;
   font-family: "Work Sans", sans-serif;
-  outline:none;
+  outline: none;
 }
 
 .buttonFilter,
@@ -599,8 +603,6 @@ a {
 .buttonLogin:hover {
   padding-left: 26px;
 }
-
-
 
 .inputField {
   font-size: 1em;
