@@ -3,4 +3,4 @@ demo_job_1:
   script: 
     - "echo Hello World"
   tags: 
-    - tag1
+    - ci
