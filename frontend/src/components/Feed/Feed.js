@@ -30,18 +30,18 @@ class Feed extends React.Component {
   componentDidMount() {
     this.buildFeed();
   }
-  
+
   buildFeed() {
     this.props.defaultHome();
     getMusclegroups()
-    .then(data => this.setState({musclegroups : data}))
-    .then(() => this.setState({loadingMusclegroups : false}));
+      .then(data => this.setState({ musclegroups: data }))
+      .then(() => this.setState({ loadingMusclegroups: false }));
     getLatestExercises()
-    .then(data => this.setState({exercises : data}))
-    .then(() => this.setState({loadingExercises : false}));
+      .then(data => this.setState({ exercises: data }))
+      .then(() => this.setState({ loadingExercises: false }));
     getLatestWorkouts()
-    .then(data => this.setState({workouts : data}))
-    .then(() => this.setState({loadingWorkouts : false}));
+      .then(data => this.setState({ workouts: data }))
+      .then(() => this.setState({ loadingWorkouts: false }));
   }
 
   filterFound = () => {
