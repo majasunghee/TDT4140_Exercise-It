@@ -187,6 +187,7 @@ class Feed extends React.Component {
             )}
           </div>
         </div>
+        <div className={styles.footer}> Hei </div>
         <div className={styles.filterContainer}>
       <input 
       placeholder="Filtrer på muskelgrupper og øvelser"
