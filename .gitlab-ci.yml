@@ -1,6 +1,11 @@
 --- 
-demo_job_1: 
+code-quality: 
   script: 
-    - "echo Hello World"
+    - "echo code quality check"
+  tags: 
+    - ci
+testing: 
+  script: 
+    - "echo Running tests"
   tags: 
     - ci
