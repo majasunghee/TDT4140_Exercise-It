@@ -97,8 +97,8 @@ class Feed extends React.Component {
       <div>
         <div className={styles.feedContainer}>
           <div className={styles.mainHeader}><h1>{this.props.user.username ? 'Hei, '+this.props.user.username+'!' : 'Velkommen!'}</h1></div>
-          <NewExercise reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewExercise}/>
-          <NewWorkout reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewWorkout}/>         
+          <NewExercise musclegroups={this.state.musclegroups} reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewExercise}/>
+          <NewWorkout exercises={this.state.exercises} reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewWorkout}/>         
           <div className={styles.feed}>
           {!this.props.hiddenWorkouts ?
           (this.state.selectedFilters.length === 0

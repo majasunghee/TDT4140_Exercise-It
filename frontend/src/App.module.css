@@ -428,6 +428,11 @@ a {
   filter: brightness(92%);
 }
 
+.row {
+  display: flex;
+  margin-left: -15px;
+}
+
 .triggerPost {
   cursor: pointer;
   text-align: center;
@@ -441,6 +446,7 @@ a {
   box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
 }
 
+.inputDisabled,
 .inputSmall,
 .input {
   background-color: transparent;
@@ -452,6 +458,11 @@ a {
   margin-right: 20px;
   line-height: 2.2em;
   transition: 0.2s;
+  outline: none;
+}
+
+.inputDisabled {
+  color: gray;
 }
 
 .inputSmall:hover,
@@ -495,14 +506,21 @@ a {
   width: 320px;
 }
 
+.filterListPost,
 .filterList {
   margin-top: 15px;
-  margin-left: 10px;
+  margin-left: 15px;
   margin-right: 10px;
   color: rgb(145, 145, 145);
   transition: 0.2s;
 }
 
+.filterListPost {
+  color: #ff531e;
+  font-size: 0.9em;
+}
+
+.filterListPost:hover,
 .filterList:hover {
   color: rgb(90, 90, 90);
   cursor: pointer;
@@ -613,6 +631,7 @@ a {
   padding: 15px;
   background-color: rgb(240, 240, 240);
   transition: 0.2s;
+  outline: none;
 }
 
 .inputField:hover {
