@@ -20,7 +20,8 @@ const defaultState = {
   info: false,
   feed: true,
   post: {},
-  postUrl: ''
+  postUrl: '',
+  type: ''
 };
 
 let authenticatedUser = {};
@@ -48,7 +49,9 @@ class App extends React.Component {
   };
 
   getSinglePostUrl = () => {
-    this.setState({postUrl: window.location.href.split("posts/")[1] ? window.location.href.split("posts/")[1].toString() : ''})
+    this.setState({postUrl: (window.location.href.split("?")[0].split("posts/")[1])
+     ? (window.location.href.split("?")[0].split("posts/")[1]).toString() : '',
+     type: window.location.href.split("?type=")[1] ? window.location.href.split("?type=")[1] : ''})
     this.setState({feed: false})
   }
 
@@ -94,7 +97,7 @@ class App extends React.Component {
                 onLogin={() => this.goToLogin()}
                 onInfo={() => this.goToInfo()}
                 state={this.state}
-                singlePost={post => this.setState({ feed: false, post: post})}
+                singlePost={(post, type) => this.setState({ feed: false, post: post, type: type })}
               />
             </Route>
             <Route exact path="/info">
@@ -122,8 +125,7 @@ class App extends React.Component {
         ) : this.state.info ? (
           <Redirect to="/info" />
         ) : this.state.feed ? (
-          <Redirect to="/" /> ) : <Redirect to={"/posts/" + ( this.state.post.id
-          ? this.state.post.id : this.state.postUrl)} />
+          <Redirect to="/" /> ) : <Redirect to={"/posts/" + (this.state.post.id ? this.state.post.id : this.state.postUrl) + `?type=${this.state.type}`} />
         }
       </Router>
     );

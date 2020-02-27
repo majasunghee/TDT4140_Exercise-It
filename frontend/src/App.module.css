@@ -1,3 +1,8 @@
+:root {
+  --mainColor: #f16000;
+  --secondColor: #6700a7;
+}
+
 .container {
   margin-left: 360px;
   width: auto;
@@ -7,7 +12,6 @@
   padding-bottom: 100px;
   padding-top: 20px;
   min-height: 96vh;
-  transition: 0.5s;
 }
 
 .feed {
@@ -19,6 +23,10 @@
   color: #5d5d5d;
   cursor: default;
   margin-bottom: -10px;
+}
+
+.infoHeader {
+  flex-direction: column;
 }
 
 .loginHeader {
@@ -40,7 +48,7 @@
 }
 
 .mainHeader:hover {
-  background: -webkit-linear-gradient(30deg, #5d5d5d, #6700a7 50%);
+  background: -webkit-linear-gradient(30deg, #5d5d5d, var(--secondColor) 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -51,7 +59,11 @@ a {
 }
 
 .logo {
-  background-image: linear-gradient(140deg, rgb(241, 96, 0), #510083);
+  background-image: linear-gradient(
+    140deg,
+    var(--mainColor),
+    var(--secondColor)
+  );
   height: 60px;
   width: 320px;
   font-size: 2.5em;
@@ -67,7 +79,11 @@ a {
 }
 
 .logo:hover {
-  background-image: linear-gradient(120deg, rgb(241, 96, 0), #510083);
+  background-image: linear-gradient(
+    120deg,
+    var(--mainColor),
+    var(--secondColor)
+  );
   cursor: pointer;
 }
 
@@ -98,6 +114,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .icon {
   height: 50px;
   max-width: 50px;
@@ -128,7 +145,7 @@ a {
 .arrow:hover {
   font-size: 76px;
   margin-top: 242px;
-  color: #ff6924;
+  color: var(--mainColor);
   margin-left: -8px;
   margin-right: -8px;
   padding-left: 4px;
@@ -175,7 +192,7 @@ a {
 }
 
 .loginSetting:hover {
-  color: rgb(224, 108, 0);
+  color: var(--mainColor);
 }
 
 .cardWrapper {
@@ -433,6 +450,7 @@ a {
   margin-left: -15px;
 }
 
+
 .triggerPost {
   cursor: pointer;
   text-align: center;
@@ -448,12 +466,13 @@ a {
 
 .inputDisabled,
 .inputSmall,
-.input {
+.input,
+.inputSmallDisabled {
   background-color: transparent;
   border: 0;
   font-size: 1em;
   border-bottom: 2px solid #acacaca9;
-  width: 520px;
+  width: 430px;
   margin-top: 15px;
   margin-right: 20px;
   line-height: 2.2em;
@@ -461,17 +480,20 @@ a {
   outline: none;
 }
 
-.inputDisabled {
+.inputDisabled,
+.inputSmallDisabled {
   color: gray;
 }
 
 .inputSmall:hover,
 .input:hover {
-  border-bottom: 2px solid #ff6924;
+  border-bottom: 2px solid var(--mainColor);
 }
 
+.inputSmallDisabled,
 .inputSmall {
-  width: 130px;
+  width: 140px;
+  text-align: center;
 }
 
 .inputImage {
@@ -495,7 +517,7 @@ a {
   border-bottom: 1px solid rgb(60, 60, 60);
   width: 460px;
   line-height: 2em;
-  color: rgb(223, 223, 223);
+  color: rgb(248, 248, 248);
   transition: 0.2s;
   font-family: "Work Sans", sans-serif;
   outline: none;
@@ -549,7 +571,7 @@ a {
 .inputLogin:hover {
   padding-left: 26px;
   width: 454px;
-  color: rgb(224, 108, 0);
+  color: var(--mainColor);
   background-color: rgb(24, 24, 24);
 }
 
@@ -567,7 +589,7 @@ a {
   cursor: default;
   margin-top: 20px;
   font-family: "Work Sans", sans-serif;
-  outline:none;
+  outline: none;
 }
 
 .toggleFalse {
@@ -584,8 +606,8 @@ a {
 .buttonFilterDisabled,
 .buttonLoginDisabled,
 .buttonLogin {
-  background-color: rgb(38, 38, 38);
-  color: #a200fa;
+  background-color: rgb(32, 32, 32);
+  color: var(--mainColor);
   font-size: 1.1em;
   border-radius: 4px;
   padding: 20px;
@@ -596,7 +618,7 @@ a {
   cursor: pointer;
   width: 500px;
   font-family: "Work Sans", sans-serif;
-  outline:none;
+  outline: none;
 }
 
 .buttonFilter,
@@ -618,8 +640,6 @@ a {
   padding-left: 26px;
 }
 
-
-
 .inputField {
   font-size: 1em;
   border: 1.5px solid #acacaca9;
@@ -635,7 +655,7 @@ a {
 }
 
 .inputField:hover {
-  border: 1.5px solid #ff6924;
+  border: 1.5px solid var(--mainColor);
 }
 
 .form {
@@ -649,14 +669,16 @@ a {
   background-color: rgb(63, 63, 63);
   color: white;
   font-size: 1.1em;
-  border-radius: 12px;
+  border-radius: 8px;
   height: 42px;
-  padding: 40px;
+  padding: 30px;
   padding-top: 10px;
   border: 0;
   padding-bottom: 10px;
   transition: 0.5s;
   cursor: pointer;
+  width: 180px;
+  margin-right: 20px;
 }
 
 .buttonDisabled {
@@ -664,7 +686,11 @@ a {
 }
 
 .button:hover {
-  background-image: linear-gradient(140deg, rgb(63, 63, 63), #5c0095);
+  background-image: linear-gradient(
+    140deg,
+    rgb(63, 63, 63),
+    var(--secondColor)
+  );
 }
 
 .link {
@@ -683,27 +709,6 @@ a {
   color: rgb(243, 243, 243);
 }
 
-.choosenLink,
-.filterLink {
-  margin-top: 4px;
-  padding-bottom: 3px;
-  width: 150px;
-}
-
-.choosenLink {
-  font-weight: bold;
-  transition: 0.1s;
-}
-
-.choosenLink,
-.filterLink:hover {
-  border-bottom: 2px solid rgb(255, 60, 0);
-  cursor: pointer;
-  width: 110px;
-  margin-right: 40px;
-  padding-bottom: 1px;
-}
-
 .error {
   margin: 25px;
   margin-top: -45px;
@@ -712,13 +717,9 @@ a {
   font-style: italic;
 }
 
-.filterLink:hover > strong {
-  color: rgba(0, 0, 0, 0.4);
-}
-
 .loginWrapper {
   display: flex;
-  background-color: rgb(228, 228, 228);
+  background-color: rgb(255, 255, 255);
 }
 
 .loginLogoActivated,
@@ -747,7 +748,7 @@ a {
   position: absolute;
   top: 0;
   right: 0;
-  background-color: rgb(22, 22, 22);
+  background-color: rgb(38, 38, 38);
   text-align: center;
 }
 
@@ -767,12 +768,12 @@ a {
 
 .bannerPurple {
   background-color: #1976d2;
-  background: linear-gradient(70deg, rgb(134, 59, 204) 30%, #580092);
+  background: linear-gradient(70deg, var(--mainColor) 30%, var(--secondColor));
   width: 100%;
   height: 900px;
   padding-left: 200px;
   padding-top: 50px;
-  color: #fff;
+  color: rgb(255, 255, 255);
   font-size: 32px;
   line-height: 58px;
   cursor: default;
@@ -780,7 +781,7 @@ a {
 
 .bannerOrange {
   background-color: #1976d2;
-  background: linear-gradient(70deg, rgb(219, 80, 0) 30%, #ff1e00);
+  background: linear-gradient(70deg, var(--secondColor) 30%, #ff1e00);
   color: rgb(228, 228, 228);
   font-weight: bold;
   width: 100%;

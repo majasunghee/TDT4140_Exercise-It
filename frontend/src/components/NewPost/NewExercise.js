@@ -33,7 +33,7 @@ export default class NewExercise extends React.Component {
       formdata.append("image", this.state.image, this.state.image.name);
       formdata.append("relations", this.state.musclegroupsId);
       formdata.append("username", this.props.user.username ? this.props.user.username : '')
-      console.log(formdata)
+
       var parameters = {
         method: "POST",
         body: formdata,
@@ -94,7 +94,6 @@ export default class NewExercise extends React.Component {
   }
 
   render() {
-    console.log(this.state.musclegroupsId)
     if ( !this.props.isCreating ) { return <div></div>}
     return (
             <div className={styles.postWrapperPublish}>
@@ -154,18 +153,27 @@ export default class NewExercise extends React.Component {
             <input
             name="addMusclegroup"
             className={this.filterFound() ? styles.input : styles.inputDisabled}
-            placeholder="Legg til muskelgruppe"
-            value={this.state.addMusclegroup.charAt(0).toUpperCase() + this.state.addMusclegroup.slice(1)}
+            placeholder="Velg muskelgrupper"
+            value={this.state.addMusclegroup.charAt(0).toUpperCase() + 
+              this.state.addMusclegroup.slice(1)}
             onChange={this.onChange}
             onKeyPress={event =>
               event.key === "Enter" ? this.addFilter() : ""} />
+               <button
+          className={
+            this.filterFound() ? styles.button : styles.buttonDisabled
+          }
+          onClick={() => this.addFilter()}
+        >
+          + Legg til
+        </button>
           <button
           className={
             this.checkValidPost() ? styles.button : styles.buttonDisabled
           }
           onClick={() => this.post()}
         >
-          + Publiser
+          Publiser
         </button></div>
         <div className={styles.row}>
         {this.state.musclegroups.map(musclegroup =>

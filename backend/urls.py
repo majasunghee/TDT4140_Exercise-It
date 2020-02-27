@@ -11,7 +11,6 @@ router.register('musclegroups', views.MusclegroupViewSet)
 router.register('exercises', views.ExerciseViewSet)
 router.register('workouts', views.WorkoutViewSet)
 router.register('feedback', views.FeedbackViewSet)
-router.register('feed', views.FeedViewSet)
 router.register('auth', views.GetMeView, basename='CustomUser')
 
 # Wire up our API using automatic URL routing.
@@ -20,5 +19,6 @@ urlpatterns = [
     url('', include(router.urls)),
     url('admin/', admin.site.urls),
     url('login/', views.LoginView.as_view()),
-    url('workout', views.GetSingleWorkout.as_view())
+    url('exercise/', views.GetSingleExercise.as_view()),
+    url('workout/', views.GetSingleWorkout.as_view())
 ]

@@ -6,9 +6,8 @@ import NewWorkout from "../NewPost/NewWorkout"
 import SpinnerPost from "../Spinner/SpinnerPost";
 import styles from "../../App.module.css";
 
-import { getLatestExercises } from "../../actions/exercises";
+import { getLatestExercises, getLatestWorkouts } from "../../actions/posts";
 import { getMusclegroups } from "../../actions/musclegroups";
-import { getLatestWorkouts } from "../../actions/workouts";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -30,18 +29,18 @@ class Feed extends React.Component {
   componentDidMount() {
     this.buildFeed();
   }
-  
+
   buildFeed() {
     this.props.defaultHome();
     getMusclegroups()
-    .then(data => this.setState({musclegroups : data}))
-    .then(() => this.setState({loadingMusclegroups : false}));
+      .then(data => this.setState({ musclegroups: data }))
+      .then(() => this.setState({ loadingMusclegroups: false }));
     getLatestExercises()
-    .then(data => this.setState({exercises : data}))
-    .then(() => this.setState({loadingExercises : false}));
+      .then(data => this.setState({ exercises: data }))
+      .then(() => this.setState({ loadingExercises: false }));
     getLatestWorkouts()
-    .then(data => this.setState({workouts : data}))
-    .then(() => this.setState({loadingWorkouts : false}));
+      .then(data => this.setState({ workouts: data }))
+      .then(() => this.setState({ loadingWorkouts: false }));
   }
 
   filterFound = () => {
@@ -103,7 +102,7 @@ class Feed extends React.Component {
           {!this.props.hiddenWorkouts ?
           (this.state.selectedFilters.length === 0
               ? this.state.workouts.slice(0, 2).map(post => (
-                  <div onClick={() => this.props.singlePost(post)}>
+                  <div onClick={() => this.props.singlePost(post, 'workout')}>
                     <Post
                       user={post.user}
                       date={post.date}
@@ -115,7 +114,7 @@ class Feed extends React.Component {
                 ))
               : this.state.workouts.map(post =>
                   this.checkSelectedFilters(post) ? (
-                    <div onClick={() => this.props.singlePost(post)}>
+                    <div onClick={() => this.props.singlePost(post, 'workout')}>
                       <Post
                         user={post.user}
                         date={post.date}
@@ -139,7 +138,7 @@ class Feed extends React.Component {
                <div className={styles.cardContainer}>
                   <div className={this.state.scroller !== 0 ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller !== 0 ? this.setState({scroller: this.state.scroller - 3}) : ''}>{"<"}</div>
                   {this.state.exercises.slice(this.state.scroller, this.state.scroller+3).map(post => (
-                    <div onClick={() => this.props.singlePost(post)}>
+                    <div onClick={() => this.props.singlePost(post, 'exercise')}>
                       <Card
                         url={post.url}
                         user={post.user}
@@ -155,7 +154,7 @@ class Feed extends React.Component {
              </div>) : 
                   this.state.exercises.map(post => (
                     this.checkSelectedFilters(post) ?
-                    <div onClick={() => this.props.singlePost(post)}>
+                    <div onClick={() => this.props.singlePost(post, 'exercise')}>
                       <Post
                         url={post.url}
                         user={post.user}
@@ -171,7 +170,7 @@ class Feed extends React.Component {
                   )
                 ) : ''}
                { this.state.selectedFilters.length === 0 && !this.props.hiddenWorkouts && this.state.workouts.slice(2).map(post => (
-                  <div onClick={() => this.props.singlePost(post)}>
+                  <div onClick={() => this.props.singlePost(post, 'workout')}>
                     <Post
                       user={post.user}
                       date={post.date}
