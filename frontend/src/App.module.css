@@ -450,7 +450,6 @@ a {
   margin-left: -15px;
 }
 
-
 .triggerPost {
   cursor: pointer;
   text-align: center;
@@ -472,7 +471,7 @@ a {
   border: 0;
   font-size: 1em;
   border-bottom: 2px solid #acacaca9;
-  width: 430px;
+  width: 420px;
   margin-top: 15px;
   margin-right: 20px;
   line-height: 2.2em;
