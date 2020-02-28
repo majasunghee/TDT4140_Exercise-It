@@ -82,6 +82,7 @@ class Home extends React.Component {
               this.props.singlePost(post, workout);
             }}
             token={this.props.token}
+            deleted={this.state.deleted}
           />
         </div>
       </div>

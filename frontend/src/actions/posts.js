@@ -1,6 +1,6 @@
 export const getSingleExercise = async id => {
   const idData = new FormData();
-  idData.append('id', id);
+  idData.append("id", id);
 
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
@@ -9,7 +9,7 @@ export const getSingleExercise = async id => {
     method: "POST",
     body: idData,
     redirect: "follow"
-  }
+  };
 
   const response = await fetch("http://localhost:8000/exercise/", parameters);
   const data = await response.json();
@@ -33,26 +33,41 @@ export const getLatestExercises = async () => {
   return data;
 };
 
-export const updateExercise = async newdata => {
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
+export const updateExercise = async (id, content) => {
+  const newdata = new FormData();
+  newdata.append("content", content);
 
   var parameters = {
-    method: "PUT",
-    headers: headers,
+    method: "PATCH",
     redirect: "follow",
-    body: JSON.stringify(newdata)
+    body: newdata
   };
 
-  const response = await fetch("http://localhost:8000/exercises/", parameters);
+  const response = await fetch(
+    "http://localhost:8000/exercises/" + id + "/",
+    parameters
+  );
   const data = await response.json();
   console.log("updating existing exercise..");
   return data;
 };
 
+export const deleteExercise = async id => {
+  var parameters = {
+    method: "DELETE",
+    redirect: "follow"
+  };
+
+  const response = await fetch(
+    "http://localhost:8000/exercises/" + id + "/",
+    parameters
+  );
+  console.log("deleting exercise..");
+};
+
 export const getSingleWorkout = async id => {
   const idData = new FormData();
-  idData.append('id', id);
+  idData.append("id", id);
 
   const headers = new Headers();
   headers.append("Content-Type", "application/json");
@@ -61,7 +76,7 @@ export const getSingleWorkout = async id => {
     method: "POST",
     body: idData,
     redirect: "follow"
-  }
+  };
 
   const response = await fetch("http://localhost:8000/workout/", parameters);
   const data = await response.json();
@@ -85,18 +100,34 @@ export const getLatestWorkouts = async () => {
   return data;
 };
 
-export const updateWorkout = async () => {
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
+export const updateWorkout = async (id, content) => {
+  const newdata = new FormData();
+  newdata.append("content", content);
 
   var parameters = {
-    method: "GET",
-    headers: headers,
-    redirect: "follow"
+    method: "PATCH",
+    redirect: "follow",
+    body: newdata
   };
 
-  const response = await fetch("http://localhost:8000/workouts/", parameters);
+  const response = await fetch(
+    "http://localhost:8000/workouts/" + id + "/",
+    parameters
+  );
   const data = await response.json();
   console.log("updating workout..");
   return data;
+};
+
+export const deleteWorkout = async id => {
+  var parameters = {
+    method: "DELETE",
+    redirect: "follow"
+  };
+
+  const response = await fetch(
+    "http://localhost:8000/workouts/" + id + "/",
+    parameters
+  );
+  console.log("deleting exercise..");
 };
