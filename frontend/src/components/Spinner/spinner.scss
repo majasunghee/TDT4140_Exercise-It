@@ -1,5 +1,5 @@
 .spinner {
-    --duration: .8s;
+    --duration: 0.8s;
     transform: scale(var(--scale, 1.2));
     .outer {
         animation: outer var(--duration) linear infinite;

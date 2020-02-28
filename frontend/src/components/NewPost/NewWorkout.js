@@ -3,7 +3,9 @@ import styles from "../../App.module.css"
 
 const defaultState = {
   title: "",
+  addExercise: "",
   exercises: [],
+  exercisesId: "",
   image: "",
   content: "",
   duration: "",
@@ -21,14 +23,14 @@ export default class NewWorkout extends React.Component {
         var date = new Date();
         var dateFormat =
           date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    
         const formdata = new FormData();
         formdata.append('title', this.state.title);
         formdata.append('date', dateFormat);
         formdata.append('content', this.state.content);
         formdata.append('duration', this.state.duration);
         formdata.append('image', this.state.image, this.state.image.name);
-        formdata.append('exercises', this.state.exercises);
+        formdata.append('relations', this.state.exercisesId);
+        formdata.append('username', this.props.user.username ? this.props.user.username : '')
     
         var parameters = {
           method: "POST",
@@ -39,7 +41,6 @@ export default class NewWorkout extends React.Component {
         const data = await response.json();
         console.log("posting a new workout..");
         this.props.reFetch();
-        this.props.createNew();
         this.setState(defaultState)
         return data;
       }
@@ -49,8 +50,9 @@ export default class NewWorkout extends React.Component {
       checkValidPost = () => {
         return (
             this.state.title.length > 3 &&
+            this.state.title.length < 50 &&
             this.state.image &&
-            this.state.content.length > 20 &&
+            this.state.content.length > 15 &&
             this.state.duration
         );
         };
@@ -58,31 +60,70 @@ export default class NewWorkout extends React.Component {
         onChange = change =>
         this.setState({ [change.target.name]: change.target.value });
         
-        render() { 
+
+        onChange = change =>
+        this.setState({ [change.target.name]: change.target.value });
+    
+      filterFound = () => {
+        var match = '';
+        if (this.state.exercises.indexOf(this.state.addExercise) <= -1) {
+        this.props.exercises.forEach(a => this.state.addExercise === a.title ? match = a.id : '')
+        return match;
+        }
+      }
+    
+      removeFilter(filter) {
+        var oldIds = this.state.exercisesId.split(' ').slice(1);
+        var newFilters = [];
+        var newIds = '';
+        oldIds.splice(this.state.exercises.indexOf(filter), 1)
+        oldIds.forEach(id => 
+          newIds = newIds + " " + id);
+    
+        this.state.exercises.forEach(a => a !== filter ?
+        newFilters.push(a) : '');
+        this.setState({exercises: newFilters, exercisesId: newIds})
+      }
+    
+      addFilter() {
+        if (this.filterFound()) {
+        this.setState({exercisesId: (this.state.exercisesId + " " + this.filterFound()),
+        exercises: [...this.state.exercises, this.state.addExercise], addExercise: ''})
+        }
+      }
+    
+
+        render() {
+        if ( !this.props.isCreating ) { return <div></div>}
+
         return (            
-        <div
-            onClick={() =>
-              !this.props.isCreating && this.props.createNew()
-            }
-            className={
-              this.props.isCreating ? styles.newPost : styles.triggerPost
-            }
-          >
-            <div>
+          <div className={styles.postWrapperPublish}>
+          <div className={styles.title}>
               <strong>Opprett treningsøkt</strong>
             </div>
-            <div
-              className={this.props.isCreating ? styles.form : styles.hidden}
-            >
-              <div className={styles.fields}>
+            <div >
+              
                 <input
                   name="title"
                   className={styles.input}
-                  placeholder="Overskrift"
+                  placeholder="Tittel på økt"
                   value={this.state.title}
                   onChange={this.onChange}
                 />
-                <div className={styles.inputImage}>
+                     <input
+                  name="duration"
+                  type="number"
+                  className={styles.inputSmall}
+                  placeholder="Varighet"
+                  value={this.state.duration}
+                  onChange={this.onChange}
+                />
+
+
+
+        <div className={styles.postImagePublish} >
+        <div className={styles.gradientPublish}>
+        <div className={styles.inputImage}>
                 Bilde:
                  <input type="file"
                  name="image"
@@ -92,31 +133,33 @@ export default class NewWorkout extends React.Component {
                     image: change.target.files[0]
                   });
                 }}/>
-                  </div>
+                  </div> </div> </div>
                 <textarea
                   className={styles.inputField}
                   name="content"
                   style={{ minHeight: 100 }}
-                  placeholder="Tekst"
+                  placeholder="Beskrivelse"
                   value={this.state.content}
                   onChange={this.onChange}
                 />
                 <input
-                  name="exercises"
-                  className={styles.input}
-                  placeholder="Øvelser"
-                  value={this.state.exercises}
+                  name="addExercise"
+                  className={this.filterFound() ? styles.input : styles.inputDisabled}
+                  placeholder="Velg øvelser"
+                  value={this.state.addExercise.charAt(0).toUpperCase() + 
+                    this.state.addExercise.slice(1)}
                   onChange={this.onChange}
+                  onKeyPress={event =>
+                    event.key === "Enter" ? this.addFilter() : ""}
                 />
-                 <input
-                  name="duration"
-                  type="number"
-                  className={styles.input}
-                  placeholder="Varighet"
-                  value={this.state.duration}
-                  onChange={this.onChange}
-                />
-              </div>
+                 <button
+          className={
+            this.filterFound() ? styles.button : styles.buttonDisabled
+          }
+          onClick={() => this.addFilter()}
+        >
+          + Legg til
+        </button>
               <button
                 className={
                   this.checkValidPost()
@@ -125,8 +168,12 @@ export default class NewWorkout extends React.Component {
                 }
                 onClick={() => this.post()}
               >
-                Post
+                Publiser
               </button>
             </div>
+            <div className={styles.row}>
+        {this.state.exercises.map(exercise =>
+        <div className={styles.filterListPost} onClick={() => this.removeFilter(exercise)}>{exercise}</div>)}
+      </div>
           </div>) }
     }

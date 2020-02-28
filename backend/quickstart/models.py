@@ -15,26 +15,37 @@ class CustomUser(AbstractUser):
         if created:
             Token.objects.create(user=instance)
 
+
 ''' Exercise-related tables '''
 class Musclegroup(models.Model):
     name = models.CharField(max_length=30)
     latin = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.name
+
+    
 class Post(models.Model):
     date = models.DateField()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    username = models.CharField(max_length=30, null=True, blank=True)
     title = models.CharField(max_length=60)
     image = models.ImageField(upload_to='frontend/public/images/')
     content = models.TextField()
+    relations = models.CharField(max_length=60, null=True, blank=True)
 
 class Exercise(Post):
-    reps = models.IntegerField()
-    sets = models.IntegerField()
-    musclegroups = models.ManyToManyField(Musclegroup)
+    reps = models.IntegerField(null=True, blank=True)
+    sets = models.IntegerField(null=True, blank=True)
+    musclegroups = models.ManyToManyField(Musclegroup, null=True, blank=True)
 
+    def __str__(self):
+        return self.title
+
+        
 class Workout(Post):
     duration = models.IntegerField()
-    exercises = models.ManyToManyField(Exercise)
+    exercises = models.ManyToManyField(Exercise, null=True, blank=True)
 
 class Feedback(models.Model):
     rating = models.IntegerField()

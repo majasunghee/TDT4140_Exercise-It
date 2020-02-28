@@ -9,11 +9,11 @@ export const registerUser = async userdata => {
     body: JSON.stringify(userdata),
     redirect: "follow"
   };
+
+  console.log("trying to register new user..");
   const response = await fetch("http://localhost:8000/users/", parameters);
   const data = await response.json();
-  console.log("registering new user..");
-  console.log(data);
-  return data;
+  return response.ok ? data : false;
 };
 
 export const loginUser = async userdata => {
@@ -27,11 +27,10 @@ export const loginUser = async userdata => {
     redirect: "follow"
   };
 
+  console.log("trying to log in user..");
   const response = await fetch("http://localhost:8000/login/", parameters);
   const data = await response.json();
-  console.log("trying to log in user..");
-  console.log(data);
-  return data;
+  return response.ok ? data : false;
 };
 
 export const getUser = async token => {
@@ -45,9 +44,8 @@ export const getUser = async token => {
     redirect: "follow"
   };
 
+  console.log("trying to authenticate user..");
   const response = await fetch("http://localhost:8000/auth/", parameters);
   const data = await response.json();
-  console.log("trying to authenticate user..");
-  console.log(data);
-  return data;
+  return response.ok ? data : false;
 };

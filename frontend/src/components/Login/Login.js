@@ -1,5 +1,4 @@
 import React from "react";
-import Logo from "../../logo.png";
 import Spinner from "../Spinner/Spinner";
 
 import styles from "../../App.module.css";
@@ -49,17 +48,17 @@ class Login extends React.Component {
     this.setState({ [change.target.name]: change.target.value, error: false });
 
   authenticateUser() {
-    this.setState({loading: true})
+    this.setState({ loading: true });
     if (this.state.register) {
-      registerUser(this.getUserFields()).then(
+      registerUser(this.getUserFields()).then(res => res ?
         loginUser(this.getUserFields())
           .then(data => this.props.onAuth(data))
-          .then(() => this.setState({ error: true }))
+          .then(() => this.setState({ error: true })) : this.setState({ error: true, loading: false })
       );
     } else {
       loginUser(this.getUserFields())
         .then(data => this.props.onAuth(data))
-        .then(() => this.setState({ error: true }));
+        .then(res => !res && this.setState({ error: true, loading: false }));
     }
   }
 
@@ -67,139 +66,151 @@ class Login extends React.Component {
     return (
       <div className={styles.loginWrapper}>
         <div className={styles.loginLogoWrapper}>
-          <img
-            alt="Exercise-it!"
-            className={
-              !this.buttonEnabled()
-                ? styles.loginLogo
-                : styles.loginLogoActivated
-            }
-            src={Logo}
-          />
+          <div className={styles.hero}>
+            <div className={styles.bannerPurple}>
+              <div className={styles.antiHero}>
+                <div className={styles.loginHeader}>Exercise-It!</div>
+                <div>En aktiv side for deg som ønsker </div>
+                <div>å dele trening og bli inspirert</div>
+              </div>
+            </div>
+          </div>
+          <div className={styles.hero2}>
+            <div className={styles.bannerOrange} />
+          </div>
         </div>
         <div className={styles.loginFormWrapper}>
-        {this.state.loading ? (<div className={styles.loginForm}><Spinner /></div>) :
-          (<div className={styles.loginForm}>
-            <div
-              className={styles.backButton}
-              onClick={() => this.props.onCancel()}
-            >
-              Hopp over
+          {this.state.loading ? (
+            <div className={styles.loginForm}>
+              <Spinner />
             </div>
-            {this.state.register ? <h2>Kom i gang!</h2> : <h2>Logg inn!</h2>}
-            <h3> Brukernavn</h3>
-            <input
-              name="username"
-              onChange={this.onChange}
-              placeholder="Navn"
-              className={styles.inputLogin}
-            />
-            {this.state.register ? (
-              <div>
-                <h3> E-post</h3>
-                <input
-                  name="email"
-                  onChange={this.onChange}
-                  placeholder="E-post"
-                  className={styles.inputLogin}
-                />
-                {(!this.state.email.includes("@") ||
-                  this.state.email.length <= 6) &&
-                0 < this.state.email.length ? (
-                  <div>E-post adressen er ikke gyldig!</div>
-                ) : (
-                  ""
-                )}
-              </div>
-            ) : (
-              ""
-            )}
-            <h3> Passord</h3>
-            <input
-              name="password"
-              onChange={this.onChange}
-              placeholder="Passord"
-              type="password"
-              className={styles.inputLogin}
-              onKeyPress={event =>
-                event.key === "Enter" ? this.authenticateUser() : ""
-              }
-            />
-            {this.state.register ? (
-              <div>
-                <h3> Gjenta passord</h3>
-                <input
-                  name="repeatPassword"
-                  onChange={this.onChange}
-                  placeholder="Passord"
-                  type="password"
-                  onKeyPress={event =>
-                    event.key === "Enter" ? this.authenticateUser() : ""
-                  }
-                  className={styles.inputLogin}
-                />
-                {this.state.repeatPassword.length > 0 &&
-                this.state.password !== this.state.repeatPassword ? (
-                  <div>Passordene stemmer ikke overens!</div>
-                ) : (
-                  ""
-                )}{" "}
-              </div>
-            ) : (
-              ""
-            )}
-            {this.state.register ? (
-              <div>
-                <h3> Min rolle</h3>
+          ) : (
+            <div className={styles.loginForm}>
+              {this.state.register ? (
+                <div className={styles.loginSubheader}>Kom i gang!</div>
+              ) : (
+                <div className={styles.loginSubheader}>Logg inn!</div>
+              )}
+              <input
+                name="username"
+                spellcheck="false"
+                onChange={this.onChange}
+                placeholder="Brukernavn"
+                className={styles.inputLogin}
+              />
+              {this.state.register ? (
                 <div>
-                  <button
-                    onClick={() => this.setState({ role: false })}
-                    className={
-                      !this.state.role ? styles.toggleTrue : styles.toggleFalse
-                    }
-                  >
-                    Hobbytrening
-                  </button>
-                  <button
-                    onClick={() => this.setState({ role: true })}
-                    className={
-                      this.state.role ? styles.toggleTrue : styles.toggleFalse
-                    }
-                  >
-                    Treningsekspert
-                  </button>
+                  <input
+                  spellcheck="false"
+                    name="email"
+                    onChange={this.onChange}
+                    placeholder="E-post"
+                    className={styles.inputLogin}
+                  />
+                  {(!this.state.email.includes("@") ||
+                    this.state.email.length <= 6) &&
+                  0 < this.state.email.length ? (
+                    <div>E-post adressen er ikke gyldig!</div>
+                  ) : (
+                    ""
+                  )}
                 </div>
-              </div>
-            ) : (
-              ""
-            )}
-            <div>
-              <button
-                disabled={!this.buttonEnabled()}
-                onClick={() => this.authenticateUser()}
-                className={
-                  this.buttonEnabled()
-                    ? styles.buttonRegister
-                    : styles.buttonRegisterDisabled
+              ) : (
+                ""
+              )}
+              <input
+                name="password"
+                onChange={this.onChange}
+                placeholder="Passord"
+                type="password"
+                className={styles.inputLogin}
+                onKeyPress={event =>
+                  event.key === "Enter" ? this.authenticateUser() : ""
                 }
-              >
-                Fortsett
-              </button>
-              <button
-                onClick={() => {
-                  this.setState({ register: !this.state.register });
-                }}
-                className={styles.link}
-              >
-                {this.state.register ? "Jeg har bruker" : "Registrer deg"}
-              </button>
+              />
+              {this.state.register ? (
+                <div>
+                  <input
+                    name="repeatPassword"
+                    onChange={this.onChange}
+                    placeholder="Gjenta passord"
+                    type="password"
+                    onKeyPress={event =>
+                      event.key === "Enter" ? this.authenticateUser() : ""
+                    }
+                    className={styles.inputLogin}
+                  />
+                  {this.state.repeatPassword.length > 0 &&
+                  this.state.password !== this.state.repeatPassword ? (
+                    <div>Passordene stemmer ikke overens!</div>
+                  ) : (
+                    ""
+                  )}{" "}
+                </div>
+              ) : (
+                ""
+              )}
+              {this.state.register ? (
+                <div>
+                  <div>
+                    <button
+                      onClick={() => this.setState({ role: false })}
+                      className={
+                        !this.state.role
+                          ? styles.toggleTrue
+                          : styles.toggleFalse
+                      }
+                    >
+                      Amatør
+                    </button>
+                    <button
+                      onClick={() => this.setState({ role: true })}
+                      className={
+                        this.state.role ? styles.toggleTrue : styles.toggleFalse
+                      }
+                    >
+                      Profesjonell
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+              <div>
+                <button
+                  disabled={!this.buttonEnabled()}
+                  onClick={() => this.authenticateUser()}
+                  className={
+                    this.buttonEnabled()
+                      ? styles.buttonLogin
+                      : styles.buttonLoginDisabled
+                  }
+                >
+                  Fortsett
+                </button>
+                <button
+                  onClick={() => {
+                    this.setState({ register: !this.state.register });
+                  }}
+                  className={styles.link}
+                >
+                  {this.state.register ? "Jeg har bruker" : "Registrer deg"}
+                </button>
+                <button
+                  className={styles.link}
+                  onClick={() => this.props.onCancel()}
+                >
+                  Hopp over
+                </button>
+                {this.state.error ? (
+                  this.state.register ? <div className={styles.error}>Ugyldig brukerinfo..</div> :
+                <div className={styles.error}>Feil navn eller passord..</div>
+              ) : (
+                ""
+              )}
+              </div>
             </div>
-            {this.state.error ? (
-              <div className={styles.error}>Noe gikk galt..</div>
-            ) : (
-              ""
-            )}
-          </div>)}
+          )}
         </div>
       </div>
     );
