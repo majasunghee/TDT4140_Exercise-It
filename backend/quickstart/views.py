@@ -76,6 +76,26 @@ class WorkoutViewSet(viewsets.ModelViewSet):
     serializer_class = WorkoutSerializer
 
 
+class GetSingleExercise(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
+    def post(self, request, *args, **kwargs):
+        post = Exercise.objects.get(id=request.data['id'])
+        pusername = ''
+        prole = False
+        musclegroups = []
+        if (post.musclegroups):
+            musclegroupObjects = post.musclegroups.all()
+            for musclegroup in musclegroupObjects:
+                    musclegroups.append(musclegroup.name)
+        if (post.user):
+            pusername = post.user.username
+        if (post.user):
+            prole = post.user.role
+        return Response({'title': post.title, 'musclegroups': musclegroups, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'sets': post.sets, 'reps': post.reps })
+
+
 class GetSingleWorkout(APIView):
     permission_classes = ()
     authentication_classes = ()
@@ -83,12 +103,23 @@ class GetSingleWorkout(APIView):
     def post(self, request, *args, **kwargs):
         post = Workout.objects.get(id=request.data['id'])
         pusername = ''
-        prole = False
+        prole = False     
+        exercises = []
+        musclegroups = []
+        if (post.exercises):
+            exerciseObjects = post.exercises.all()
+            for exercise in exerciseObjects:
+                exercises.append(exercise.title)
+                if (exercise.musclegroups):
+                    musclegroupObjects = exercise.musclegroups.all()
+                    for musclegroup in musclegroupObjects:
+                        musclegroups.append(musclegroup.name)
         if (post.user):
             pusername = post.user.username
         if (post.user):
             prole = post.user.role
-        return Response({'title': post.title, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole})
+        return Response({'title': post.title, 'exercises': exercises, 'musclegroups': list(set(musclegroups)), 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'duration': post.duration})
+
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):
@@ -100,46 +131,46 @@ class FeedbackViewSet(viewsets.ModelViewSet):
         serializer_class = FeedbackSerializer
 
 
-class FeedViewSet(viewsets.ModelViewSet):
-    queryset = Exercise.objects.all()
-    serializer_class = ExerciseSerializer
+# class FeedViewSet(viewsets.ModelViewSet):
+#     queryset = Exercise.objects.all()
+#     serializer_class = ExerciseSerializer
 
-    def getPopularPublicExercises():
-        queryset = Exercise.objects.all()
-        serializer_class = ExerciseSerializer
+#     def getPopularPublicExercises():
+#         queryset = Exercise.objects.all()
+#         serializer_class = ExerciseSerializer
 
-    def getPopularPublicWorkouts():
-        queryset = Workout.objects.all()
-        serializer_class = WorkoutSerializer
+#     def getPopularPublicWorkouts():
+#         queryset = Workout.objects.all()
+#         serializer_class = WorkoutSerializer
 
-    def getPopularProfessionalExercises():
-        queryset = Exercise.objects.all()
-        serializer_class = ExerciseSerializer
+#     def getPopularProfessionalExercises():
+#         queryset = Exercise.objects.all()
+#         serializer_class = ExerciseSerializer
 
-    def getPopularProfessionalWorkouts():
-        queryset = Workout.objects.all()
-        serializer_class = WorkoutSerializer
+#     def getPopularProfessionalWorkouts():
+#         queryset = Workout.objects.all()
+#         serializer_class = WorkoutSerializer
 
-    def getLatestExercises():
-        queryset = Exercise.objects.all()
-        serializer_class = ExerciseSerializer
+#     def getLatestExercises():
+#         queryset = Exercise.objects.all()
+#         serializer_class = ExerciseSerializer
 
-    def getLatestWorkouts():
-        queryset = Workout.objects.all()
-        serializer_class = WorkoutSerializer
+#     def getLatestWorkouts():
+#         queryset = Workout.objects.all()
+#         serializer_class = WorkoutSerializer
 
-    def getHighestRatedExercises():
-        queryset = Exercise.objects.all()
-        serializer_class = ExerciseSerializer
+#     def getHighestRatedExercises():
+#         queryset = Exercise.objects.all()
+#         serializer_class = ExerciseSerializer
 
-    def getHighestRatedWorkouts():
-        queryset = Workout.objects.all()
-        serializer_class = WorkoutSerializer
+#     def getHighestRatedWorkouts():
+#         queryset = Workout.objects.all()
+#         serializer_class = WorkoutSerializer
 
-    def getExercisesByMuscles():
-        queryset = Exercise.objects.all()
-        serializer_class = UserSerializer
+#     def getExercisesByMuscles():
+#         queryset = Exercise.objects.all()
+#         serializer_class = UserSerializer
 
-    def getWorkoutsByExercises():
-        queryset = Workout.objects.all()
-        serializer_class = UserSerializer
+#     def getWorkoutsByExercises():
+#         queryset = Workout.objects.all()
+#         serializer_class = UserSerializer

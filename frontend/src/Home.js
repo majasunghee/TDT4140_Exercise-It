@@ -78,8 +78,8 @@ class Home extends React.Component {
             creatingNewWorkout={this.state.newWorkout}
             hiddenExercises={this.state.hideExercises}
             hiddenWorkouts={this.state.hideWorkouts}
-            singlePost={post => {
-              this.props.singlePost(post);
+            singlePost={(post, workout) => {
+              this.props.singlePost(post, workout);
             }}
             token={this.props.token}
           />

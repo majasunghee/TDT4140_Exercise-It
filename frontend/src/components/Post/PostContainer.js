@@ -5,7 +5,7 @@ import professional from "../../icons/professional.png";
 import amateur from "../../icons/amateur.png";
 import Settings from "../Settings/Settings"
 
-import {getSingleWorkout} from "../../actions/workouts";
+import { getSingleWorkout, getSingleExercise } from "../../actions/posts";
 
 var postData = '';
 
@@ -25,11 +25,15 @@ class PostContainer extends React.Component {
   }
   
   getPost() {
-    const formdata = new FormData();
-    formdata.append('id', window.location.href.split("posts/")[1]);
-    
-   getSingleWorkout(formdata).then(data => postData = data).then(() => this.setState({loading: false}));
-  }
+    if (window.location.href.split('?')[1] === 'type=workout') {
+    getSingleWorkout(window.location.href.split("?")[0].split("posts/")[1]).then(data => postData = data)
+      .then(() => this.setState({loading: false}));
+    }
+    else if (window.location.href.split('?')[1] === 'type=exercise'){
+    getSingleExercise(window.location.href.split("?")[0].split("posts/")[1]).then(data => postData = data)
+      .then(() => this.setState({loading: false}));
+    }
+}
 
   render() {
   
@@ -99,6 +103,12 @@ class PostContainer extends React.Component {
           }
         />
         <div>{postData.content}</div>
+        <div className={styles.row}>
+        {postData.exercises && postData.exercises.map(exercise =>
+        <div className={styles.filterListPost}>{exercise}</div>)}
+        {postData.musclegroups.map(exercise =>
+        <div className={styles.filterListPost}>{exercise}</div>)}
+      </div>
       </div>
       {}
     </div></div></div>

@@ -1,3 +1,8 @@
+:root {
+  --mainColor: #f16000;
+  --secondColor: #6700a7;
+}
+
 .container {
   margin-left: 360px;
   width: auto;
@@ -7,7 +12,6 @@
   padding-bottom: 100px;
   padding-top: 20px;
   min-height: 96vh;
-  transition: 0.5s;
 }
 
 .feed {
@@ -44,7 +48,7 @@
 }
 
 .mainHeader:hover {
-  background: -webkit-linear-gradient(30deg, #5d5d5d, #6700a7 50%);
+  background: -webkit-linear-gradient(30deg, #5d5d5d, var(--secondColor) 50%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -55,7 +59,11 @@ a {
 }
 
 .logo {
-  background-image: linear-gradient(140deg, rgb(241, 96, 0), #510083);
+  background-image: linear-gradient(
+    140deg,
+    var(--mainColor),
+    var(--secondColor)
+  );
   height: 60px;
   width: 320px;
   font-size: 2.5em;
@@ -71,7 +79,11 @@ a {
 }
 
 .logo:hover {
-  background-image: linear-gradient(120deg, rgb(241, 96, 0), #510083);
+  background-image: linear-gradient(
+    120deg,
+    var(--mainColor),
+    var(--secondColor)
+  );
   cursor: pointer;
 }
 
@@ -102,6 +114,7 @@ a {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .icon {
   height: 50px;
   max-width: 50px;
@@ -132,7 +145,7 @@ a {
 .arrow:hover {
   font-size: 76px;
   margin-top: 242px;
-  color: #ff6924;
+  color: var(--mainColor);
   margin-left: -8px;
   margin-right: -8px;
   padding-left: 4px;
@@ -174,12 +187,12 @@ a {
   padding-left: 10px;
   width: 350px;
   cursor: pointer;
-  color: rgb(224, 108, 0);
+  color: #a700ff;
   background-color: rgb(24, 24, 24);
 }
 
 .loginSetting:hover {
-  color: rgb(224, 108, 0);
+  color: var(--mainColor);
 }
 
 .cardWrapper {
@@ -432,6 +445,11 @@ a {
   filter: brightness(92%);
 }
 
+.row {
+  display: flex;
+  margin-left: -15px;
+}
+
 .triggerPost {
   cursor: pointer;
   text-align: center;
@@ -445,26 +463,36 @@ a {
   box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
 }
 
+.inputDisabled,
 .inputSmall,
-.input {
+.input,
+.inputSmallDisabled {
   background-color: transparent;
   border: 0;
   font-size: 1em;
   border-bottom: 2px solid #acacaca9;
-  width: 520px;
+  width: 420px;
   margin-top: 15px;
   margin-right: 20px;
   line-height: 2.2em;
   transition: 0.2s;
+  outline: none;
+}
+
+.inputDisabled,
+.inputSmallDisabled {
+  color: gray;
 }
 
 .inputSmall:hover,
 .input:hover {
-  border-bottom: 2px solid rgb(224, 108, 0);
+  border-bottom: 2px solid var(--mainColor);
 }
 
+.inputSmallDisabled,
 .inputSmall {
-  width: 130px;
+  width: 140px;
+  text-align: center;
 }
 
 .inputImage {
@@ -499,14 +527,21 @@ a {
   width: 320px;
 }
 
+.filterListPost,
 .filterList {
   margin-top: 15px;
-  margin-left: 10px;
+  margin-left: 15px;
   margin-right: 10px;
   color: rgb(145, 145, 145);
   transition: 0.2s;
 }
 
+.filterListPost {
+  color: #ff531e;
+  font-size: 0.9em;
+}
+
+.filterListPost:hover,
 .filterList:hover {
   color: rgb(90, 90, 90);
   cursor: pointer;
@@ -535,7 +570,7 @@ a {
 .inputLogin:hover {
   padding-left: 26px;
   width: 454px;
-  color: rgb(224, 108, 0);
+  color: var(--mainColor);
   background-color: rgb(24, 24, 24);
 }
 
@@ -570,8 +605,8 @@ a {
 .buttonFilterDisabled,
 .buttonLoginDisabled,
 .buttonLogin {
-  background-color: rgb(38, 38, 38);
-  color: rgb(224, 108, 0);
+  background-color: rgb(32, 32, 32);
+  color: var(--mainColor);
   font-size: 1.1em;
   border-radius: 4px;
   padding: 20px;
@@ -615,10 +650,11 @@ a {
   padding: 15px;
   background-color: rgb(240, 240, 240);
   transition: 0.2s;
+  outline: none;
 }
 
 .inputField:hover {
-  border: 1.5px solid #ff6924;
+  border: 1.5px solid var(--mainColor);
 }
 
 .form {
@@ -632,14 +668,16 @@ a {
   background-color: rgb(63, 63, 63);
   color: white;
   font-size: 1.1em;
-  border-radius: 12px;
+  border-radius: 8px;
   height: 42px;
-  padding: 40px;
+  padding: 30px;
   padding-top: 10px;
   border: 0;
   padding-bottom: 10px;
   transition: 0.5s;
   cursor: pointer;
+  width: 180px;
+  margin-right: 20px;
 }
 
 .buttonDisabled {
@@ -647,7 +685,11 @@ a {
 }
 
 .button:hover {
-  background-image: linear-gradient(140deg, rgb(63, 63, 63), #5c0095);
+  background-image: linear-gradient(
+    140deg,
+    rgb(63, 63, 63),
+    var(--secondColor)
+  );
 }
 
 .link {
@@ -666,37 +708,12 @@ a {
   color: rgb(243, 243, 243);
 }
 
-.choosenLink,
-.filterLink {
-  margin-top: 4px;
-  padding-bottom: 3px;
-  width: 150px;
-}
-
-.choosenLink {
-  font-weight: bold;
-  transition: 0.1s;
-}
-
-.choosenLink,
-.filterLink:hover {
-  border-bottom: 2px solid rgb(255, 60, 0);
-  cursor: pointer;
-  width: 110px;
-  margin-right: 40px;
-  padding-bottom: 1px;
-}
-
 .error {
   margin: 25px;
   margin-top: -45px;
   color: rgb(200, 0, 0);
   text-align: right;
   font-style: italic;
-}
-
-.filterLink:hover > strong {
-  color: rgba(0, 0, 0, 0.4);
 }
 
 .loginWrapper {
@@ -750,7 +767,7 @@ a {
 
 .bannerPurple {
   background-color: #1976d2;
-  background: linear-gradient(70deg, rgb(219, 80, 0) 30%, #580092);
+  background: linear-gradient(70deg, var(--mainColor) 30%, var(--secondColor));
   width: 100%;
   height: 900px;
   padding-left: 200px;
@@ -763,7 +780,7 @@ a {
 
 .bannerOrange {
   background-color: #1976d2;
-  background: linear-gradient(70deg, rgb(134, 59, 204) 30%, #ff1e00);
+  background: linear-gradient(70deg, var(--secondColor) 30%, #ff1e00);
   color: rgb(228, 228, 228);
   font-weight: bold;
   width: 100%;

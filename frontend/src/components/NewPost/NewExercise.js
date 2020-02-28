@@ -3,7 +3,9 @@ import styles from "../../App.module.css";
 
 const defaultState = {
   title: "",
-  musclegroups: "",
+  addMusclegroup: "",
+  musclegroups: [],
+  musclegroupsId: "",
   image: "",
   content: "",
   sets: "",
@@ -29,9 +31,9 @@ export default class NewExercise extends React.Component {
       formdata.append("sets", this.state.sets ? this.state.sets : 1);
       formdata.append("reps", this.state.reps ? this.state.reps : 1);
       formdata.append("image", this.state.image, this.state.image.name);
-      formdata.append("relations", this.state.musclegroups);
+      formdata.append("relations", this.state.musclegroupsId);
       formdata.append("username", this.props.user.username ? this.props.user.username : '')
-      console.log(formdata)
+
       var parameters = {
         method: "POST",
         body: formdata,
@@ -63,9 +65,36 @@ export default class NewExercise extends React.Component {
   onChange = change =>
     this.setState({ [change.target.name]: change.target.value });
 
+  filterFound = () => {
+    var match = '';
+    if (this.state.musclegroups.indexOf(this.state.addMusclegroup) <= -1) {
+    this.props.musclegroups.forEach(a => this.state.addMusclegroup === a.name ? match = a.id : '')
+    return match;
+    }
+  }
+
+  removeFilter(filter) {
+    var oldIds = this.state.musclegroupsId.split(' ').slice(1);
+    var newFilters = [];
+    var newIds = '';
+    oldIds.splice(this.state.musclegroups.indexOf(filter), 1)
+    oldIds.forEach(id => 
+      newIds = newIds + " " + id);
+
+    this.state.musclegroups.forEach(a => a !== filter ?
+    newFilters.push(a) : '');
+    this.setState({musclegroups: newFilters, musclegroupsId: newIds})
+  }
+
+  addFilter() {
+    if (this.filterFound()) {
+    this.setState({musclegroupsId: (this.state.musclegroupsId + " " + this.filterFound()),
+    musclegroups: [...this.state.musclegroups, this.state.addMusclegroup], addMusclegroup: ''})
+    }
+  }
+
   render() {
     if ( !this.props.isCreating ) { return <div></div>}
-
     return (
             <div className={styles.postWrapperPublish}>
         <div className={styles.title}>
@@ -120,21 +149,36 @@ export default class NewExercise extends React.Component {
               placeholder="Beskrivelse"
               value={this.state.content}
               onChange={this.onChange}
-            />            <input
-            name="musclegroups"
-            className={styles.input}
+            /> 
+            <input
+            name="addMusclegroup"
+            className={this.filterFound() ? styles.input : styles.inputDisabled}
             placeholder="Velg muskelgrupper"
-            value={this.state.musclegroups}
+            value={this.state.addMusclegroup.charAt(0).toUpperCase() + 
+              this.state.addMusclegroup.slice(1)}
             onChange={this.onChange}
-          /> <button
+            onKeyPress={event =>
+              event.key === "Enter" ? this.addFilter() : ""} />
+               <button
+          className={
+            this.filterFound() ? styles.button : styles.buttonDisabled
+          }
+          onClick={() => this.addFilter()}
+        >
+          + Legg til
+        </button>
+          <button
           className={
             this.checkValidPost() ? styles.button : styles.buttonDisabled
           }
           onClick={() => this.post()}
         >
-          + Publiser
+          Publiser
         </button></div>
-      </div>
+        <div className={styles.row}>
+        {this.state.musclegroups.map(musclegroup =>
+        <div className={styles.filterListPost} onClick={() => this.removeFilter(musclegroup)}>{musclegroup}</div>)}
+      </div></div>
     );
   }
 }

@@ -77,15 +77,15 @@ class MusclegroupSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'name', 'latin')
 
 
-class ExerciseSerializer(serializers.ModelSerializer):
+class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
     image = Base64ImageField(max_length=None, use_url=True,)
     musclegroups = MusclegroupSerializer(many=True, read_only=True)
     user = UserSerializer(read_only=True)
 
     class Meta:
         model = Exercise
-        fields = ('__all__')
-    
+        fields = ('id','image','musclegroups','user','date','username','title','content','relations','sets','reps')
+
     def create(self, data):
         exercise = super().create(data)
         musclegroups = data.pop("relations")
