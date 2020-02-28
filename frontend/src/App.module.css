@@ -834,3 +834,9 @@ a {
 .loginWrapper:hover > .loginLogoWrapper > .hero2 {
   top: 32%;
 }
+.footer{
+  text-align: center;
+  margin-top: 5%;
+  opacity: 60%;
+
+}

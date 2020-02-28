@@ -110,19 +110,7 @@ class PostContainer extends React.Component {
         <div className={styles.filterListPost}>{exercise}</div>)}
       </div>
       </div>
-      {/* <div className={styles.kommentarer}>
-        <strong>Kommentar</strong>
-        <div>
-          <input placeholder="Skriv her" className={styles.inputField} />{" "}
-          <button className={styles.button}>Send inn</button>{" "}
-        </div>
-        {postData.kommentarer &&
-          postData.kommentarer.map(a => (
-            <div className={styles.kommentar}>
-              <strong>Brukernavn {a.username}</strong> - {a.kommentar}
-            </div>
-          ))}
-      </div> */}
+      {}
     </div></div></div>
   ); }
 };
