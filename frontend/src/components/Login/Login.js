@@ -93,6 +93,7 @@ class Login extends React.Component {
               )}
               <input
                 name="username"
+                spellcheck="false"
                 onChange={this.onChange}
                 placeholder="Brukernavn"
                 className={styles.inputLogin}
@@ -100,6 +101,7 @@ class Login extends React.Component {
               {this.state.register ? (
                 <div>
                   <input
+                  spellcheck="false"
                     name="email"
                     onChange={this.onChange}
                     placeholder="E-post"

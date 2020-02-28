@@ -6,9 +6,8 @@ import NewWorkout from "../NewPost/NewWorkout"
 import SpinnerPost from "../Spinner/SpinnerPost";
 import styles from "../../App.module.css";
 
-import { getLatestExercises } from "../../actions/exercises";
+import { getLatestExercises, getLatestWorkouts } from "../../actions/posts";
 import { getMusclegroups } from "../../actions/musclegroups";
-import { getLatestWorkouts } from "../../actions/workouts";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -59,38 +58,33 @@ class Feed extends React.Component {
   }
 
   removeFilter(filter) {
-    var allFilters = this.state.selectedFilters;
-    this.setState({selectedFilters: []})
-    if (this.filterFound()) {
-    allFilters.forEach(a => a !== filter ?
-    this.setState({selectedFilters: [...this.state.selectedFilters, a] }) : '')
-    }
+    var newFilters = [];
+    this.state.selectedFilters.forEach(a => a !== filter ?
+    newFilters.push(a) : '');
+    this.setState({selectedFilters: newFilters})
   }
 
   checkSelectedFilters = post => {
     var postExercises = [];
     var postMusclegroups = [];
-    var match = 0;
+    var match = true;
     if (post.exercises) {
-      post.exercises.forEach(a => postExercises.push(a));
-      postExercises.forEach(exercise =>
+      post.exercises.forEach(a => postExercises.push(a.title));
+      post.exercises.forEach(exercise =>
         exercise.musclegroups.forEach(musclegroup =>
-        postMusclegroups.push(musclegroup)
+        postMusclegroups.push(musclegroup.name)
       ));
     }
     else if (post.musclegroups) {
-      postExercises.push(post);
+      postExercises.push(post.title);
       post.musclegroups.forEach(musclegroup =>
-        postMusclegroups.push(musclegroup)
+        postMusclegroups.push(musclegroup.name)
       );
     }
-    postExercises.forEach(a =>
-      this.state.selectedFilters.includes(a.title) ? (match = match + 1) : ""
+    this.state.selectedFilters.forEach(a =>
+      (postExercises.includes(a) || postMusclegroups.includes(a)) ? '' : match = false
     );
-    postMusclegroups.forEach(a =>
-      this.state.selectedFilters.includes(a.name) ? (match = match + 1) : ""
-    );
-    return match >= this.state.selectedFilters.length;
+    return match;
   };
 
   render() {
@@ -102,13 +96,13 @@ class Feed extends React.Component {
       <div>
         <div className={styles.feedContainer}>
           <div className={styles.mainHeader}><h1>{this.props.user.username ? 'Hei, '+this.props.user.username+'!' : 'Velkommen!'}</h1></div>
-          <NewExercise reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewExercise}/>
-      <NewWorkout reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewWorkout}/>         
+          <NewExercise musclegroups={this.state.musclegroups} reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewExercise}/>
+          <NewWorkout exercises={this.state.exercises} reFetch={() => this.buildFeed()} user={this.props.user} isCreating={this.props.creatingNewWorkout}/>         
           <div className={styles.feed}>
           {!this.props.hiddenWorkouts ?
           (this.state.selectedFilters.length === 0
               ? this.state.workouts.slice(0, 2).map(post => (
-                  <div onClick={() => this.props.singlePost(post)}>
+                  <div onClick={() => this.props.singlePost(post, 'workout')}>
                     <Post
                       user={post.user}
                       date={post.date}
@@ -120,7 +114,7 @@ class Feed extends React.Component {
                 ))
               : this.state.workouts.map(post =>
                   this.checkSelectedFilters(post) ? (
-                    <div onClick={() => this.props.singlePost(post)}>
+                    <div onClick={() => this.props.singlePost(post, 'workout')}>
                       <Post
                         user={post.user}
                         date={post.date}
@@ -139,11 +133,12 @@ class Feed extends React.Component {
           <div className={styles.feed}>
             {!this.state.loading ? (
               <div>
-               {!this.props.hiddenExercises ? (<div className={styles.cardContainer}>
+               {!this.props.hiddenExercises ? 
+                this.state.selectedFilters.length === 0 ? (
+               <div className={styles.cardContainer}>
                   <div className={this.state.scroller !== 0 ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller !== 0 ? this.setState({scroller: this.state.scroller - 3}) : ''}>{"<"}</div>
                   {this.state.exercises.slice(this.state.scroller, this.state.scroller+3).map(post => (
-                    this.checkSelectedFilters(post) ?
-                    <div onClick={() => this.props.singlePost(post)}>
+                    <div onClick={() => this.props.singlePost(post, 'exercise')}>
                       <Card
                         url={post.url}
                         user={post.user}
@@ -154,14 +149,28 @@ class Feed extends React.Component {
                         sets={post.sets}
                         reps={post.reps}
                       />
+                    </div>))}
+                <div className={ this.state.scroller+3 < this.state.exercises.length ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller+4 < this.state.exercises.length ? this.setState({scroller: this.state.scroller + 3}) : ''}>{">"}</div>
+             </div>) : 
+                  this.state.exercises.map(post => (
+                    this.checkSelectedFilters(post) ?
+                    <div onClick={() => this.props.singlePost(post, 'exercise')}>
+                      <Post
+                        url={post.url}
+                        user={post.user}
+                        date={post.date}
+                        title={post.title}
+                        image={post.image}
+                        content={post.content}
+                        sets={post.sets}
+                        reps={post.reps}
+                        exercise
+                      />
                     </div> : ''
-                  ))}
-                  <div className={ this.state.scroller+3 < this.state.exercises.length ? styles.arrow : styles.arrowDisabled} onClick={() => this.state.scroller+4 < this.state.exercises.length ? this.setState({scroller: this.state.scroller + 3}) : ''}>{">"}</div>
-                </div>) : ''}
-                <div className={styles.cardContainer}>
-                </div>
+                  )
+                ) : ''}
                { this.state.selectedFilters.length === 0 && !this.props.hiddenWorkouts && this.state.workouts.slice(2).map(post => (
-                  <div onClick={() => this.props.singlePost(post)}>
+                  <div onClick={() => this.props.singlePost(post, 'workout')}>
                     <Post
                       user={post.user}
                       date={post.date}
@@ -177,6 +186,7 @@ class Feed extends React.Component {
             )}
           </div>
         </div>
+        <div className={styles.footer}> Exercise-It © • estb. 2020 </div>
         <div className={styles.filterContainer}>
       <input 
       placeholder="Filtrer på muskelgrupper og øvelser"

@@ -16,7 +16,7 @@ const Post = props => {
           />
           <div className={styles.title}>
         <strong>{props.title}</strong>
-        <div className={styles.subtitle}><strong>Treningsøkt</strong></div>
+        <div className={styles.subtitle}><strong>{props.exercise ? 'Øvelse' : 'Treningsøkt'}</strong></div>
       </div>
       <div className={styles.description}>
        {props.user ? 'Av ' + props.user.username : 'Anonym'} - {props.date}
