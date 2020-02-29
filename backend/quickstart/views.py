@@ -88,12 +88,12 @@ class GetSingleExercise(APIView):
         if (post.musclegroups):
             musclegroupObjects = post.musclegroups.all()
             for musclegroup in musclegroupObjects:
-                    musclegroups.append(musclegroup.name)
+                musclegroups.append(musclegroup.name)
         if (post.user):
             pusername = post.user.username
         if (post.user):
             prole = post.user.role
-        return Response({'title': post.title, 'musclegroups': musclegroups, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'sets': post.sets, 'reps': post.reps })
+        return Response({'title': post.title, 'musclegroups': musclegroups, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'sets': post.sets, 'reps': post.reps})
 
 
 class GetSingleWorkout(APIView):
@@ -103,7 +103,7 @@ class GetSingleWorkout(APIView):
     def post(self, request, *args, **kwargs):
         post = Workout.objects.get(id=request.data['id'])
         pusername = ''
-        prole = False     
+        prole = False
         exercises = []
         musclegroups = []
         if (post.exercises):
@@ -119,7 +119,6 @@ class GetSingleWorkout(APIView):
         if (post.user):
             prole = post.user.role
         return Response({'title': post.title, 'exercises': exercises, 'musclegroups': list(set(musclegroups)), 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'duration': post.duration})
-
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):
