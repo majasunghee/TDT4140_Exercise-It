@@ -130,6 +130,14 @@ class PostContainer extends React.Component {
                 <strong>{postData.user ? postData.user : "Anonym"}</strong>
               </div>
               <div className={styles.description}>{postData.date}</div>
+              <div className={styles.title}>
+                {postData.duration ? postData.duration : ""}
+              </div>
+              <div className={styles.title}>
+                {postData.sets && postData.reps
+                  ? postData.sets + " " + postData.reps
+                  : ""}
+              </div>
               <div
                 className={styles.singlePostImage}
                 style={{
