@@ -152,7 +152,7 @@ export default class NewExercise extends React.Component {
             /> 
             <input
             name="addMusclegroup"
-            className={this.filterFound() ? styles.input : styles.inputDisabled}
+            className={this.filterFound() ? styles.inputMedium : styles.inputMediumDisabled}
             placeholder="Velg muskelgrupper"
             value={this.state.addMusclegroup.charAt(0).toUpperCase() + 
               this.state.addMusclegroup.slice(1)}
@@ -161,11 +161,19 @@ export default class NewExercise extends React.Component {
               event.key === "Enter" ? this.addFilter() : ""} />
                <button
           className={
-            this.filterFound() ? styles.button : styles.buttonDisabled
+            this.filterFound() ? styles.buttonSmall : styles.buttonSmallDisabled
           }
           onClick={() => this.addFilter()}
         >
-          + Legg til
+          Velg
+        </button>
+        <button
+          className={
+            styles.button
+          }
+          onClick={() => this.props.createMusclegroup()}
+        >
+          Ny muskelgruppe <strong>+</strong>
         </button>
           <button
           className={

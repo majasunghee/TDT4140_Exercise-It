@@ -3,6 +3,8 @@ import styles from "../../App.module.css";
 import anonym from "../../icons/anonym.png";
 import professional from "../../icons/professional.png";
 import amateur from "../../icons/amateur.png";
+import duration from "../../icons/duration.png";
+import reps from "../../icons/reps.png";
 import Settings from "../Settings/Settings";
 
 import {
@@ -15,6 +17,8 @@ import {
 } from "../../actions/posts";
 
 var postData = "";
+
+const months = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember']
 
 class PostContainer extends React.Component {
   constructor(props) {
@@ -129,13 +133,26 @@ class PostContainer extends React.Component {
               <div className={styles.title}>
                 <strong>{postData.user ? postData.user : "Anonym"}</strong>
               </div>
-              <div className={styles.description}>{postData.date}</div>
-              <div className={styles.title}>
-                {postData.duration ? postData.duration : ""}
+              <div className={styles.description}>{parseInt(postData.date.slice(8,10), 10) + '. ' + 
+              months[parseInt(postData.date.slice(5,7), 10)-1] + ' ' + postData.date.slice(0,4)}</div>
+              { postData.duration ? 
+              <img
+                alt="Exercise-it!"
+                className={styles.iconInfo}
+                src={duration}
+              /> : '' }
+              <div className={styles.duration}>
+                {postData.duration ? postData.duration + " min" : ""}
               </div>
-              <div className={styles.title}>
-                {postData.sets && postData.reps
-                  ? postData.sets + " " + postData.reps
+              { postData.reps && postData.sets && (postData.sets > 1 || postData.reps > 1) ? 
+              <img
+                alt="Exercise-it!"
+                className={styles.iconInfoLeft}
+                src={reps}
+              /> : '' }
+              <div className={styles.reps}>
+                {postData.sets && postData.sets && (postData.sets > 1 || postData.reps > 1)
+                  ? postData.reps + " rep. - " + postData.sets + " sett"
                   : ""}
               </div>
               <div
@@ -154,16 +171,16 @@ class PostContainer extends React.Component {
                   }
                 />
               ) : (
-                <div>{this.state.content}</div>
+                <div className={styles.text}>{this.state.content}</div>
               )}
               <div className={styles.rowSpace}>
                 <div className={styles.row}>
                   {postData.exercises &&
                     postData.exercises.map(exercise => (
-                      <div className={styles.filterListPurple}>{exercise}</div>
+                      <div className={styles.filterListPost}>{exercise}</div>
                     ))}
                   {postData.musclegroups.map(exercise => (
-                    <div className={styles.filterListPost}>{exercise}</div>
+                    <div className={styles.filterListPurple}>{exercise}</div>
                   ))}
                 </div>
                 {this.props.user.username === postData.user ||

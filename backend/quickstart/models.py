@@ -28,7 +28,7 @@ class Musclegroup(models.Model):
 class Post(models.Model):
     date = models.DateField()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
-    username = models.CharField(max_length=30, null=True, blank=True)
+    username = models.CharField(max_length=50, null=True, blank=True)
     title = models.CharField(max_length=60)
     image = models.ImageField(upload_to='frontend/public/images/')
     content = models.TextField()
