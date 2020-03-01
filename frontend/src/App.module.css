@@ -205,6 +205,7 @@ a {
   justify-content: space-between;
   left: 0;
   top: 0;
+  box-shadow: 10px 0px 75px -25px rgb(82, 82, 82);
   font-family: "Work Sans", sans-serif;
 }
 
