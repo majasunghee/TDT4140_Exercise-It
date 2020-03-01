@@ -4,25 +4,31 @@
 }
 
 .container {
-  margin-left: 360px;
+  margin-left: 330px;
   width: auto;
   display: flex;
   justify-content: center;
   background-color: rgb(228, 228, 228);
   padding-bottom: 100px;
+  margin-bottom: -20px;
   padding-top: 20px;
   min-height: 96vh;
 }
 
 .feed {
-  padding-top: 2px;
+  padding-top: 0.1px;
 }
 
+.headerEmpty,
 .mainHeader {
   font-size: 1.4em;
   color: #5d5d5d;
   cursor: default;
   margin-bottom: -10px;
+}
+
+.headerEmpty {
+  width: 890px;
 }
 
 .infoHeader {
@@ -65,12 +71,12 @@ a {
     var(--secondColor)
   );
   height: 60px;
-  width: 320px;
   font-size: 2.5em;
   border-radius: 0px 0px;
   color: white;
-  padding: 10px;
-  padding-top: 20px;
+  padding-bottom: 8px;
+  padding-top: 18px;
+  padding-left: 10px;
   padding-right: 30px;
   text-align: center;
   font-weight: bold;
@@ -108,6 +114,17 @@ a {
   text-align: right;
 }
 
+.edit {
+  background-color: transparent;
+  border: 0;
+  font-size: 1em;
+  margin-top: 12px;
+  color: rgb(97, 97, 97);
+  width: auto;
+  text-align: right;
+  cursor: pointer;
+}
+
 .buttonRow {
   width: 265px;
   display: flex;
@@ -130,27 +147,51 @@ a {
   position: absolute;
 }
 
+.iconInfo {
+  padding-left: 815px;
+  height: 50px;
+  max-width: 50px;
+  top: 154px;
+  position: absolute;
+}
+
+.iconInfoLeft {
+  padding-left: 725px;
+  height: 50px;
+  max-width: 50px;
+  top: 154px;
+  position: absolute;
+}
+
+.reps,
+.duration {
+  padding-left: 860px;
+  font-size: 1.2em;
+  top: 184px;
+  position: absolute;
+  color: rgb(66, 66, 66);
+  font-family: "Work Sans", sans-serif;
+}
+
+.reps {
+  padding-left: 770px;
+}
+
 .arrowDisabled,
 .arrow {
-  font-size: 60px;
   margin-top: 250px;
   transition: 0.2s;
-  color: rgb(68, 68, 68);
+  height: 65px;
+  cursor: pointer;
+  filter: opacity(60%);
 }
 
 .arrowDisabled {
-  color: rgb(144, 144, 144);
+  filter: grayscale(80%) opacity(50%);
 }
 
 .arrow:hover {
-  font-size: 76px;
-  margin-top: 242px;
-  color: var(--mainColor);
-  margin-left: -8px;
-  margin-right: -8px;
-  padding-left: 4px;
-  padding-right: 4px;
-  cursor: pointer;
+  filter: opacity(100%);
 }
 
 .settings {
@@ -160,7 +201,7 @@ a {
   flex-direction: column;
   color: rgb(146, 146, 146);
   position: fixed;
-  width: 360px;
+  width: 330px;
   justify-content: space-between;
   left: 0;
   top: 0;
@@ -171,7 +212,7 @@ a {
 .loginSetting,
 .setting {
   text-align: center;
-  width: 360px;
+  width: 330px;
   text-align: center;
   font-size: 1.1em;
   padding-top: 23px;
@@ -185,18 +226,25 @@ a {
 .loginSetting:hover,
 .setting:hover {
   padding-left: 10px;
-  width: 350px;
+  width: 320px;
   cursor: pointer;
   color: #a700ff;
   background-color: rgb(24, 24, 24);
 }
 
+.loginSetting {
+  padding-top: 17px;
+  padding-bottom: 17px;
+  background-color: rgb(22, 22, 22);
+}
+
 .loginSetting:hover {
   color: var(--mainColor);
+  background-color: rgb(22, 22, 22);
 }
 
 .cardWrapper {
-  width: 280px;
+  width: 288px;
   height: 500px;
   margin-top: 55px;
   padding: 0px;
@@ -210,8 +258,8 @@ a {
 }
 
 .cardWrapper:hover {
-  margin-top: 50px;
-  box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
+  margin-top: 52px;
+  box-shadow: 0px 0px 30px -6px rgb(134, 134, 134);
   cursor: pointer;
 }
 
@@ -219,8 +267,7 @@ a {
   width: 1000px;
   display: flex;
   justify-content: space-between;
-  transition: 0.2s;
-  margin-bottom: 80px;
+  margin-bottom: 70px;
   margin-top: 15px;
   margin-left: -89px;
   margin-right: -89px;
@@ -239,6 +286,7 @@ a {
   margin-top: 200px;
 }
 
+.postWrapperExtra,
 .postWrapperSpinner,
 .postWrapperPublish,
 .postWrapper {
@@ -261,16 +309,27 @@ a {
 }
 
 .postWrapperSpinner:hover,
-.postWrapperPublish:hover,
 .postWrapper:hover {
   cursor: pointer;
   box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
 }
 
+.postWrapperExtra:hover,
+.postWrapperPublish:hover {
+  box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
+}
+
 .postWrapperPublish {
-  margin-top: 65px;
+  margin-top: 60px;
   padding-top: 25px;
   transition: 0s;
+}
+
+.postWrapperExtra {
+  margin-top: 10px;
+  min-height: 30px;
+  transition: 0s;
+  padding-top: 25px;
 }
 
 .title {
@@ -310,15 +369,14 @@ a {
   display: flex;
   font-size: 1.3em;
   flex-direction: column;
-  width: 1000px;
-  border: 1px solid rgb(206, 206, 206);
-  border-radius: 8px;
+  width: 960px;
   padding: 20px;
   padding-top: 15px;
   padding-bottom: 25px;
-  background-color: rgb(248, 248, 248);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
   line-height: 2em;
-  box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
+  box-shadow: 0px 0px 40px -10px rgb(165, 165, 165);
   margin-top: 60px;
 }
 
@@ -334,8 +392,8 @@ a {
 .singlePostImage,
 .postImage {
   width: 889px;
-  height: 500px;
-  margin: -19px;
+  height: 400px;
+  margin: -20px;
   margin-top: 25px;
   margin-bottom: 20px;
   transition: 0.3s;
@@ -350,7 +408,7 @@ a {
 }
 
 .singlePostImage {
-  width: 1040px;
+  width: 999px;
   height: 600px;
 }
 
@@ -361,7 +419,7 @@ a {
     #44006e73
   );
   width: 890px;
-  height: 500px;
+  height: 400px;
 }
 
 .gradientPublish {
@@ -380,16 +438,16 @@ a {
 .gradient {
   background-image: linear-gradient(
     140deg,
-    rgba(224, 108, 0, 0.212),
-    #44006e3f
+    rgba(224, 108, 0, 0.171),
+    #44006e36
   );
   width: 890px;
-  height: 500px;
-  transition: 1s;
+  height: 400px;
+  transition: 0.2s;
 }
 
 .postWrapper:hover > .postImage > .gradient {
-  filter: opacity(0%);
+  filter: opacity(30%);
 }
 
 .singlePostWrapper > img {
@@ -450,6 +508,10 @@ a {
   margin-left: -15px;
 }
 
+.rowSpace {
+  display: flex;
+  justify-content: space-between;
+}
 
 .triggerPost {
   cursor: pointer;
@@ -464,6 +526,8 @@ a {
   box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
 }
 
+.inputMedium,
+.inputMediumDisabled,
 .inputDisabled,
 .inputSmall,
 .input,
@@ -472,7 +536,7 @@ a {
   border: 0;
   font-size: 1em;
   border-bottom: 2px solid #acacaca9;
-  width: 430px;
+  width: 440px;
   margin-top: 15px;
   margin-right: 20px;
   line-height: 2.2em;
@@ -480,11 +544,13 @@ a {
   outline: none;
 }
 
+.inputMediumDisabled,
 .inputDisabled,
 .inputSmallDisabled {
   color: gray;
 }
 
+.inputMedium:hover,
 .inputSmall:hover,
 .input:hover {
   border-bottom: 2px solid var(--mainColor);
@@ -492,8 +558,13 @@ a {
 
 .inputSmallDisabled,
 .inputSmall {
-  width: 140px;
+  width: 120px;
   text-align: center;
+}
+
+.inputMedium,
+.inputMediumDisabled {
+  width: 200px;
 }
 
 .inputImage {
@@ -523,11 +594,19 @@ a {
   outline: none;
 }
 
+/* .inputLogin:-webkit-autofill,
+.inputLogin:-webkit-autofill:hover {
+  -webkit-box-shadow: 0 0 0 30px rgb(28, 28, 28) inset !important;
+  -webkit-text-fill-color: rgb(248, 248, 248) !important;
+} */
+
 .filterDisabled,
 .filterEnabled {
   width: 320px;
+  padding-left: 52px;
 }
 
+.filterListPurple,
 .filterListPost,
 .filterList {
   margin-top: 15px;
@@ -537,9 +616,18 @@ a {
   transition: 0.2s;
 }
 
-.filterListPost {
-  color: #ff531e;
+.filterListPurple {
+  color: var(--secondColor);
   font-size: 0.9em;
+}
+
+.filterListPost {
+  color: var(--mainColor);
+  font-size: 0.9em;
+}
+
+.filterListPurple:hover {
+  cursor: default;
 }
 
 .filterListPost:hover,
@@ -550,16 +638,16 @@ a {
 
 .filterContainer {
   position: fixed;
-  top: 90px;
+  top: 141px;
   left: 0px;
-  width: 360px;
+  width: 330px;
   display: flex;
   flex-wrap: wrap;
 }
 
 .filterDisabled:hover,
 .filterEnabled:hover {
-  padding-left: 26px;
+  padding-left: 58px;
   width: 314px;
   background-color: rgb(24, 24, 24);
 }
@@ -575,6 +663,21 @@ a {
   background-color: rgb(24, 24, 24);
 }
 
+.search {
+  position: fixed;
+  height: 25px;
+  top: 165px;
+  left: 18px;
+  transition: 0.2s;
+  cursor: text;
+}
+
+.filterDisabled:hover + .search {
+  left: 24px;
+}
+
+.smallToggleTrue,
+.smallToggleFalse,
 .toggleTrue,
 .toggleFalse {
   background-color: rgb(33, 33, 33);
@@ -592,14 +695,41 @@ a {
   outline: none;
 }
 
+.smallToggleTrue,
+.smallToggleFalse {
+  background-color: rgb(22, 22, 22);
+  text-align: center;
+  width: 165px;
+  height: auto;
+  padding: 0;
+  padding-top: 17px;
+  padding-bottom: 17px;
+  margin-top: 0;
+}
+
+.smallToggleFalse {
+  color: rgb(141, 141, 141);
+}
+
+.smallToggleTrue {
+  background-color: rgb(30, 30, 30);
+}
+
 .toggleFalse {
   background-color: rgb(28, 28, 28);
   color: rgb(141, 141, 141);
 }
 
-.toggleFalse:hover {
+.smallToggleTrue:hover,
+.smallToggleFalse:hover {
   cursor: pointer;
+  padding-left: 8px;
+  width: 157px;
+}
+
+.toggleFalse:hover {
   padding-left: 30px;
+  cursor: pointer;
 }
 
 .buttonFilter,
@@ -626,6 +756,7 @@ a {
   padding: 8px;
   height: 52px;
   border-bottom: 0;
+  background-color: rgb(30, 30, 30);
 }
 
 .buttonFilterDisabled,
@@ -635,11 +766,11 @@ a {
   background-color: rgb(28, 28, 28);
 }
 
-.buttonFilter:hover,
 .buttonLogin:hover {
   padding-left: 26px;
 }
 
+.inputFieldLarge,
 .inputField {
   font-size: 1em;
   border: 1.5px solid #acacaca9;
@@ -654,8 +785,19 @@ a {
   outline: none;
 }
 
+.inputFieldLarge {
+  margin-top: 15px;
+  width: 925px;
+  height: 140px;
+}
+
+.inputFieldLarge:hover,
 .inputField:hover {
   border: 1.5px solid var(--mainColor);
+}
+
+.text {
+  color: rgb(70, 70, 70);
 }
 
 .form {
@@ -664,33 +806,46 @@ a {
   align-items: flex-end;
 }
 
+.buttonSmall,
+.buttonSmallDisabled,
 .buttonDisabled,
 .button {
   background-color: rgb(63, 63, 63);
   color: white;
   font-size: 1.1em;
   border-radius: 8px;
-  height: 42px;
+  height: 44px;
   padding: 30px;
   padding-top: 10px;
   border: 0;
   padding-bottom: 10px;
   transition: 0.5s;
   cursor: pointer;
-  width: 180px;
-  margin-right: 20px;
+  min-width: 160px;
+  margin-left: 230px;
 }
 
+.buttonSmallDisabled,
 .buttonDisabled {
   background-color: rgba(107, 107, 107, 0.657);
 }
 
+.buttonSmall:hover,
 .button:hover {
   background-image: linear-gradient(
     140deg,
     rgb(63, 63, 63),
     var(--secondColor)
   );
+}
+
+.buttonSmall,
+.buttonSmallDisabled {
+  padding: 10px;
+  min-width: 100px;
+  margin-left: -10px;
+  border-radius: 8px 8px 8px 0;
+  margin-right: 20px;
 }
 
 .link {
@@ -703,6 +858,7 @@ a {
   color: rgb(182, 182, 182);
   margin-right: 0;
   transition: 0.2s;
+  outline: none;
 }
 
 .link:hover {
@@ -768,7 +924,7 @@ a {
 
 .bannerPurple {
   background-color: #1976d2;
-  background: linear-gradient(70deg, var(--mainColor) 30%, var(--secondColor));
+  background: linear-gradient(70deg, var(--mainColor) 40%, var(--secondColor));
   width: 100%;
   height: 900px;
   padding-left: 200px;
@@ -781,7 +937,7 @@ a {
 
 .bannerOrange {
   background-color: #1976d2;
-  background: linear-gradient(70deg, var(--secondColor) 30%, #ff1e00);
+  background: linear-gradient(70deg, var(--secondColor) 50%, #ff0037);
   color: rgb(228, 228, 228);
   font-weight: bold;
   width: 100%;
@@ -834,4 +990,10 @@ a {
 
 .loginWrapper:hover > .loginLogoWrapper > .hero2 {
   top: 32%;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 5%;
+  opacity: 60%;
 }

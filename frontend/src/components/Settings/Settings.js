@@ -7,26 +7,27 @@ const Settings = props => {
     <div className={styles.settings}>
       <div onClick={() => props.goHome()}>
         <div className={styles.logo}>Exercise-It!</div>
-      </div>
-      <div className={styles.buttonRow}>
-        {!props.showInfo ? (
-          <div>
+        {!props.showInfo ? ( <div className={styles.rowSpace}>
             <div
               onClick={() => props.hideExercises()}
               className={
-                props.hiddenExercises ? styles.settingActive : styles.setting
+                props.hiddenExercises ? styles.smallToggleTrue : styles.smallToggleFalse
               }
             >
-              Skjul øvelser
+              Kun økter
             </div>
             <div
               onClick={() => props.hideWorkouts()}
               className={
-                props.hiddenWorkouts ? styles.settingActive : styles.setting
+                props.hiddenWorkouts ? styles.smallToggleTrue : styles.smallToggleFalse
               }
             >
-              Skjul treningsøkter
-            </div>
+              Kun øvelser
+            </div> </div> ): ''}
+      </div>
+      <div >
+        {!props.showInfo ? (
+          <div>
             <div
               onClick={() => props.newExercise()}
               className={
@@ -35,7 +36,7 @@ const Settings = props => {
                   : styles.setting
               }
             >
-              Legg til ny øvelse +
+              Legg til øvelse <strong>+</strong>
             </div>
             <div
               onClick={() => props.newWorkout()}
@@ -43,7 +44,7 @@ const Settings = props => {
                 props.creatingNewWorkout ? styles.settingActive : styles.setting
               }
             >
-              Opprett treningsøkt +
+              Opprett økt <strong>+</strong>
             </div>{" "}
           </div>
         ) : (
@@ -51,7 +52,7 @@ const Settings = props => {
         )}
         {props.user.username === "admin" ? (
           <a target="_self" href="http://localhost:8000/admin">
-            <div className={styles.loginSetting}>Django-Admin</div>
+            <div className={styles.setting}>Django-Admin</div>
           </a>
         ) : (
           <div

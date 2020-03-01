@@ -89,7 +89,7 @@ class Login extends React.Component {
               {this.state.register ? (
                 <div className={styles.loginSubheader}>Kom i gang!</div>
               ) : (
-                <div className={styles.loginSubheader}>Logg inn!</div>
+                <div className={styles.loginSubheader}>Logg inn</div>
               )}
               <input
                 name="username"
