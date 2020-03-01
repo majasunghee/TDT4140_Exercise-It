@@ -69,20 +69,21 @@ class Home extends React.Component {
           hiddenWorkouts={this.state.hideWorkouts}
         />
         <div className={styles.container}>
-            <Feed
-              defaultHome={() =>
-                this.setState({ newExercise: false, newWorkout: false })
-              }
-              user={this.props.user}
-              creatingNewExercise={this.state.newExercise}
-              creatingNewWorkout={this.state.newWorkout}
-              hiddenExercises={this.state.hideExercises}
-              hiddenWorkouts={this.state.hideWorkouts}
-              singlePost={post => {
-                this.props.singlePost(post);
-              }}
-              token={this.props.token}
-            />
+          <Feed
+            defaultHome={() =>
+              this.setState({ newExercise: false, newWorkout: false })
+            }
+            user={this.props.user}
+            creatingNewExercise={this.state.newExercise}
+            creatingNewWorkout={this.state.newWorkout}
+            hiddenExercises={this.state.hideExercises}
+            hiddenWorkouts={this.state.hideWorkouts}
+            singlePost={(post, workout) => {
+              this.props.singlePost(post, workout);
+            }}
+            token={this.props.token}
+            deleted={this.state.deleted}
+          />
         </div>
       </div>
     );

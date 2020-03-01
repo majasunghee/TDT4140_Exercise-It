@@ -48,15 +48,13 @@ class Info extends React.Component {
           info={() => this.props.onInfo()}
         />
         <div className={styles.container}>
-          <div className={styles.mainHeader}>Exercise-It!</div>
-          <div className={styles.mainHeader}>
-            En aktiv side for deg som ønsker å dele trening og bli inspirert
+          <div className={styles.infoHeader}>
+            <div className={styles.mainHeader}>Exercise-It!</div>
+            <br />
+            <p>En aktiv side for deg som ønsker å dele trening og bli inspirert</p>
+            <p>Gruppe 62, Programvareutvikling</p>
+            <p>NTNU Våren 2020</p>
           </div>
-          <br />
-          <div className={styles.mainHeader}>
-            Gruppe 62, Programvareutvikling
-          </div>
-          <div className={styles.mainHeader}>NTNU Våren 2020</div>
         </div>
       </div>
     );

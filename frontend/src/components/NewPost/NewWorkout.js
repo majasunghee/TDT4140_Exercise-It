@@ -3,7 +3,9 @@ import styles from "../../App.module.css"
 
 const defaultState = {
   title: "",
+  addExercise: "",
   exercises: [],
+  exercisesId: "",
   image: "",
   content: "",
   duration: "",
@@ -27,7 +29,7 @@ export default class NewWorkout extends React.Component {
         formdata.append('content', this.state.content);
         formdata.append('duration', this.state.duration);
         formdata.append('image', this.state.image, this.state.image.name);
-        formdata.append('relations', this.state.exercises);
+        formdata.append('relations', this.state.exercisesId);
         formdata.append('username', this.props.user.username ? this.props.user.username : '')
     
         var parameters = {
@@ -58,6 +60,39 @@ export default class NewWorkout extends React.Component {
         onChange = change =>
         this.setState({ [change.target.name]: change.target.value });
         
+
+        onChange = change =>
+        this.setState({ [change.target.name]: change.target.value });
+    
+      filterFound = () => {
+        var match = '';
+        if (this.state.exercises.indexOf(this.state.addExercise) <= -1) {
+        this.props.exercises.forEach(a => this.state.addExercise === a.title ? match = a.id : '')
+        return match;
+        }
+      }
+    
+      removeFilter(filter) {
+        var oldIds = this.state.exercisesId.split(' ').slice(1);
+        var newFilters = [];
+        var newIds = '';
+        oldIds.splice(this.state.exercises.indexOf(filter), 1)
+        oldIds.forEach(id => 
+          newIds = newIds + " " + id);
+    
+        this.state.exercises.forEach(a => a !== filter ?
+        newFilters.push(a) : '');
+        this.setState({exercises: newFilters, exercisesId: newIds})
+      }
+    
+      addFilter() {
+        if (this.filterFound()) {
+        this.setState({exercisesId: (this.state.exercisesId + " " + this.filterFound()),
+        exercises: [...this.state.exercises, this.state.addExercise], addExercise: ''})
+        }
+      }
+    
+
         render() {
         if ( !this.props.isCreating ) { return <div></div>}
 
@@ -108,12 +143,23 @@ export default class NewWorkout extends React.Component {
                   onChange={this.onChange}
                 />
                 <input
-                  name="exercises"
-                  className={styles.input}
+                  name="addExercise"
+                  className={this.filterFound() ? styles.input : styles.inputDisabled}
                   placeholder="Velg øvelser"
-                  value={this.state.exercises}
+                  value={this.state.addExercise.charAt(0).toUpperCase() + 
+                    this.state.addExercise.slice(1)}
                   onChange={this.onChange}
+                  onKeyPress={event =>
+                    event.key === "Enter" ? this.addFilter() : ""}
                 />
+                 <button
+          className={
+            this.filterFound() ? styles.button : styles.buttonDisabled
+          }
+          onClick={() => this.addFilter()}
+        >
+          + Legg til
+        </button>
               <button
                 className={
                   this.checkValidPost()
@@ -122,8 +168,12 @@ export default class NewWorkout extends React.Component {
                 }
                 onClick={() => this.post()}
               >
-                + Publiser
+                Publiser
               </button>
             </div>
+            <div className={styles.row}>
+        {this.state.exercises.map(exercise =>
+        <div className={styles.filterListPost} onClick={() => this.removeFilter(exercise)}>{exercise}</div>)}
+      </div>
           </div>) }
     }

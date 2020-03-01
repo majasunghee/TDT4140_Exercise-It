@@ -1,0 +1,11 @@
+--- 
+code-quality: 
+  script: 
+    - "echo code quality check"
+  tags: 
+    - ci
+testing: 
+  script: 
+    - "echo Running tests"
+  tags: 
+    - ci
