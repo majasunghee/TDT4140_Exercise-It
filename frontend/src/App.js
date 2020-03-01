@@ -126,7 +126,7 @@ class App extends React.Component {
                 setRoute={() => this.getSinglePostUrl()}
                 homeButton={() => this.setState({ feed: true })}
                 onDelete={() =>
-                  this.setState({ feed: true }) && location.reload()
+                  this.setState({ feed: true }) && this.forceUpdate()
                 }
               />
             </Route>
