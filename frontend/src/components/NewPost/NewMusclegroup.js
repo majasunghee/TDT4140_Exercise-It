@@ -71,7 +71,11 @@ export default class NewMusclegroup extends React.Component {
             this.state.musclegroup.length <= 2 ||
             this.props.musclegroups.filter(
               a => a.name === this.state.musclegroup
+<<<<<<< HEAD
             ).length !== 0
+=======
+            ).length != 0
+>>>>>>> 38afa92394ff0ff48b8f6bb5d021df1577455a79
           }
           className={
             this.state.musclegroup.length > 2 &&
