@@ -33,9 +33,10 @@ export const getLatestExercises = async () => {
   return data;
 };
 
-export const updateExercise = async (id, content) => {
+export const updateExercise = async (id, content, add, rem) => {
   const newdata = new FormData();
   newdata.append("content", content);
+  newdata.append("relations", add + "/" + rem);
 
   var parameters = {
     method: "PATCH",
@@ -100,9 +101,10 @@ export const getLatestWorkouts = async () => {
   return data;
 };
 
-export const updateWorkout = async (id, content) => {
+export const updateWorkout = async (id, content, add, rem) => {
   const newdata = new FormData();
   newdata.append("content", content);
+  newdata.append("relations", add + "/" + rem);
 
   var parameters = {
     method: "PATCH",

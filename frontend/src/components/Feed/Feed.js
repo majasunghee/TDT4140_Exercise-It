@@ -27,7 +27,7 @@ class Feed extends React.Component {
       loadingMusclegroups: true,
       loadingWorkouts: true,
       scroller: 0,
-      createMusclegroup: false,
+      createMusclegroup: false
     };
   }
 
@@ -37,6 +37,7 @@ class Feed extends React.Component {
 
   buildFeed() {
     this.props.defaultHome();
+    this.setState({ createMusclegroup: false });
     getMusclegroups()
       .then(data => this.setState({ musclegroups: data }))
       .then(() => this.setState({ loadingMusclegroups: false }));
@@ -46,6 +47,12 @@ class Feed extends React.Component {
     getLatestWorkouts()
       .then(data => this.setState({ workouts: data }))
       .then(() => this.setState({ loadingWorkouts: false }));
+  }
+
+  reFetchMuscleGroups() {
+    getMusclegroups().then(data =>
+      this.setState({ musclegroups: data, createMusclegroup: false })
+    );
   }
 
   filterFound = () => {
@@ -114,25 +121,18 @@ class Feed extends React.Component {
           <div className={styles.feedContainer}>
             <SpinnerPost />
             <div className={styles.footer}> Exercise-It © • estb. 2020 </div>
-        <div className={styles.filterContainer}>
-          <input
-            placeholder="Skriv inn nøkkelord"
-            name="Filter"
-            autoComplete="off"
-            className={styles.filterDisabled}
-          />  
-          <img
-                alt=""
-                className={styles.search}
-                src={search}
-                  />
-          <button
-            disabled={true}
-            className={ styles.buttonFilterDisabled }
-          >
-            Legg til filter
-          </button>
-        </div>
+            <div className={styles.filterContainer}>
+              <input
+                placeholder="Skriv inn nøkkelord"
+                name="Filter"
+                autoComplete="off"
+                className={styles.filterDisabled}
+              />
+              <img alt="" className={styles.search} src={search} />
+              <button disabled={true} className={styles.buttonFilterDisabled}>
+                Legg til filter
+              </button>
+            </div>
           </div>
         </div>
       );
@@ -140,19 +140,38 @@ class Feed extends React.Component {
     return (
       <div>
         <div className={styles.feedContainer}>
-          <div className={(this.state.exercises.filter(post => this.checkSelectedFilters(post)).length === 0
-             && this.state.workouts.filter(post => this.checkSelectedFilters(post)).length === 0) ? styles.headerEmpty : styles.mainHeader}>
+          <div
+            className={
+              this.state.exercises.filter(post =>
+                this.checkSelectedFilters(post)
+              ).length === 0 &&
+              this.state.workouts.filter(post =>
+                this.checkSelectedFilters(post)
+              ).length === 0
+                ? styles.headerEmpty
+                : styles.mainHeader
+            }
+          >
             <h1>
-              {(this.state.exercises.filter(post => this.checkSelectedFilters(post)).length === 0
-             && this.state.workouts.filter(post => this.checkSelectedFilters(post)).length === 0) ? "Ingen treff .."
-             : this.props.user.username
+              {this.state.exercises.filter(post =>
+                this.checkSelectedFilters(post)
+              ).length === 0 &&
+              this.state.workouts.filter(post =>
+                this.checkSelectedFilters(post)
+              ).length === 0
+                ? "Ingen treff .."
+                : this.props.user.username
                 ? "Hei, " + this.props.user.username + "!"
-                : "Velkommen!" }
+                : "Velkommen!"}
             </h1>
           </div>
           <NewExercise
             musclegroups={this.state.musclegroups}
-            createMusclegroup={() => this.setState({ createMusclegroup: !this.state.createMusclegroup })}
+            createMusclegroup={() =>
+              this.setState({
+                createMusclegroup: !this.state.createMusclegroup
+              })
+            }
             reFetch={() => this.buildFeed()}
             user={this.props.user}
             isCreating={this.props.creatingNewExercise}
@@ -163,11 +182,15 @@ class Feed extends React.Component {
             user={this.props.user}
             isCreating={this.props.creatingNewWorkout}
           />
-          <NewMusclegroup 
+          <NewMusclegroup
             musclegroups={this.state.musclegroups}
-            reFetch={() => {}}
-            isCreating={this.state.createMusclegroup}
-            />
+            reFetch={() => this.reFetchMuscleGroups()}
+            isCreating={
+              !this.props.creatingNewWorkout &&
+              this.props.creatingNewExercise &&
+              this.state.createMusclegroup
+            }
+          />
           <div className={styles.feed}>
             {!this.props.hiddenWorkouts
               ? this.state.selectedFilters.length === 0
@@ -207,22 +230,28 @@ class Feed extends React.Component {
             {!this.state.loading ? (
               <div>
                 {!this.props.hiddenExercises ? (
-                  (this.state.selectedFilters.length === 0 && !this.props.hiddenWorkouts) ? (
+                  this.state.selectedFilters.length === 0 &&
+                  !this.props.hiddenWorkouts ? (
                     <div className={styles.cardContainer}>
-                    <div  onClick={() =>
-                  this.state.scroller !== 0
-                    ? this.setState({
-                        scroller: this.state.scroller - 3
-                      })
-                    : ""}><img
-                alt="<"
-                className={
-                  this.state.scroller !== 0
-                    ? styles.arrow
-                    : styles.arrowDisabled
-                }
-                src={left}
-                  /> </div>
+                      <div
+                        onClick={() =>
+                          this.state.scroller !== 0
+                            ? this.setState({
+                                scroller: this.state.scroller - 3
+                              })
+                            : ""
+                        }
+                      >
+                        <img
+                          alt="<"
+                          className={
+                            this.state.scroller !== 0
+                              ? styles.arrow
+                              : styles.arrowDisabled
+                          }
+                          src={left}
+                        />{" "}
+                      </div>
                       {this.state.exercises
                         .slice(this.state.scroller, this.state.scroller + 3)
                         .map(post => (
@@ -243,45 +272,54 @@ class Feed extends React.Component {
                             />
                           </div>
                         ))}
-                <div  onClick={() =>
-                   this.state.scroller + 4 < this.state.exercises.length
-                   ? this.setState({
-                       scroller: this.state.scroller + 3
-                     })
-                   : ""}><img
-                alt=">"
-                className={
-                  this.state.scroller + 4 < this.state.exercises.length
-                    ? styles.arrow
-                    : styles.arrowDisabled
-                }
-                src={right}
-                  /> </div>
+                      <div
+                        onClick={() =>
+                          this.state.scroller + 4 < this.state.exercises.length
+                            ? this.setState({
+                                scroller: this.state.scroller + 3
+                              })
+                            : ""
+                        }
+                      >
+                        <img
+                          alt=">"
+                          className={
+                            this.state.scroller + 4 <
+                            this.state.exercises.length
+                              ? styles.arrow
+                              : styles.arrowDisabled
+                          }
+                          src={right}
+                        />{" "}
+                      </div>
                     </div>
                   ) : (
                     <div className={styles.feed}>
-                    {this.state.exercises.map(post =>
-                      this.checkSelectedFilters(post) ? (
-                        <div
-                          onClick={() =>
-                            this.props.singlePost(post, "exercise")
-                          }
-                        >
-                          <Post
-                            url={post.url}
-                            user={post.user}
-                            date={post.date}
-                            title={post.title}
-                            image={post.image}
-                            content={post.content}
-                            sets={post.sets}
-                            reps={post.reps}
-                            exercise
-                          />
-                        </div>
-                       ) : ( "" ))}</div>
-                    )
-                  
+                      {this.state.exercises.map(post =>
+                        this.checkSelectedFilters(post) ? (
+                          <div
+                            onClick={() =>
+                              this.props.singlePost(post, "exercise")
+                            }
+                          >
+                            <Post
+                              url={post.url}
+                              user={post.user}
+                              date={post.date}
+                              title={post.title}
+                              image={post.image}
+                              content={post.content}
+                              sets={post.sets}
+                              reps={post.reps}
+                              exercise
+                            />
+                          </div>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </div>
+                  )
                 ) : (
                   ""
                 )}
@@ -304,7 +342,7 @@ class Feed extends React.Component {
             )}
           </div>
         </div>
-        <div className={styles.footer}> Exercise-It © • estb. 2020 </div>
+        <div className={styles.footer}> Exercise-It © • est. 2020 </div>
         <div className={styles.filterContainer}>
           <input
             placeholder="Skriv inn nøkkelord"
@@ -321,12 +359,8 @@ class Feed extends React.Component {
             onKeyPress={event =>
               event.key === "Enter" ? this.addFilter() : ""
             }
-          />  
-          <img
-                alt=""
-                className={styles.search}
-                src={search}
-                  />
+          />
+          <img alt="" className={styles.search} src={search} />
           <button
             disabled={!this.filterFound()}
             onClick={() => this.addFilter()}
@@ -338,7 +372,7 @@ class Feed extends React.Component {
           >
             Legg til filter
           </button>
-        
+
           {this.state.selectedFilters.map(filter => (
             <div
               className={styles.filterList}

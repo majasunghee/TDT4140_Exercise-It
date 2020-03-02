@@ -102,6 +102,25 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
         exercise.save()
         return exercise
 
+    def update(self, instance, data):
+        exercise = super().update(instance, data)
+        if (len(data["relations"]) > 2):
+            add = data["relations"].split("/")[0]
+            remove = data["relations"].split("/")[1]
+        if (len(add) > 0):
+            for m_name in add.split(" "):
+                group = Musclegroup.objects.get(name=m_name)
+                exercise.musclegroups.add(group) 
+        if (len(remove) > 0):
+            for m_name in remove.split(" "):
+                if (m_name != ""):
+                    group = Musclegroup.objects.get(name=m_name)
+                    exercise.musclegroups.remove(group) 
+
+        exercise.save()
+        return exercise
+
+
 class SimpleExerciseSerializer(serializers.ModelSerializer):
     musclegroups = MusclegroupSerializer(many=True)
 
@@ -131,6 +150,24 @@ class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
         if (len(pusername) > 0):
             person = CustomUser.objects.get(username=pusername)
             setattr(workout, 'user', person)
+
+        workout.save()
+        return workout
+
+    def update(self, instance, data):
+        workout = super().update(instance, data)
+        if (len(data["relations"]) > 2):
+            add = data["relations"].split("/")[0]
+            remove = data["relations"].split("/")[1]
+        if (len(add) > 0):
+            for e_title in add.split(" "):
+                group = Exercise.objects.get(title=e_title)
+                workout.exercises.add(group) 
+        if (len(remove) > 0):
+            for e_title in remove.split(" "):
+                if (e_title != ""):
+                    group = Exercise.objects.get(title=e_title)
+                    workout.exercises.remove(group) 
 
         workout.save()
         return workout

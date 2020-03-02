@@ -7,6 +7,9 @@ import duration from "../../icons/duration.png";
 import reps from "../../icons/reps.png";
 import Settings from "../Settings/Settings";
 
+import { getLatestExercises } from "../../actions/posts";
+import { getMusclegroups } from "../../actions/musclegroups";
+
 import {
   getSingleWorkout,
   getSingleExercise,
@@ -18,7 +21,20 @@ import {
 
 var postData = "";
 
-const months = ['januar', 'februar', 'mars', 'april', 'mai', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'desember']
+const months = [
+  "januar",
+  "februar",
+  "mars",
+  "april",
+  "mai",
+  "juni",
+  "juli",
+  "august",
+  "september",
+  "oktober",
+  "november",
+  "desember"
+];
 
 class PostContainer extends React.Component {
   constructor(props) {
@@ -27,14 +43,28 @@ class PostContainer extends React.Component {
     this.state = {
       loading: true,
       editing: false,
-      content: ""
+      content: "",
+      newRelations: "",
+      removeRelations: "",
+      filter: "",
+      musclegroups: {},
+      exercises: {},
+      postFilters: [],
     };
   }
 
   componentDidMount() {
     this.getPost();
     window.scrollTo(0, 0);
-    this.props.setRoute();
+    this.props.setRoute();    
+    this.getMeta();
+  }
+
+  getMeta() {
+    getMusclegroups()
+      .then(data => this.setState({ musclegroups: data }))
+    getLatestExercises()
+      .then(data => this.setState({ exercises: data }))
   }
 
   getPost() {
@@ -55,13 +85,13 @@ class PostContainer extends React.Component {
     if (window.location.href.split("?")[1] === "type=workout") {
       updateWorkout(
         window.location.href.split("?")[0].split("posts/")[1],
-        this.state.content
-      );
+        this.state.content, this.state.newRelations, this.state.removeRelations
+      ).then(() => this.forceUpdate());
     } else if (window.location.href.split("?")[1] === "type=exercise") {
       updateExercise(
         window.location.href.split("?")[0].split("posts/")[1],
-        this.state.content
-      );
+        this.state.content, this.state.newRelations, this.state.removeRelations
+      ).then(() => this.forceUpdate());
     }
 
     this.setState({ editing: false });
@@ -77,7 +107,55 @@ class PostContainer extends React.Component {
     }
   }
 
+  filterFound = () => {
+    var match = "";
+    postData.exercises && this.state.exercises.forEach(a =>
+      this.state.filter === a.title && (!postData.exercises.includes(this.state.filter) ||
+       this.state.removeRelations.includes(this.state.filter)) && (!this.state.postFilters.includes(this.state.filter)) ? (match = a.title) : ""
+    );
+    !postData.exercises && postData.musclegroups && this.state.musclegroups.forEach(a =>
+      this.state.filter === a.name && (!postData.musclegroups.includes(this.state.filter) ||
+       this.state.removeRelations.includes(this.state.filter)) && (!this.state.postFilters.includes(this.state.filter)) ? (match = a.name) : ""
+    );
+      return match;
+    };
+    
+  addFilter() {
+    if (this.filterFound()) {
+      if (this.state.removeRelations.split(" ").filter(a => a === this.state.filter).length === 0) {
+      this.setState({
+        newRelations: this.state.newRelations + " " + this.filterFound(),
+      });
+      this.setState({
+        postFilters: [...this.state.postFilters, this.state.filter],
+        filter: "",
+      });
+      }
+      else {
+      this.setState({
+        removeRelations: this.state.removeRelations.replace(" "+this.state.filter, ""),
+        filter: "",
+      });  
+      }
+    }
+  }
+
+  removeFilter(filter) {
+    var oldIds = this.state.newRelations.split(" ").slice(1);
+    var newFilters = [];
+    var newIds = "";
+    oldIds.splice(this.state.postFilters.indexOf(filter), 1);
+    oldIds.forEach(id => (newIds = newIds + " " + id));
+
+    this.state.postFilters.forEach(a =>
+      a !== filter ? newFilters.push(a) : ""
+    );
+    this.setState({ postFilters: newFilters, newRelations: newIds });
+  }
+
   render() {
+    console.log("add: " + this.state.newRelations);
+    console.log("remove: " + this.state.removeRelations);
     if (this.state.loading) {
       return <div></div>;
     }
@@ -133,25 +211,40 @@ class PostContainer extends React.Component {
               <div className={styles.title}>
                 <strong>{postData.user ? postData.user : "Anonym"}</strong>
               </div>
-              <div className={styles.description}>{parseInt(postData.date.slice(8,10), 10) + '. ' + 
-              months[parseInt(postData.date.slice(5,7), 10)-1] + ' ' + postData.date.slice(0,4)}</div>
-              { postData.duration ? 
-              <img
-                alt="Exercise-it!"
-                className={styles.iconInfo}
-                src={duration}
-              /> : '' }
+              <div className={styles.description}>
+                {parseInt(postData.date.slice(8, 10), 10) +
+                  ". " +
+                  months[parseInt(postData.date.slice(5, 7), 10) - 1] +
+                  " " +
+                  postData.date.slice(0, 4)}
+              </div>
+              {postData.duration ? (
+                <img
+                  alt="Exercise-it!"
+                  className={styles.iconInfo}
+                  src={duration}
+                />
+              ) : (
+                ""
+              )}
               <div className={styles.duration}>
                 {postData.duration ? postData.duration + " min" : ""}
               </div>
-              { postData.reps && postData.sets && (postData.sets > 1 || postData.reps > 1) ? 
-              <img
-                alt="Exercise-it!"
-                className={styles.iconInfoLeft}
-                src={reps}
-              /> : '' }
+              {postData.reps &&
+              postData.sets &&
+              (postData.sets > 1 || postData.reps > 1) ? (
+                <img
+                  alt="Exercise-it!"
+                  className={styles.iconInfoLeft}
+                  src={reps}
+                />
+              ) : (
+                ""
+              )}
               <div className={styles.reps}>
-                {postData.sets && postData.sets && (postData.sets > 1 || postData.reps > 1)
+                {postData.sets &&
+                postData.sets &&
+                (postData.sets > 1 || postData.reps > 1)
                   ? postData.reps + " rep. - " + postData.sets + " sett"
                   : ""}
               </div>
@@ -172,15 +265,54 @@ class PostContainer extends React.Component {
                 />
               ) : (
                 <div className={styles.text}>{this.state.content}</div>
-              )}
+              )}    {this.state.editing ? (  <div>
+          <input
+            name="filter"
+            className={
+              this.filterFound()
+                ? styles.inputMedium
+                : styles.inputMediumDisabled
+            }
+            placeholder={window.location.href.split("?")[1] === "type=exercise" ? "Finn muskelgrupper" : "Finn øvelser"}
+            value={
+              this.state.filter.charAt(0).toUpperCase() +
+              this.state.filter.slice(1)
+            }
+            onChange={change =>
+              this.setState({ filter: change.target.value })}
+            onKeyPress={event =>
+              event.key === "Enter" ? this.addFilter() : ""
+            }
+          />
+          <button
+            className={
+              this.filterFound()
+                ? styles.buttonSmall
+                : styles.buttonSmallDisabled
+            }
+            onClick={() => this.addFilter()}
+          >
+            Velg
+          </button></div>) : ''}
               <div className={styles.rowSpace}>
                 <div className={styles.row}>
                   {postData.exercises &&
-                    postData.exercises.map(exercise => (
-                      <div className={styles.filterListPost}>{exercise}</div>
+                    postData.exercises.filter(a => !this.state.removeRelations.includes(a)).map(exercise => (
+                      <div className={styles.filterListPost}
+                      onClick={() => this.state.editing && this.setState({
+                        removeRelations: this.state.removeRelations + ' ' + exercise
+                      })}>{exercise}</div>
                     ))}
-                  {postData.musclegroups.map(exercise => (
-                    <div className={styles.filterListPurple}>{exercise}</div>
+                    {this.state.postFilters.length > 0 ? this.state.postFilters.map(filter => (
+                      <div className={styles.filterListPost}
+                      onClick={() => this.state.editing && this.removeFilter(filter)}>{filter}</div>
+                    )) : ''}
+                  {postData.musclegroups.filter(a => !this.state.removeRelations.includes(a)).map(workout => (
+                    <div className={styles.filterListPurple}
+                    onClick={() => window.location.href.split("?")[1] === "type=exercise" && 
+                    this.state.editing && this.setState({
+                      removeRelations: this.state.removeRelations + ' ' + workout
+                    })}>{workout}</div>
                   ))}
                 </div>
                 {this.props.user.username === postData.user ||
