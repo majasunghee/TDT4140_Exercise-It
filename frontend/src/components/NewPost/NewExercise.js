@@ -60,6 +60,7 @@ export default class NewExercise extends React.Component {
     return (
       this.state.title.length > 3 &&
       this.state.title.length < 50 &&
+      !(this.state.title.indexOf(' ') > -1) &&
       this.state.image &&
       this.state.content.length > 15
     );
