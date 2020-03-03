@@ -1,6 +1,6 @@
 ![Exercise.it](./feed.png)
 
-# `exercise-web`
+## `exercise-web :muscle:`
 
 ## Start the app
 
