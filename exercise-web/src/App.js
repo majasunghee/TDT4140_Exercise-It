@@ -1,17 +1,12 @@
 import React from "react";
-import Home from "./Home";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+
+import Container from "./components/Container/Container";
 import Login from "./components/Login/Login";
-import Info from "./components/Info/Info";
-import PostContainer from "./components/Post/PostContainer";
+import Info from "./components/Settings/Info";
+import PostLarge from "./components/Post/PostLarge";
 
-import { getUser } from "./actions/user";
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
+import { getUser } from "./fetch/user";
 
 const defaultState = {
   user: {},
@@ -81,7 +76,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
+      <BrowserRouter>
         <link
           href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
           rel="stylesheet"
@@ -99,7 +94,7 @@ class App extends React.Component {
               />
             </Route>
             <Route exact path="/">
-              <Home
+              <Container
                 user={this.state.user}
                 token={this.state.token}
                 onLogin={() => this.goToLogin()}
@@ -118,7 +113,7 @@ class App extends React.Component {
               />
             </Route>
             <Route path="/posts">
-              <PostContainer
+              <PostLarge
                 user={this.state.user}
                 token={this.state.token}
                 onLogin={() => this.goToLogin()}
@@ -148,7 +143,7 @@ class App extends React.Component {
           />
         )}
         ;
-      </Router>
+      </BrowserRouter>
     );
   }
 }

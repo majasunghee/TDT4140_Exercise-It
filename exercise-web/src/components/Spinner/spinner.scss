@@ -1,3 +1,8 @@
+
+.spinnerContainer {
+    margin-top: 200px;
+  }
+  
 .spinner {
     --duration: 0.8s;
     transform: scale(var(--scale, 1.2));

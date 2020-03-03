@@ -7,36 +7,16 @@ import duration from "../../icons/duration.png";
 import reps from "../../icons/reps.png";
 import Settings from "../Settings/Settings";
 
-import { getLatestExercises } from "../../actions/posts";
-import { getMusclegroups } from "../../actions/musclegroups";
+import months from "../../consts/months"
 
-import {
-  getSingleWorkout,
-  getSingleExercise,
-  updateExercise,
-  updateWorkout,
-  deleteExercise,
-  deleteWorkout
-} from "../../actions/posts";
+import { getLatestExercises, getSingleExercise, updateExercise, deleteExercise } from "../../fetch/exercise";
+import { getMusclegroups } from "../../fetch/musclegroup";
+
+import { getSingleWorkout, updateWorkout, deleteWorkout } from "../../fetch/workout";
 
 var postData = "";
 
-const months = [
-  "januar",
-  "februar",
-  "mars",
-  "april",
-  "mai",
-  "juni",
-  "juli",
-  "august",
-  "september",
-  "oktober",
-  "november",
-  "desember"
-];
-
-class PostContainer extends React.Component {
+class PostLarge extends React.Component {
   constructor(props) {
     super(props);
 
@@ -411,4 +391,4 @@ class PostContainer extends React.Component {
   }
 }
 
-export default PostContainer;
+export default PostLarge;

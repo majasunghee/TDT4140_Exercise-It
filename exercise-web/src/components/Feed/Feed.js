@@ -1,6 +1,6 @@
 import React from "react";
 import Post from "../Post/Post";
-import Card from "../Card/Card";
+import PostSmall from "../Post/PostSmall";
 import NewExercise from "../NewPost/NewExercise";
 import NewWorkout from "../NewPost/NewWorkout";
 import NewMusclegroup from "../NewPost/NewMusclegroup";
@@ -10,8 +10,9 @@ import left from "../../icons/left.png";
 import right from "../../icons/right.png";
 import search from "../../icons/search.png";
 
-import { getLatestExercises, getLatestWorkouts } from "../../actions/posts";
-import { getMusclegroups } from "../../actions/musclegroups";
+import { getLatestExercises } from "../../fetch/exercise";
+import { getLatestWorkouts } from "../../fetch/workout";
+import { getMusclegroups } from "../../fetch/musclegroup";
 
 class Feed extends React.Component {
   constructor(props) {
@@ -260,7 +261,7 @@ class Feed extends React.Component {
                               this.props.singlePost(post, "exercise")
                             }
                           >
-                            <Card
+                            <PostSmall
                               url={post.url}
                               user={post.user}
                               date={post.date}

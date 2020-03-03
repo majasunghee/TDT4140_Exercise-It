@@ -4,20 +4,7 @@ import anonym from "../../icons/anonym.png";
 import professional from "../../icons/professional.png";
 import amateur from "../../icons/amateur.png";
 
-const months = [
-  "januar",
-  "februar",
-  "mars",
-  "april",
-  "mai",
-  "juni",
-  "juli",
-  "august",
-  "september",
-  "oktober",
-  "november",
-  "desember"
-];
+import months from "../../consts/months"
 
 const Post = props => {
   return (

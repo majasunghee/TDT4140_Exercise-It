@@ -1,10 +1,10 @@
 import React from "react";
-import Settings from "./components/Settings/Settings";
-import Feed from "./components/Feed/Feed";
+import Settings from "../Settings/Settings";
+import Feed from "../Feed/Feed";
 
-import styles from "./App.module.css";
+import styles from "../../App.module.css";
 
-class Home extends React.Component {
+class Container extends React.Component {
   constructor(props) {
     super(props);
 
@@ -90,4 +90,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Container;

@@ -2,7 +2,7 @@ import React from "react";
 import Spinner from "../Spinner/Spinner";
 
 import styles from "../../App.module.css";
-import { registerUser, loginUser } from "../../actions/user";
+import { registerUser, loginUser } from "../../fetch/user";
 
 class Login extends React.Component {
   constructor(props) {

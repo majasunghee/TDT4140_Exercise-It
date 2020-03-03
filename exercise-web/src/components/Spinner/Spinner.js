@@ -1,10 +1,9 @@
 import React from 'react';
-import styles from '../../App.module.css'
 import './spinner.scss'
 
 const Spinner = () => {
     return (
-        <div className={styles.spinnerContainer}>
+        <div className="spinnerContainer">
             <div className="spinner">
             <div className="outer">
                 <div className="body">

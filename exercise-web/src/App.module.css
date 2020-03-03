@@ -1,8 +1,3 @@
-:root {
-  --mainColor: #f16000;
-  --secondColor: #7500be;
-}
-
 .container {
   margin-left: 330px;
   width: auto;
@@ -280,10 +275,6 @@ a {
   border-radius: 6px 6px 0 0;
   display: flex;
   justify-content: space-between;
-}
-
-.spinnerContainer {
-  margin-top: 200px;
 }
 
 .postWrapperExtra,

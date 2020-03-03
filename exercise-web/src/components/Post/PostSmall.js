@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../../App.module.css";
 
-const Card = props => {
+const PostSmall = props => {
   return (
     <div className={styles.cardWrapper} style={{  
       backgroundImage: "url("+props.image.split('public/')[1]+")",
@@ -15,4 +15,4 @@ const Card = props => {
   );
 };
 
-export default Card;
+export default PostSmall;
