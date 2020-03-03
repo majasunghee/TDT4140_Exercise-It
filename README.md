@@ -1,4 +1,6 @@
 # Gruppe 62 - Exercise it!
+![Exercise-It](/images/feed.png)
+
 # Frontend: node.js
 
 In the frontend directory, you can run:
