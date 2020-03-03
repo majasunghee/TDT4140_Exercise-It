@@ -1,8 +1,6 @@
 ![Exercise.it](./feed.png)
 
-# exercise-web
-
-In the exercise-web frontend directory, you can run:
+# `exercise-web`
 
 ## Start the app
 
@@ -11,8 +9,8 @@ cd exercise-web
 npm start
 ```
 
-Runs the app in [http://localhost:3000](http://localhost:3000).
-You will also see any errors in the console.
+Runs the app on [http://localhost:3000](http://localhost:3000).
+You will see any errors in the console.
 
 ## Install the app in a new local repo
 
@@ -23,8 +21,6 @@ npm start
 ```
 
 ## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
