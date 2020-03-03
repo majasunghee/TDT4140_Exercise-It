@@ -1,5 +1,6 @@
 # Gruppe 62 - Exercise it!
-![Exercise-It](/images/feed.png)
+![Exercise-It](./feed.png)
+![Exercise-It](./login.png)
 
 # Frontend: node.js
 
