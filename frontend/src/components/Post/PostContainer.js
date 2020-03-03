@@ -49,22 +49,20 @@ class PostContainer extends React.Component {
       filter: "",
       musclegroups: {},
       exercises: {},
-      postFilters: [],
+      postFilters: []
     };
   }
 
   componentDidMount() {
     this.getPost();
     window.scrollTo(0, 0);
-    this.props.setRoute();    
+    this.props.setRoute();
     this.getMeta();
   }
 
   getMeta() {
-    getMusclegroups()
-      .then(data => this.setState({ musclegroups: data }))
-    getLatestExercises()
-      .then(data => this.setState({ exercises: data }))
+    getMusclegroups().then(data => this.setState({ musclegroups: data }));
+    getLatestExercises().then(data => this.setState({ exercises: data }));
   }
 
   getPost() {
@@ -85,15 +83,18 @@ class PostContainer extends React.Component {
     if (window.location.href.split("?")[1] === "type=workout") {
       updateWorkout(
         window.location.href.split("?")[0].split("posts/")[1],
-        this.state.content, this.state.newRelations, this.state.removeRelations
+        this.state.content,
+        this.state.newRelations,
+        this.state.removeRelations
       ).then(() => this.forceUpdate());
     } else if (window.location.href.split("?")[1] === "type=exercise") {
       updateExercise(
         window.location.href.split("?")[0].split("posts/")[1],
-        this.state.content, this.state.newRelations, this.state.removeRelations
+        this.state.content,
+        this.state.newRelations,
+        this.state.removeRelations
       ).then(() => this.forceUpdate());
     }
-
     this.setState({ editing: false });
   }
 
@@ -109,33 +110,50 @@ class PostContainer extends React.Component {
 
   filterFound = () => {
     var match = "";
-    postData.exercises && this.state.exercises.forEach(a =>
-      this.state.filter === a.title && (!postData.exercises.includes(this.state.filter) ||
-       this.state.removeRelations.includes(this.state.filter)) && (!this.state.postFilters.includes(this.state.filter)) ? (match = a.title) : ""
-    );
-    !postData.exercises && postData.musclegroups && this.state.musclegroups.forEach(a =>
-      this.state.filter === a.name && (!postData.musclegroups.includes(this.state.filter) ||
-       this.state.removeRelations.includes(this.state.filter)) && (!this.state.postFilters.includes(this.state.filter)) ? (match = a.name) : ""
-    );
-      return match;
-    };
-    
+    postData.exercises &&
+      this.state.exercises.forEach(a =>
+        this.state.filter === a.title &&
+        (!postData.exercises.includes(this.state.filter) ||
+          this.state.removeRelations.includes(this.state.filter)) &&
+        !this.state.postFilters.includes(this.state.filter)
+          ? (match = a.title)
+          : ""
+      );
+    !postData.exercises &&
+      postData.musclegroups &&
+      this.state.musclegroups.forEach(a =>
+        this.state.filter === a.name &&
+        (!postData.musclegroups.includes(this.state.filter) ||
+          this.state.removeRelations.includes(this.state.filter)) &&
+        !this.state.postFilters.includes(this.state.filter)
+          ? (match = a.name)
+          : ""
+      );
+    return match;
+  };
+
   addFilter() {
     if (this.filterFound()) {
-      if (this.state.removeRelations.split(" ").filter(a => a === this.state.filter).length === 0) {
-      this.setState({
-        newRelations: this.state.newRelations + " " + this.filterFound(),
-      });
-      this.setState({
-        postFilters: [...this.state.postFilters, this.state.filter],
-        filter: "",
-      });
-      }
-      else {
-      this.setState({
-        removeRelations: this.state.removeRelations.replace(" "+this.state.filter, ""),
-        filter: "",
-      });  
+      if (
+        this.state.removeRelations
+          .split(" ")
+          .filter(a => a === this.state.filter).length === 0
+      ) {
+        this.setState({
+          newRelations: this.state.newRelations + " " + this.filterFound()
+        });
+        this.setState({
+          postFilters: [...this.state.postFilters, this.state.filter],
+          filter: ""
+        });
+      } else {
+        this.setState({
+          removeRelations: this.state.removeRelations.replace(
+            " " + this.state.filter,
+            ""
+          ),
+          filter: ""
+        });
       }
     }
   }
@@ -154,8 +172,6 @@ class PostContainer extends React.Component {
   }
 
   render() {
-    console.log("add: " + this.state.newRelations);
-    console.log("remove: " + this.state.removeRelations);
     if (this.state.loading) {
       return <div></div>;
     }
@@ -265,55 +281,95 @@ class PostContainer extends React.Component {
                 />
               ) : (
                 <div className={styles.text}>{this.state.content}</div>
-              )}    {this.state.editing ? (  <div>
-          <input
-            name="filter"
-            className={
-              this.filterFound()
-                ? styles.inputMedium
-                : styles.inputMediumDisabled
-            }
-            placeholder={window.location.href.split("?")[1] === "type=exercise" ? "Finn muskelgrupper" : "Finn øvelser"}
-            value={
-              this.state.filter.charAt(0).toUpperCase() +
-              this.state.filter.slice(1)
-            }
-            onChange={change =>
-              this.setState({ filter: change.target.value })}
-            onKeyPress={event =>
-              event.key === "Enter" ? this.addFilter() : ""
-            }
-          />
-          <button
-            className={
-              this.filterFound()
-                ? styles.buttonSmall
-                : styles.buttonSmallDisabled
-            }
-            onClick={() => this.addFilter()}
-          >
-            Velg
-          </button></div>) : ''}
+              )}{" "}
+              {this.state.editing ? (
+                <div>
+                  <input
+                    name="filter"
+                    className={
+                      this.filterFound()
+                        ? styles.inputMedium
+                        : styles.inputMediumDisabled
+                    }
+                    placeholder={
+                      window.location.href.split("?")[1] === "type=exercise"
+                        ? "Finn muskelgrupper"
+                        : "Finn øvelser"
+                    }
+                    value={
+                      this.state.filter.charAt(0).toUpperCase() +
+                      this.state.filter.slice(1)
+                    }
+                    onChange={change =>
+                      this.setState({ filter: change.target.value })
+                    }
+                    onKeyPress={event =>
+                      event.key === "Enter" ? this.addFilter() : ""
+                    }
+                  />
+                  <button
+                    className={
+                      this.filterFound()
+                        ? styles.buttonSmall
+                        : styles.buttonSmallDisabled
+                    }
+                    onClick={() => this.addFilter()}
+                  >
+                    Velg
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
               <div className={styles.rowSpace}>
                 <div className={styles.row}>
                   {postData.exercises &&
-                    postData.exercises.filter(a => !this.state.removeRelations.includes(a)).map(exercise => (
-                      <div className={styles.filterListPost}
-                      onClick={() => this.state.editing && this.setState({
-                        removeRelations: this.state.removeRelations + ' ' + exercise
-                      })}>{exercise}</div>
+                    postData.exercises
+                      .filter(a => !this.state.removeRelations.includes(a))
+                      .map(exercise => (
+                        <div
+                          className={styles.filterListPost}
+                          onClick={() =>
+                            this.state.editing &&
+                            this.setState({
+                              removeRelations:
+                                this.state.removeRelations + " " + exercise
+                            })
+                          }
+                        >
+                          {exercise}
+                        </div>
+                      ))}
+                  {this.state.postFilters.length > 0
+                    ? this.state.postFilters.map(filter => (
+                        <div
+                          className={styles.filterListPost}
+                          onClick={() =>
+                            this.state.editing && this.removeFilter(filter)
+                          }
+                        >
+                          {filter}
+                        </div>
+                      ))
+                    : ""}
+                  {postData.musclegroups
+                    .filter(a => !this.state.removeRelations.includes(a))
+                    .map(workout => (
+                      <div
+                        className={styles.filterListPurple}
+                        onClick={() =>
+                          window.location.href.split("?")[1] ===
+                            "type=exercise" &&
+                          this.state.editing &&
+                          this.setState({
+                            removeRelations:
+                              this.state.removeRelations + " " + workout
+                          })
+                        }
+                      >
+                        {workout}
+                      </div>
                     ))}
-                    {this.state.postFilters.length > 0 ? this.state.postFilters.map(filter => (
-                      <div className={styles.filterListPost}
-                      onClick={() => this.state.editing && this.removeFilter(filter)}>{filter}</div>
-                    )) : ''}
-                  {postData.musclegroups.filter(a => !this.state.removeRelations.includes(a)).map(workout => (
-                    <div className={styles.filterListPurple}
-                    onClick={() => window.location.href.split("?")[1] === "type=exercise" && 
-                    this.state.editing && this.setState({
-                      removeRelations: this.state.removeRelations + ' ' + workout
-                    })}>{workout}</div>
-                  ))}
                 </div>
                 {this.props.user.username === postData.user ||
                 this.props.user.username === "admin" ? (

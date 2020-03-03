@@ -60,7 +60,7 @@ export default class NewExercise extends React.Component {
     return (
       this.state.title.length > 3 &&
       this.state.title.length < 50 &&
-      !(this.state.title.indexOf(' ') > -1) &&
+      !(this.state.title.indexOf(" ") > -1) &&
       this.state.image &&
       this.state.content.length > 15
     );
@@ -117,7 +117,10 @@ export default class NewExercise extends React.Component {
             name="title"
             className={styles.input}
             placeholder="Navn på øvelse"
-            value={this.state.title}
+            value={
+              this.state.title.charAt(0).toUpperCase() +
+              this.state.title.slice(1)
+            }
             onChange={this.onChange}
           />
           <input
@@ -165,52 +168,54 @@ export default class NewExercise extends React.Component {
           />
           <div className={styles.rowSpace}>
             <div>
-          <input
-            name="addMusclegroup"
-            className={
-              this.filterFound()
-                ? styles.inputMedium
-                : styles.inputMediumDisabled
-            }
-            placeholder="Finn muskelgrupper"
-            value={
-              this.state.addMusclegroup.charAt(0).toUpperCase() +
-              this.state.addMusclegroup.slice(1)
-            }
-            onChange={this.onChange}
-            onKeyPress={event =>
-              event.key === "Enter" ? this.addFilter() : ""
-            }
-          />
-          <button
-            className={
-              this.filterFound()
-                ? styles.buttonSmall
-                : styles.buttonSmallDisabled
-            }
-            onClick={() => this.addFilter()}
-          >
-            Velg
-          </button>
-          {this.props.user.username === "admin" ? (
+              <input
+                name="addMusclegroup"
+                className={
+                  this.filterFound()
+                    ? styles.inputMedium
+                    : styles.inputMediumDisabled
+                }
+                placeholder="Finn muskelgrupper"
+                value={
+                  this.state.addMusclegroup.charAt(0).toUpperCase() +
+                  this.state.addMusclegroup.slice(1)
+                }
+                onChange={this.onChange}
+                onKeyPress={event =>
+                  event.key === "Enter" ? this.addFilter() : ""
+                }
+              />
+              <button
+                className={
+                  this.filterFound()
+                    ? styles.buttonSmall
+                    : styles.buttonSmallDisabled
+                }
+                onClick={() => this.addFilter()}
+              >
+                Velg
+              </button>
+              {this.props.user.username === "admin" ? (
+                <button
+                  className={styles.buttonSmall}
+                  onClick={() => this.props.createMusclegroup()}
+                >
+                  Ny <strong>+</strong>
+                </button>
+              ) : (
+                ""
+              )}
+            </div>
             <button
-              className={styles.buttonSmall}
-              onClick={() => this.props.createMusclegroup()}
+              className={
+                this.checkValidPost() ? styles.button : styles.buttonDisabled
+              }
+              onClick={() => this.post()}
             >
-              Ny <strong>+</strong>
+              Publiser
             </button>
-          ) : (
-            ""
-          )}</div>
-          <button
-            className={
-              this.checkValidPost() ? styles.button : styles.buttonDisabled
-            }
-            onClick={() => this.post()}
-          >
-            Publiser
-          </button>
-        </div></div>
+          </div>
+        </div>
         <div className={styles.row}>
           {this.state.musclegroups.map(musclegroup => (
             <div
