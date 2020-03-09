@@ -104,7 +104,7 @@ export default class NewExercise extends React.Component {
 
   render() {
     if (!this.props.isCreating) {
-      return <div></div>;
+      return <div className={styles.postWrapperEmpty}></div>;
     }
     return (
       <div className={styles.postWrapperPublish}>

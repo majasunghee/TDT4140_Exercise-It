@@ -40,13 +40,6 @@ class Info extends React.Component {
   render() {
     return (
       <div className={this.state.light ? styles.lightMode : ""}>
-        <Settings
-          user={this.props.user}
-          showInfo
-          goHome={() => this.props.homeButton()}
-          login={() => this.props.onLogin()}
-          info={() => this.props.onInfo()}
-        />
         <div className={styles.container}>
           <div className={styles.infoHeader}>
             <div className={styles.mainHeader}>Exercise-It!</div>

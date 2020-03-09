@@ -1,7 +1,9 @@
 import React from "react";
 import Spinner from "../Spinner/Spinner";
 
-import styles from "../../App.module.css";
+import { Link, Redirect } from "react-router-dom";
+
+import styles from "./login.module.css";
 import { registerUser, loginUser } from "../../fetch/user";
 
 class Login extends React.Component {
@@ -16,7 +18,8 @@ class Login extends React.Component {
       repeatPassword: "",
       register: false,
       error: false,
-      loading: false
+      loading: false,
+      loggedIn: false
     };
   }
 
@@ -53,21 +56,25 @@ class Login extends React.Component {
       registerUser(this.getUserFields()).then(res => res ?
         loginUser(this.getUserFields())
           .then(data => this.props.onAuth(data))
-          .then(() => this.setState({ error: true })) : this.setState({ error: true, loading: false })
+          .then(res => res ? this.setState({ loggedIn: true }) : this.setState({ error: true, loading: false }))
+           : this.setState({ error: true, loading: false })
       );
     } else {
       loginUser(this.getUserFields())
         .then(data => this.props.onAuth(data))
-        .then(res => !res && this.setState({ error: true, loading: false }));
+        .then(res => res ? this.setState({ loggedIn: true }) : this.setState({ error: true, loading: false }));
     }
   }
 
   render() {
+    if (this.state.loggedIn) {
+    return  <Redirect to="/" />
+    }
     return (
       <div className={styles.loginWrapper}>
         <div className={styles.loginLogoWrapper}>
-          <div className={styles.hero}>
-            <div className={styles.bannerPurple}>
+          <div className={styles.rightSkew}>
+            <div className={styles.bannerOrange}>
               <div className={styles.antiHero}>
                 <div className={styles.loginHeader}>Exercise.it!</div>
                 <div>En aktiv side for deg som ønsker </div>
@@ -75,8 +82,8 @@ class Login extends React.Component {
               </div>
             </div>
           </div>
-          <div className={styles.hero2}>
-            <div className={styles.bannerOrange} />
+          <div className={styles.leftSkew}>
+            <div className={styles.bannerPurple} />
           </div>
         </div>
         <div className={styles.loginFormWrapper}>
@@ -196,12 +203,9 @@ class Login extends React.Component {
                 >
                   {this.state.register ? "Jeg har bruker" : "Registrer deg"}
                 </button>
-                <button
-                  className={styles.link}
-                  onClick={() => this.props.onCancel()}
-                >
+                <Link to="/"   className={styles.link}>
                   Hopp over
-                </button>
+                </Link>
                 {this.state.error ? (
                   this.state.register ? <div className={styles.error}>Ugyldig brukerinfo..</div> :
                 <div className={styles.error}>Feil navn eller passord..</div>

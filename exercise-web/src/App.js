@@ -1,151 +1,140 @@
 import React from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 
-import Container from "./components/Container/Container";
+import Feed from "./components/Feed/Feed";
+import PostLarge from "./components/Post/PostLarge";
 import Login from "./components/Login/Login";
 import Info from "./components/Settings/Info";
-import PostLarge from "./components/Post/PostLarge";
+import Settings from "./components/Settings/Settings";
 
 import { getUser } from "./fetch/user";
 
-const defaultState = {
-  user: {},
-  token: "",
-  login: false,
-  info: false,
-  feed: true,
-  post: {},
-  postUrl: "",
-  type: ""
-};
-
-let authenticatedUser = {};
-
-class App extends React.Component {
+//Main class to render the react-app
+//Contains info about the user as state, if logged in
+class ExerciseIt extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = defaultState;
+    this.state = {
+    user: {},
+    token: "",
+    //States to control what settings are active
+    newExercise: false,
+    newWorkout: false,
+    hideExercises: false,
+    hideWorkouts: false
+    };
   }
 
-  componentDidMount() {
-    this.authenticateUser(localStorage.getItem("token"));
-  }
-
+  //Function to log in user with token from login-page or cookies
+  //Returns false if token is not provided
   authenticateUser = token => {
     if (token) {
       localStorage.setItem("token", token);
       getUser(token)
-        .then(user => (authenticatedUser = user))
-        .then(() =>
-          this.setState({ login: false, token: token, user: authenticatedUser })
-        );
+        .then(user => this.setState({ token: token, user: user }));
+      return true;
     }
+    return false;
   };
 
-  getSinglePostUrl = () => {
-    this.setState({
-      postUrl: window.location.href.split("?")[0].split("posts/")[1]
-        ? window.location.href
-            .split("?")[0]
-            .split("posts/")[1]
-            .toString()
-        : "",
-      type: window.location.href.split("?type=")[1]
-        ? window.location.href.split("?type=")[1]
-        : ""
-    });
-    this.setState({ feed: false });
-  };
-
-  goToLogin = () => {
+  //Function to remove the user from state and cookies
+  removeUser = () => {
     localStorage.removeItem("token");
-    this.setState(defaultState);
-    this.setState({ login: true });
+    this.setState({ user: {}, token: "", });
   };
 
-  goToInfo = () => {
-    this.setState({ defaultState });
-    this.setState({ info: !this.state.info });
+  //Every time app refreshes, try to log in user from cookies
+  componentDidMount() {
+    this.authenticateUser(localStorage.getItem("token"));
+  }
+
+  //Settings should always be displayed when not on login-page
+  //Function to display settings with props, identical for all routes
+  buildSettings = () => {
+    return (
+    <Settings
+      user={this.state.user}
+      goHome={() => this.homeButton()}
+      login={() => this.removeUser()}
+      newExercise={() => this.newExercise()}
+      newWorkout={() => this.newWorkout()}
+      creatingNewExercise={this.state.newExercise}
+      creatingNewWorkout={this.state.newWorkout}
+      hideExercises={() => this.setState({ hideExercises: !this.state.hideExercises, hideWorkouts: false})}
+      hideWorkouts={() => this.setState({ hideWorkouts: !this.state.hideWorkouts, hideExercises: false})}
+      hiddenExercises={this.state.hideExercises}
+      hiddenWorkouts={this.state.hideWorkouts}
+    />)
+  }
+
+  //Reset the state for settings when home-button is clicked
+  homeButton = () => {
+    this.setState({ newExercise: false, newWorkout: false,
+      hideExercises: false, hideWorkouts: false });
   };
 
-  leaveLogin = () => {
-    localStorage.removeItem("token");
-    this.setState(defaultState);
+  //Toggles the publish exercise-box when clicked from settings
+  newExercise = () => {
+    if (!this.state.newExercise) {
+      window.scrollTo(0, 0);
+      this.setState({ newWorkout: false });
+    }
+    this.setState({ newExercise: !this.state.newExercise });
+    return true;
   };
 
+  //Toggles the publish workout-box when clicked from settings
+  newWorkout = () => {
+    if (!this.state.newWorkout) {
+      window.scrollTo(0, 0);
+      this.setState({ newExercise: false });
+    }
+    this.setState({ newWorkout: !this.state.newWorkout });
+    return true;
+  };
+
+  //Render method to display content for the app
+  //Contains the routing and switch between components
+  //Checks what URL it is, and routes user to correct component
   render() {
+    window.scrollTo(0, 0);
     return (
       <BrowserRouter>
-        <link
-          href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-          rel="stylesheet"
-        ></link>
-        <link
-          href="https://fonts.googleapis.com/css?family=Work+Sans&display=swap"
-          rel="stylesheet"
-        ></link>
-        <div>
           <Switch>
+            <Route exact path="/">
+              {this.buildSettings()}
+              <Feed
+                user={this.state.user}
+                creatingNewExercise={this.state.newExercise}
+                creatingNewWorkout={this.state.newWorkout}
+                hiddenExercises={this.state.hideExercises}
+                hiddenWorkouts={this.state.hideWorkouts}
+                token={this.state.token}
+              />
+            </Route>
+            <Route path="/posts">
+              {this.buildSettings()}
+              <PostLarge
+                user={this.state.user}
+                token={this.state.token}
+                onDelete={() => this.forceUpdate()}
+              />
+            </Route>
+            <Route exact path="/info">
+              {this.buildSettings()}
+              <Info />
+            </Route>
             <Route exact path="/login">
               <Login
                 onAuth={user => this.authenticateUser(user.token)}
                 onCancel={() => this.leaveLogin()}
               />
             </Route>
-            <Route exact path="/">
-              <Container
-                user={this.state.user}
-                token={this.state.token}
-                onLogin={() => this.goToLogin()}
-                onInfo={() => this.goToInfo()}
-                singlePost={(post, type) =>
-                  this.setState({ feed: false, post: post, type: type })
-                }
-              />
-            </Route>
-            <Route exact path="/info">
-              <Info
-                user={this.state.user}
-                onLogin={() => this.goToLogin()}
-                onInfo={() => this.goToInfo()}
-                homeButton={() => this.setState({ info: false })}
-              />
-            </Route>
-            <Route path="/posts">
-              <PostLarge
-                user={this.state.user}
-                token={this.state.token}
-                onLogin={() => this.goToLogin()}
-                onInfo={() => this.goToInfo()}
-                setRoute={() => this.getSinglePostUrl()}
-                homeButton={() => this.setState({ feed: true })}
-                onDelete={() =>
-                  this.setState({ feed: true }) && this.forceUpdate()
-                }
-              />
-            </Route>
           </Switch>
-        </div>
-        {this.state.login ? (
-          <Redirect to="/login" />
-        ) : this.state.info ? (
-          <Redirect to="/info" />
-        ) : this.state.feed ? (
-          <Redirect to="/" />
-        ) : (
-          <Redirect
-            to={
-              "/posts/" +
-              (this.state.post.id ? this.state.post.id : this.state.postUrl) +
-              `?type=${this.state.type}`
-            }
-          />
-        )}
-        ;
       </BrowserRouter>
     );
   }
 }
 
-export default App;
+export default ExerciseIt;

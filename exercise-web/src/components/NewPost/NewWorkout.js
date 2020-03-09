@@ -103,7 +103,7 @@ export default class NewWorkout extends React.Component {
 
   render() {
     if (!this.props.isCreating) {
-      return <div></div>;
+      return <div className={styles.postWrapperEmpty}></div>;
     }
 
     return (

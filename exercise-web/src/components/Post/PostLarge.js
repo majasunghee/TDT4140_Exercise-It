@@ -36,7 +36,6 @@ class PostLarge extends React.Component {
   componentDidMount() {
     this.getPost();
     window.scrollTo(0, 0);
-    this.props.setRoute();
     this.getMeta();
   }
 
@@ -157,37 +156,8 @@ class PostLarge extends React.Component {
     }
 
     return (
-      <div>
-        <Settings
-          showInfo
-          user={this.props.user}
-          goHome={() => this.props.homeButton()}
-          login={() => this.props.onLogin()}
-          info={() => this.props.onInfo()}
-          newExercise={() => this.newExercise()}
-          newWorkout={() => this.newWorkout()}
-          creatingNewExercise={this.state.newExercise}
-          creatingNewWorkout={this.state.newWorkout}
-          hideExercises={() =>
-            this.setState({
-              hideWorkouts: !this.state.hideExercises
-                ? false
-                : this.state.hideWorkouts,
-              hideExercises: !this.state.hideExercises
-            })
-          }
-          hideWorkouts={() =>
-            this.setState({
-              hideExercises: !this.state.hideWorkouts
-                ? false
-                : this.state.hideExercises,
-              hideWorkouts: !this.state.hideWorkouts
-            })
-          }
-          hiddenExercises={this.state.hideExercises}
-          hiddenWorkouts={this.state.hideWorkouts}
-        />
-        <div className={styles.container}>
+      <div className={styles.container}>
+        <div className={styles.content}>
           <div>
             <div className={styles.mainHeader}>
               <h1>{postData.title}</h1>
@@ -385,6 +355,7 @@ class PostLarge extends React.Component {
               </div>
             </div>
           </div>
+          <div className={styles.footer}> Exercise.It © • est. 2020 </div>
         </div>
       </div>
     );
