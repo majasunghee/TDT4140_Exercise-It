@@ -1,11 +1,10 @@
 import React from "react";
-import styles from "../../App.module.css";
+import styles from "./post.module.css";
 import anonym from "../../icons/anonym.png";
 import professional from "../../icons/professional.png";
 import amateur from "../../icons/amateur.png";
 import duration from "../../icons/duration.png";
 import reps from "../../icons/reps.png";
-import Settings from "../Settings/Settings";
 
 import months from "../../consts/months"
 
@@ -276,7 +275,7 @@ class PostLarge extends React.Component {
                   {postData.exercises &&
                     postData.exercises
                       .filter(a => !this.state.removeRelations.includes(a))
-                      .map(exercise => (
+                      .map((exercise) => (
                         <div
                           className={styles.filterListPost}
                           onClick={() =>
@@ -341,7 +340,7 @@ class PostLarge extends React.Component {
                     </div>
                   ) : (
                     <button
-                      className={styles.edit}
+                      className={styles.button}
                       onClick={() =>
                         this.setState({ editing: !this.state.editing })
                       }
