@@ -1,0 +1,173 @@
+.rowSpace {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+  
+.container {
+  text-align: center;
+  background-color: rgb(228, 228, 228);
+  min-height: 96vh;
+  padding-bottom: 100px;
+  padding-top: 20px;
+}
+
+.mainHeader {
+  font-size: 1.4em;
+  color: #5d5d5d;
+  cursor: default;
+  margin-bottom: -10px;
+}
+
+.mainHeader:hover {
+  background: -webkit-linear-gradient(30deg, #5d5d5d, var(--secondColor) 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+  
+  
+
+
+  
+.settings {
+    background-color: rgb(20, 20, 20);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: rgb(146, 146, 146);
+    position: fixed;
+    width: 330px;
+    justify-content: space-between;
+    left: 0;
+    top: 0;
+    box-shadow: 10px 0px 75px -25px rgb(82, 82, 82);
+    font-family: "Work Sans", sans-serif;
+  }
+
+  .logo {
+    background-image: linear-gradient(
+      140deg,
+      var(--mainColor),
+      var(--secondColor)
+    );
+    height: 60px;
+    font-size: 2.5em;
+    border-radius: 0px 0px;
+    color: white;
+    padding-bottom: 8px;
+    padding-top: 18px;
+    padding-left: 10px;
+    padding-right: 30px;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Work Sans", sans-serif;
+    transition: 0.1s;
+    outline: none;
+  }
+  
+  .logo:hover {
+    background-image: linear-gradient(
+      120deg,
+      var(--mainColor),
+      var(--secondColor)
+    );
+    cursor: pointer;
+  }
+  
+  .logo:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 85px;
+    background-color: rgba(255, 255, 255, 0.6);
+      -webkit-transition: none;
+         -moz-transition: none;
+    transition: none;
+    }
+  
+  .logo:focus:after {
+    width: 120%;
+    background-color: rgba(255, 255, 255, 0);
+      -webkit-transition: all 0.5s ease-in-out;
+         -moz-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+  }
+
+  .smallToggleTrue,
+.smallToggleFalse {
+  border: 0;
+  font-size: 1.1em;
+  padding: 20px;
+  border-bottom: 1px solid rgb(60, 60, 60);
+  color: #a200fa;
+  transition: 0.2s;
+  cursor: default;
+  margin-top: 20px;
+  font-family: "Work Sans", sans-serif;
+  outline: none;
+  background-color: rgb(22, 22, 22);
+  text-align: center;
+  width: 165px;
+  height: auto;
+  padding: 0;
+  padding-top: 17px;
+  padding-bottom: 17px;
+  margin-top: 0;
+}
+
+.smallToggleFalse {
+  color: rgb(141, 141, 141);
+}
+
+.smallToggleTrue {
+  background-color: rgb(30, 30, 30);
+}
+
+.smallToggleTrue:hover,
+.smallToggleFalse:hover {
+  cursor: pointer;
+  padding-left: 8px;
+  width: 157px;
+}
+
+
+.settingActive,
+.loginSetting,
+.setting {
+  text-align: center;
+  width: 330px;
+  text-align: center;
+  font-size: 1.1em;
+  padding-top: 23px;
+  padding-bottom: 23px;
+  background-color: rgb(26, 26, 26);
+  transition: 0.2s;
+  border-bottom: 1px solid rgb(37, 37, 37);
+}
+
+.settingActive,
+.loginSetting:hover,
+.setting:hover {
+  padding-left: 10px;
+  width: 320px;
+  cursor: pointer;
+  color: #a700ff;
+  background-color: rgb(24, 24, 24);
+}
+
+.loginSetting {
+  padding-top: 17px;
+  padding-bottom: 17px;
+  background-color: rgb(22, 22, 22);
+}
+
+.loginSetting:hover {
+  color: var(--mainColor);
+  background-color: rgb(22, 22, 22);
+}
+  
+.infoHeader {
+  flex-direction: column;
+}

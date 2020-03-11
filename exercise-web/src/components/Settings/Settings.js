@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { withRouter } from "react-router";
 
-import styles from "../../App.module.css";
+import styles from "./settings.module.css";
 
 const Settings = props => {
   const newWorkout = () => {
@@ -35,15 +35,12 @@ const Settings = props => {
     <div className={styles.settings}>
       <div>
         <Link to="/">
-          <div>
-            <div className={styles.hamburger}>fdf</div>
-            <div
-              className={styles.logo}
-              onClick={() => props.goHome()}
-              tabindex="0"
-            >
-              Exercise.it!
-            </div>{" "}
+          <div
+            className={styles.logo}
+            onClick={() => props.goHome()}
+            tabIndex="0"
+          >
+            Exercise.it!
           </div>
         </Link>
         {!props.showInfo ? (

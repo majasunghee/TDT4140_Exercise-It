@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../../App.module.css";
+import styles from "./post.module.css";
 import anonym from "../../icons/anonym.png";
 import professional from "../../icons/professional.png";
 import amateur from "../../icons/amateur.png";

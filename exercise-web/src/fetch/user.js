@@ -30,7 +30,6 @@ export const loginUser = async userdata => {
   console.log("trying to log in user..");
   const response = await fetch("http://localhost:8000/login/", parameters);
   const data = await response.json();
-  console.log(data)
   return response.status === 200 ? data : false;
 };
 
@@ -48,6 +47,5 @@ export const getUser = async token => {
   console.log("trying to authenticate user..");
   const response = await fetch("http://localhost:8000/auth/", parameters);
   const data = await response.json();
-  console.log(data)
   return response.status === 200 ? data : false;
 };

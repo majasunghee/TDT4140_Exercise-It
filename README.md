@@ -1,4 +1,4 @@
-![Exercise.it](./feed.png)
+![Exercise.it](./exercise-web/public/feed.png)
 
 # `exercise-web`
 
@@ -29,12 +29,14 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## Start the backend-server
 
 MacOS:
+
 ```bash
 source exercise-api/env/bin/activate
 python manage.py runserver
 ```
 
 Windows:
+
 ```bash
 source exercise-api/env/Scripts/activate
 python manage.py runserver
