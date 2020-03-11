@@ -50,6 +50,7 @@ class PostContainer extends React.Component {
       musclegroups: {},
       exercises: {},
       postFilters: [],
+      visibility: true
     };
   }
 
@@ -319,6 +320,7 @@ class PostContainer extends React.Component {
                 this.props.user.username === "admin" ? (
                   this.state.editing ? (
                     <div>
+                    <div>
                       <button
                         className={styles.edit}
                         onClick={() => this.updatePost()}
@@ -333,6 +335,14 @@ class PostContainer extends React.Component {
                         Slett
                       </button>
                     </div>
+                    <div>
+                      <button 
+                        className={this.state.visibility ? styles.buttonVis : styles.buttonNotVis} 
+                        onClick={() => this.setState({ visibility: !this.state.visibility })} >
+                      {this.state.visibility ? "Synlig" : "Skjult"}
+                  </button>
+                  </div>
+                  </div>
                   ) : (
                     <button
                       className={styles.edit}
@@ -342,6 +352,7 @@ class PostContainer extends React.Component {
                     >
                       Rediger
                     </button>
+                    
                   )
                 ) : (
                   ""

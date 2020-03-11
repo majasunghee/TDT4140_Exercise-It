@@ -58,9 +58,6 @@ const Post = props => {
         {props.content.length > 210 ? ".." : ""}
       </div>
       <div>
-        <button className={styles.buttonVis}>
-          Synlig
-        </button>
       </div>
     </div>
   );
