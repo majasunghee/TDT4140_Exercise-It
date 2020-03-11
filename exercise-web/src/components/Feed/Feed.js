@@ -5,7 +5,7 @@ import NewExercise from "../NewPost/NewExercise";
 import NewWorkout from "../NewPost/NewWorkout";
 import NewMusclegroup from "../NewPost/NewMusclegroup";
 import SpinnerPost from "../Spinner/SpinnerPost";
-import styles from "../../App.module.css";
+import styles from "./feed.module.css";
 import left from "../../icons/left.png";
 import right from "../../icons/right.png";
 import search from "../../icons/search.png";
@@ -48,7 +48,7 @@ class Feed extends React.Component {
   //Method to get all required data from fetch-methods
   //Gets the latest musclegroups, exercises and workouts, and stores the data in state
   //Sets loading to false when data is successfully fetched
-  buildFeed() {
+  buildFeed = () => {
     //Disables the publish musclegroup-box if open
     this.setState({ createMusclegroup: false });
     getMusclegroups()
@@ -62,31 +62,114 @@ class Feed extends React.Component {
       .then(() => this.setState({ loadingWorkouts: false }));
   }
 
-  //Fetches musclegroups again after having created a new one
-  reFetchMuscleGroups() {
+  //Fetches musclegroups again. Used after creating a new one
+  getNewMusclegroups = () => {
     getMusclegroups().then(data =>
       this.setState({ musclegroups: data, createMusclegroup: false })
     );
   }
 
-  //Checks if the filter the user is searching for exists
-  //Returns the given filter, if it is not already active
-  filterFound = () => {
-    var match = "";
-    if (!this.state.selectedFilters.includes(this.state.filter)) {
-      this.state.musclegroups.forEach(a =>
-        this.state.filter === a.name ? (match = a.name) : ""
-      ) ||
-        this.state.exercises.forEach(a =>
-          this.state.filter === a.title ? (match = a.title) : ""
-        );
-      return match;
-    }
-  };
+  
+  //Function to display a workout-post in the feed
+  buildPost = (post, type, id) => {
+    return (
+      <Link key={id} to={"/posts/" + post.id + `?type=${type}`}>
+        <Post
+          user={post.user}
+          date={post.date}
+          title={post.title}
+          image={post.image}
+          content={post.content}
+        />
+      </Link>
+    );
+  }
+
+  //Function to display all the exercises, in a horizontally-scrolling feed
+  buildAllExercises = () => {
+    return (
+      <div className={styles.horizontalFeed}>
+        {/* Left-arrow */}
+        <div
+          onClick={() =>
+            this.state.scroller !== 0
+              ? this.setState({ scroller: this.state.scroller - 3 })
+              : ""
+          } >
+            <img alt="<" src={left}
+              className={
+                this.state.scroller !== 0
+                  ? styles.arrow
+                  : styles.arrowDisabled
+              } />
+        </div>
+        {/* Three exercises are displayed at a time */}
+        {this.state.exercises
+          .slice(this.state.scroller, this.state.scroller + 3)
+          .map((post, i) => (
+            <Link key={i} to={"/posts/" + post.id + `?type=exercise`}>
+              <PostSmall title={post.title} image={post.image} />
+            </Link>
+          ))}
+        {/* Right arrow */}
+        <div
+          onClick={() =>
+            this.state.scroller + 4 < this.state.exercises.length
+              ? this.setState({ scroller: this.state.scroller + 3 })
+              : ""
+          } >
+          <img
+            alt=">" src={right}
+            className={
+              this.state.scroller + 4 <
+              this.state.exercises.length
+                ? styles.arrow
+                : styles.arrowDisabled
+            } />
+        </div>
+      </div>
+    );
+  }
+
+  //Fuction to build the search-field and filtering on the left side
+  //Is visually a part of the settings, but actually built into the feed component
+  buildFilter = () => {
+    return (
+      <div className={styles.filterContainer}>
+        <input
+          placeholder="Skriv inn nøkkelord"
+          autoComplete="off"
+          value={ this.state.filter.charAt(0).toUpperCase() + this.state.filter.slice(1) }
+          onChange={change => this.setState({ filter: change.target.value })}
+          className={
+            this.filterFound() ? styles.filterEnabled : styles.filterDisabled
+          }
+          onKeyPress={event => event.key === "Enter" && this.addFilter()}
+        />
+        <img alt="" className={styles.search} src={search} />
+        <button
+          disabled={!this.filterFound()}
+          onClick={() => this.addFilter()}
+          className={ this.filterFound() ? styles.buttonFilter : styles.buttonFilterDisabled }
+        >
+          Legg til filter
+        </button>
+        {//Listing all the active filters, and removes them at click
+        this.state.selectedFilters.map(filter => (
+          <div
+            className={styles.filterList}
+            onClick={() => this.removeFilter(filter)}
+          >
+            {"- " + filter}
+          </div>
+        ))}
+      </div>
+    )
+  }
 
   //Adds the filter the user is searching for, if it is found
   //Resets the value of the search-input
-  addFilter() {
+  addFilter = () => {
     if (this.filterFound()) {
       this.setState({
         selectedFilters: [...this.state.selectedFilters, this.state.filter],
@@ -96,13 +179,30 @@ class Feed extends React.Component {
   }
 
   //Removes a given filter from the list of active filters
-  removeFilter(filter) {
+  removeFilter = filter => {
     var newFilters = [];
     this.state.selectedFilters.forEach(a =>
       a !== filter ? newFilters.push(a) : ""
     );
     this.setState({ selectedFilters: newFilters });
   }
+
+  //Checks if the filter the user is searching for exists
+  //Returns the given filter, if it is not already active
+  filterFound = () => {
+    var match = "";
+    if (!this.state.selectedFilters.includes(this.state.filter)) {
+      //Searching through musclegroups
+      this.state.musclegroups.forEach(a =>
+        this.state.filter === a.name ? (match = a.name) : "") 
+      ||
+      //Searching through exercises
+      this.state.exercises.forEach(a =>
+        this.state.filter === a.title ? (match = a.title) : ""
+      );
+      return match;
+    }
+  };
 
   //Filter-method to check if a post contains all the filters
   //Is applied to all posts when the list of filters is longer than zero
@@ -137,8 +237,31 @@ class Feed extends React.Component {
     return match;
   };
 
+  //Checks if there are no posts matching the filters
+  //Used to display the message "Ingen treff.."
+  feedEmpty = () => {
+    return (
+      //Are there no exercises or workouts matching the filters?
+      (this.state.exercises.filter(post =>
+        this.checkSelectedFilters(post)).length === 0
+      && this.state.workouts.filter(post =>
+        this.checkSelectedFilters(post)).length === 0) 
+      //Are there no exercises matching, and the workouts are hidden?
+      || (this.state.exercises.filter(post =>
+        this.checkSelectedFilters(post)
+      ).length === 0 && this.props.hiddenWorkouts)
+      //Are there no workouts matching, and the exercises are hidden?
+      || (this.state.workouts.filter(post =>
+        this.checkSelectedFilters(post)
+      ).length === 0 && this.props.hiddenExercises)
+    );
+  }
+
+  //Rendering the entire feed, using the functions above
   render() {
     if (
+      //Wait until all the data has been fetched
+      //While loading, return the spinner, footer and empty filtering for the settings
       this.state.loadingMusclegroups ||
       this.state.loadingExercises ||
       this.state.loadingWorkouts
@@ -151,12 +274,10 @@ class Feed extends React.Component {
             <div className={styles.filterContainer}>
               <input
                 placeholder="Skriv inn nøkkelord"
-                name="Filter"
-                autoComplete="off"
                 className={styles.filterDisabled}
               />
               <img alt="" className={styles.search} src={search} />
-              <button disabled={true} className={styles.buttonFilterDisabled}>
+              <button disabled className={styles.buttonFilterDisabled}>
                 Legg til filter
               </button>
             </div>
@@ -165,245 +286,96 @@ class Feed extends React.Component {
       );
     }
     return (
-      <div className={styles.container}>
-              <div className={styles.content}>
-        <div>
-          <div
-            className={
-              this.state.exercises.filter(post =>
-                this.checkSelectedFilters(post)
-              ).length === 0 &&
-              this.state.workouts.filter(post =>
-                this.checkSelectedFilters(post)
-              ).length === 0
-                ? styles.headerEmpty
-                : styles.mainHeader
-            }
-          >
-            <h1>
-              {this.state.exercises.filter(post =>
-                this.checkSelectedFilters(post)
-              ).length === 0 &&
-              this.state.workouts.filter(post =>
-                this.checkSelectedFilters(post)
-              ).length === 0
-                ? "Ingen treff .."
-                : this.props.user.username
-                ? "Hei, " + this.props.user.username + "!"
-                : "Velkommen!"}
-            </h1>
-          </div>
-          <NewExercise
-            musclegroups={this.state.musclegroups}
-            createMusclegroup={() =>
-              this.setState({
-                createMusclegroup: !this.state.createMusclegroup
-              })
-            }
-            reFetch={() => this.buildFeed()}
-            user={this.props.user}
-            isCreating={this.props.creatingNewExercise}
-          />
-          <NewWorkout
-            exercises={this.state.exercises}
-            reFetch={() => this.buildFeed()}
-            user={this.props.user}
-            isCreating={this.props.creatingNewWorkout}
-          />
-          <NewMusclegroup
-            musclegroups={this.state.musclegroups}
-            reFetch={() => this.reFetchMuscleGroups()}
-            isCreating={
-              !this.props.creatingNewWorkout &&
-              this.props.creatingNewExercise &&
-              this.state.createMusclegroup
-            }
-          />
-          <div className={styles.feed}>
-            {!this.props.hiddenWorkouts
-              ? this.state.selectedFilters.length === 0
-                ? this.state.workouts.slice(0, 2).map(post => (
-                  <Link to={"/posts/" + post.id + `?type=workout`}>
-                      <Post
-                        user={post.user}
-                        date={post.date}
-                        title={post.title}
-                        image={post.image}
-                        content={post.content}
-                      />
-                    </Link>
-                  ))
-                : this.state.workouts.map(post =>
-                    this.checkSelectedFilters(post) ? (
-                      <Link to={"/posts/" + post.id + `?type=workout`}>
-                        <Post
-                          user={post.user}
-                          date={post.date}
-                          title={post.title}
-                          image={post.image}
-                          content={post.content}
-                        />{" "}
-                      </Link>
-                    ) : (
-                      ""
-                    )
-                  )
-              : ""}
-          </div>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        {/* The header displays a greeting message unless the feed is empty */}
+        <div className={ this.feedEmpty() ? styles.headerEmpty : styles.mainHeader }>
+          <h1>
+            {this.feedEmpty() ? "Ingen treff .."
+              : this.props.user.username
+              ? "Hei, " + this.props.user.username + "!"
+              : "Velkommen!"}
+          </h1>
         </div>
-        <div>
-          <div className={styles.feed}>
-            {!this.state.loading ? (
-              <div>
-                {!this.props.hiddenExercises ? (
-                  this.state.selectedFilters.length === 0 &&
-                  !this.props.hiddenWorkouts ? (
-                    <div className={styles.cardContainer}>
-                      <div
-                        onClick={() =>
-                          this.state.scroller !== 0
-                            ? this.setState({
-                                scroller: this.state.scroller - 3
-                              })
-                            : ""
-                        }
-                      >
-                        <img
-                          alt="<"
-                          className={
-                            this.state.scroller !== 0
-                              ? styles.arrow
-                              : styles.arrowDisabled
-                          }
-                          src={left}
-                        />{" "}
-                      </div>
-                      {this.state.exercises
-                        .slice(this.state.scroller, this.state.scroller + 3)
-                        .map(post => (
-                          <Link to={"/posts/" + post.id + `?type=exercise`}>
-                            <PostSmall
-                              url={post.url}
-                              user={post.user}
-                              date={post.date}
-                              title={post.title}
-                              image={post.image}
-                              content={post.content}
-                              sets={post.sets}
-                              reps={post.reps}
-                            />
-                          </Link>
-                        ))}
-                      <div
-                        onClick={() =>
-                          this.state.scroller + 4 < this.state.exercises.length
-                            ? this.setState({
-                                scroller: this.state.scroller + 3
-                              })
-                            : ""
-                        }
-                      >
-                        <img
-                          alt=">"
-                          className={
-                            this.state.scroller + 4 <
-                            this.state.exercises.length
-                              ? styles.arrow
-                              : styles.arrowDisabled
-                          }
-                          src={right}
-                        />{" "}
-                      </div>
-                    </div>
+        {/* Importing the components for publishing new posts
+        Activated based on state from the feed, recieves required data from feed as props */}
+        <NewExercise
+          musclegroups={this.state.musclegroups}
+          createMusclegroup={() =>
+            this.setState({
+              createMusclegroup: !this.state.createMusclegroup
+            })
+          }
+          reFetch={() => this.buildFeed()}
+          user={this.props.user}
+          isCreating={this.props.creatingNewExercise}
+        />
+        <NewWorkout
+          exercises={this.state.exercises}
+          reFetch={() => this.buildFeed()}
+          user={this.props.user}
+          isCreating={this.props.creatingNewWorkout}
+        />
+        <NewMusclegroup
+          musclegroups={this.state.musclegroups}
+          reFetch={() => this.getNewMusclegroups()}
+          isCreating={
+            !this.props.creatingNewWorkout &&
+            this.props.creatingNewExercise &&
+            this.state.createMusclegroup
+          }
+        />
+        {/* Displays two workouts before the horizontal list of exercises, unless workouts are hidden*/}
+        <div className={styles.feed}>
+          {!this.props.hiddenWorkouts
+            ? this.state.selectedFilters.length === 0
+              ? this.state.workouts.slice(0, 2).map((post, i) => (
+                this.buildPost(post, 'workout', i)
+                ))
+              // If any filters are applied, we list all matching posts vertically, starting with workouts
+              : this.state.workouts.map((post, i) =>
+                  this.checkSelectedFilters(post) ? (
+                    this.buildPost(post, 'workout', i)
                   ) : (
-                    <div className={styles.feed}>
-                      {this.state.exercises.map(post =>
-                        this.checkSelectedFilters(post) ? (
-                          <Link to={"/posts/" + post.id + `?type=exercise`}>
-                            <Post
-                              url={post.url}
-                              user={post.user}
-                              date={post.date}
-                              title={post.title}
-                              image={post.image}
-                              content={post.content}
-                              sets={post.sets}
-                              reps={post.reps}
-                              exercise
-                            />
-                          </Link>
-                        ) : (
-                          ""
-                        )
-                      )}
-                    </div>
+                    ""
                   )
+                )
+            : ""}
+        </div>
+        {/* The exercises are listed in a horizontal feed, unless any filters are applied */}
+          <div className={styles.feed}>
+            <div>
+              {/* The horizontal feed is not rendered if the exercises are hidden */}
+              {!this.props.hiddenExercises ? (
+                this.state.selectedFilters.length === 0 &&
+                !this.props.hiddenWorkouts ? (
+                  this.buildAllExercises()
                 ) : (
-                  ""
-                )}
-                {this.state.selectedFilters.length === 0 &&
-                  !this.props.hiddenWorkouts &&
-                  this.state.workouts.slice(2).map(post => (
-                    <Link to={"/posts/" + post.id + `?type=workout`}>
-                      <Post
-                        user={post.user}
-                        date={post.date}
-                        title={post.title}
-                        image={post.image}
-                        content={post.content}
-                      />
-                    </Link>
-                  ))}{" "}
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-        <div className={styles.footer}> Exercise.It © • est. 2020 </div>
-        <div className={styles.filterContainer}>
-          <input
-            placeholder="Skriv inn nøkkelord"
-            name="Filter"
-            autoComplete="off"
-            value={
-              this.state.filter.charAt(0).toUpperCase() +
-              this.state.filter.slice(1)
-            }
-            onChange={change => this.setState({ filter: change.target.value })}
-            className={
-              this.filterFound() ? styles.filterEnabled : styles.filterDisabled
-            }
-            onKeyPress={event =>
-              event.key === "Enter" ? this.addFilter() : ""
-            }
-          />
-          <img alt="" className={styles.search} src={search} />
-          <button
-            disabled={!this.filterFound()}
-            onClick={() => this.addFilter()}
-            className={
-              this.filterFound()
-                ? styles.buttonFilter
-                : styles.buttonFilterDisabled
-            }
-          >
-            Legg til filter
-          </button>
-
-          {this.state.selectedFilters.map(filter => (
-            <div
-              className={styles.filterList}
-              onClick={() => this.removeFilter(filter)}
-            >
-              {"- " + filter}
+                  // When filters are applied, the matching exercises are rendered as regular posts
+                  this.state.exercises.map((post, i) =>
+                    this.checkSelectedFilters(post) ? (
+                      this.buildPost(post, 'exercise', i)
+                      ) : ( "" )
+                  )
+                )
+              ) : (
+                ""
+              )}
+              {//If the horizontal exercise-feed is displayed:
+              //All the rest of the workouts are displayed below it
+              this.state.selectedFilters.length === 0 &&
+                !this.props.hiddenWorkouts &&
+                this.state.workouts.slice(2).map((post, i) => (
+                  this.buildPost(post, 'workout', i)
+                ))}
             </div>
-          ))}
+          </div>
+        <div className={styles.footer}> Exercise.It © • est. 2020 </div>
+        {this.buildFilter()}
         </div>
-        </div></div>
+      </div>
     );
   }
-
 }
 
 export default Feed;
