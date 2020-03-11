@@ -12,35 +12,48 @@ const Settings = props => {
     if (!props.creatingNewWorkout) {
       props.history.push("/");
     }
-  }
+  };
 
   const newExercise = () => {
     props.newExercise();
     if (!props.creatingNewExercise) {
       props.history.push("/");
     }
-  }
+  };
 
   const hideExercises = () => {
     props.hideExercises();
     props.history.push("/");
-  }
+  };
 
   const hideWorkouts = () => {
     props.hideWorkouts();
     props.history.push("/");
-  }
+  };
 
   return (
     <div className={styles.settings}>
-      <div >
+      <div>
         <Link to="/">
-        <div className={styles.logo} onClick={() => props.goHome()} tabindex="0" >Exercise.it!</div></Link>
-        {!props.showInfo ? ( <div className={styles.rowSpace}>
+          <div>
+            <div className={styles.hamburger}>fdf</div>
+            <div
+              className={styles.logo}
+              onClick={() => props.goHome()}
+              tabindex="0"
+            >
+              Exercise.it!
+            </div>{" "}
+          </div>
+        </Link>
+        {!props.showInfo ? (
+          <div className={styles.rowSpace}>
             <div
               onClick={() => hideExercises()}
               className={
-                props.hiddenExercises ? styles.smallToggleTrue : styles.smallToggleFalse
+                props.hiddenExercises
+                  ? styles.smallToggleTrue
+                  : styles.smallToggleFalse
               }
             >
               Kun økter
@@ -48,13 +61,19 @@ const Settings = props => {
             <div
               onClick={() => hideWorkouts()}
               className={
-                props.hiddenWorkouts ? styles.smallToggleTrue : styles.smallToggleFalse
+                props.hiddenWorkouts
+                  ? styles.smallToggleTrue
+                  : styles.smallToggleFalse
               }
             >
               Kun øvelser
-            </div> </div> ): ''}
+            </div>{" "}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
-      <div >
+      <div>
         {!props.showInfo ? (
           <div>
             <div
@@ -84,16 +103,24 @@ const Settings = props => {
             <div className={styles.setting}>Django-Admin</div>
           </a>
         ) : (
-          <Link to="/info" ><div
-            className={window.location.href.indexOf("info") > -1 ? styles.settingActive : styles.setting}
-         > Informasjon</div>
-           
+          <Link to="/info">
+            <div
+              className={
+                window.location.href.indexOf("info") > -1
+                  ? styles.settingActive
+                  : styles.setting
+              }
+            >
+              {" "}
+              Informasjon
+            </div>
           </Link>
         )}
         <Link to="/login">
           <div className={styles.loginSetting} onClick={() => props.login()}>
-          {props.user.username ? "Logg ut" : "Logg inn"}
-      </div>  </Link>
+            {props.user.username ? "Logg ut" : "Logg inn"}
+          </div>{" "}
+        </Link>
       </div>
     </div>
   );
