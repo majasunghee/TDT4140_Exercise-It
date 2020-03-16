@@ -6,6 +6,8 @@ import amateur from "../../icons/amateur.png";
 import duration from "../../icons/duration.png";
 import reps from "../../icons/reps.png";
 
+import Rating from "../Rating/Rating";
+
 import months from "../../consts/months"
 
 import { getLatestExercises, getSingleExercise, updateExercise, deleteExercise } from "../../fetch/exercise";
@@ -354,6 +356,11 @@ class PostLarge extends React.Component {
               </div>
             </div>
           </div>
+
+          <div className="stars">
+            <Rating />
+          </div>
+
           <div className={styles.footer}> Exercise.It © • est. 2020 </div>
         </div>
       </div>
