@@ -357,7 +357,7 @@ class PostLarge extends React.Component {
             </div>
           </div>
 
-          <div className="stars">
+          <div className="starRating">
             <Rating />
           </div>
 
