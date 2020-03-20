@@ -320,6 +320,13 @@ class PostLarge extends React.Component {
                       </div>
                     ))}
                 </div>
+
+                <button className= {styles.button} onClick={() => {}}>
+
+                  Last ned 
+                </button>
+
+
                 {this.props.user.username === postData.user ||
                 this.props.user.username === "admin" ? (
                   this.state.editing ? (
