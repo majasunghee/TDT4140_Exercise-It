@@ -148,6 +148,14 @@ class ExerciseIt extends React.Component {
           <Route exact path="/userpage">
             {this.buildSettings()}
             <UserPage username={this.state.user.username} />
+            <Feed
+              user={this.state.user}
+              creatingNewExercise={this.state.newExercise}
+              creatingNewWorkout={this.state.newWorkout}
+              hiddenExercises={this.state.hideExercises}
+              hiddenWorkouts={this.state.hideWorkouts}
+              token={this.state.token}
+            />
           </Route>
         </Switch>
       </BrowserRouter>
