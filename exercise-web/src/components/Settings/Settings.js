@@ -118,6 +118,20 @@ const Settings = props => {
             {props.user.username ? "Logg ut" : "Logg inn"}
           </div>{" "}
         </Link>
+        {props.user.username === "admin" ? ( //jonas, hvordan får jeg dette til å funke for andre enn admin?
+          <Link to="/userpage">
+            <div
+              className={
+                window.location.href.indexOf("userpage") > -1
+                  ? styles.settingActive
+                  : styles.setting
+              }
+            >
+              {" "}
+              Profil
+            </div>
+          </Link>
+        ) : null}
       </div>
     </div>
   );
