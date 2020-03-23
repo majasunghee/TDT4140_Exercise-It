@@ -22,8 +22,12 @@ const UserPage = props => {
               <p id={styles.stat}>14</p>
               <p id={styles.Hstat}>Økter</p>
             </div>
+            
           </div>
-
+          <div className={styles.ContentSplitterWrapper}>
+              <p>Innlegg</p>
+              <div className={styles.linje}></div>
+            </div>
         </div>
       </div>
     </div>

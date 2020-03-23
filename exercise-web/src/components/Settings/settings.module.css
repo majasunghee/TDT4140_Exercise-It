@@ -175,7 +175,7 @@
 /*brukerside style starter her */
 .UserContainer{
   width: 900px;
-  height: 600px;
+  height: 1300px;
   border-radius: 8px;
   background-color: rgb(228, 228, 228);
   padding-top: 30px;
@@ -231,7 +231,7 @@
   color: rgb(228, 228, 228);
   width: 150px;
   height: 75px;
-  background-image: linear-gradient( 160deg, var(--mainColor), var(--secondColor) );
+  background-image: linear-gradient( 160deg, var(--mainColor), var(--secondColor));
   border-radius: 30px;
   cursor: default;
 }
@@ -250,4 +250,20 @@
 
 #stat:hover{
   color: rgb(180, 75, 185);
+}
+.ContentSplitterWrapper{
+  width: 100%;
+  height: 50px;
+  margin-top: 100px;
+}
+.ContentSplitterWrapper > p{
+  margin-right: 730px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.linje{
+  margin: auto;
+  height: 3px;
+  width: 800px;
+  background-image:linear-gradient( 160deg, var(--mainColor), var(--secondColor));
 }
