@@ -175,7 +175,7 @@
 /*brukerside style starter her */
 .UserContainer{
   width: 900px;
-  height: 700px;
+  height: 600px;
   border-radius: 8px;
   background-color: rgb(228, 228, 228);
   padding-top: 30px;
@@ -193,6 +193,13 @@
   height: 250px;
   margin: auto;
   margin-top: -110px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.PB_frame:hover{
+  width: 260px;
+  height: 260px;
 }
 
 .personalia{

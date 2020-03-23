@@ -8,6 +8,7 @@ const UserPage = props => {
       <div className={styles.infoHeader}>
         <div className={styles.UserContainer}>
           <div className={styles.PB_frame}>
+            +
           </div>
           <div className={styles.personalia}>
           <p id={styles.Name}>Aleksander</p>
