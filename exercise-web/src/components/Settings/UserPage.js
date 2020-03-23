@@ -16,11 +16,11 @@ const UserPage = props => {
           <div className={styles.statWrapper}>
             <div> 
               <p id={styles.stat}>154</p>
-              <p id={styles.Hstat}>Innlegg</p>
+              <p id={styles.Hstat}>Øvelser</p>
             </div>
             <div>
               <p id={styles.stat}>14</p>
-              <p id={styles.Hstat}>Mål fullført</p>
+              <p id={styles.Hstat}>Økter</p>
             </div>
           </div>
 
