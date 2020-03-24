@@ -206,12 +206,31 @@ class PostLarge extends React.Component {
               ) : (
                 ""
               )}
+        
               <div className={styles.reps}>
                 {postData.sets &&
                 postData.sets &&
                 (postData.sets > 1 || postData.reps > 1)
                   ? postData.reps + " rep. - " + postData.sets + " sett"
                   : ""}
+              </div>
+              <div>
+                {this.hearted ? (
+                  <button
+                    className={styles.heart}
+                    onClick={() => ! this.hearted}
+                    >
+                    Fjern favoritt
+                  </button>
+                ) : (
+                  <button 
+                        className={styles.heart} 
+                        onClick={() => this.hearted} //må lage tilstand eller funksjon?
+                        >
+                      Lagre innlegg som favoritt
+                </button>
+                ) 
+              }
               </div>
               <div
                 className={styles.singlePostImage}
@@ -350,7 +369,7 @@ class PostLarge extends React.Component {
                   )
                 ) : (
                   ""
-                )}
+                )} 
               </div>
             </div>
           </div>
