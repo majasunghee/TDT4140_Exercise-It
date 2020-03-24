@@ -179,7 +179,7 @@
   border-radius: 8px;
   background-color: rgb(228, 228, 228);
   padding-top: 30px;
-  margin-left: 30%;
+  margin-left: 510px;
   box-shadow: 10px 0px 75px -25px rgb(82, 82, 82);
   margin-top: 6%;
   font-family: "Work Sans", sans-serif;
@@ -257,7 +257,6 @@
   margin-top: 100px;
 }
 .ContentSplitterWrapper > p{
-  margin-right: 730px;
   font-size: 20px;
   font-weight: bold;
 }
@@ -265,5 +264,5 @@
   margin: auto;
   height: 3px;
   width: 800px;
-  background-image:linear-gradient( 160deg, var(--mainColor), var(--secondColor));
+  background-image: linear-gradient( 160deg, var(--mainColor), var(--secondColor));
 }
