@@ -104,11 +104,11 @@
   padding-top: 10px;
   border: 0;
   padding-bottom: 10px;
-  transition: 0.5s;
   cursor: pointer;
   min-width: 160px;
-  margin-left: 0px;
+  margin-left: 20px;
   margin-top: 20px;
+  outline: none;
 }
 
 .buttonSmallDisabled,
