@@ -43,7 +43,6 @@ const Settings = props => {
             Exercise.it!
           </div>
         </Link>
-        {!props.showInfo ? (
           <div className={styles.rowSpace}>
             <div
               onClick={() => hideExercises()}
@@ -66,12 +65,21 @@ const Settings = props => {
               Kun øvelser
             </div>{" "}
           </div>
-        ) : (
-          ""
-        )}
       </div>
       <div>
-        {!props.showInfo ? (
+      {props.user.username ? (
+          <Link to="/userpage">
+            <div
+              className={
+                window.location.href.indexOf("userpage") > -1
+                  ? styles.settingActive
+                  : styles.setting
+              }
+            >
+              Min Profil
+            </div>
+          </Link>
+        ) : null}
           <div>
             <div
               onClick={() => newExercise()}
@@ -92,9 +100,6 @@ const Settings = props => {
               Opprett økt <strong>+</strong>
             </div>{" "}
           </div>
-        ) : (
-          ""
-        )}
         {props.user.username === "admin" ? (
           <a target="_self" href="http://localhost:8000/admin">
             <div className={styles.setting}>Django-Admin</div>

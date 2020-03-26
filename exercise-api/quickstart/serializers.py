@@ -56,7 +56,7 @@ class Base64ImageField(serializers.ImageField):
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'role', 'visibility', 'password')
+        fields = ('id', 'username', 'email', 'role', 'visibility', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

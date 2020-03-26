@@ -20,5 +20,6 @@ urlpatterns = [
     url('', include(router.urls)),
     url('login/', views.LoginView.as_view()),
     url('exercise/', views.GetSingleExercise.as_view()),
-    url('workout/', views.GetSingleWorkout.as_view())
+    url('workout/', views.GetSingleWorkout.as_view()),
+    url('userdata/', views.UserPostsViewSet.as_view()),
 ]

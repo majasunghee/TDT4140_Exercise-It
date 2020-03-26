@@ -1,9 +1,9 @@
 .rowSpace {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
-  
+
 .container {
   text-align: center;
   background-color: rgb(228, 228, 228);
@@ -24,78 +24,74 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-  
-  
 
-
-  
 .settings {
-    background-color: rgb(20, 20, 20);
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    color: rgb(146, 146, 146);
-    position: fixed;
-    width: 330px;
-    justify-content: space-between;
-    left: 0;
-    top: 0;
-    box-shadow: 10px 0px 75px -25px rgb(82, 82, 82);
-    font-family: "Work Sans", sans-serif;
-  }
+  background-color: rgb(20, 20, 20);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: rgb(146, 146, 146);
+  position: fixed;
+  width: 330px;
+  justify-content: space-between;
+  left: 0;
+  top: 0;
+  box-shadow: 10px 0px 75px -25px rgb(82, 82, 82);
+  font-family: "Work Sans", sans-serif;
+}
 
-  .logo {
-    background-image: linear-gradient(
-      140deg,
-      var(--mainColor),
-      var(--secondColor)
-    );
-    height: 60px;
-    font-size: 2.5em;
-    border-radius: 0px 0px;
-    color: white;
-    padding-bottom: 8px;
-    padding-top: 18px;
-    padding-left: 10px;
-    padding-right: 30px;
-    text-align: center;
-    font-weight: bold;
-    font-family: "Work Sans", sans-serif;
-    transition: 0.1s;
-    outline: none;
-  }
-  
-  .logo:hover {
-    background-image: linear-gradient(
-      120deg,
-      var(--mainColor),
-      var(--secondColor)
-    );
-    cursor: pointer;
-  }
-  
-  .logo:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 85px;
-    background-color: rgba(255, 255, 255, 0.6);
-      -webkit-transition: none;
-         -moz-transition: none;
-    transition: none;
-    }
-  
-  .logo:focus:after {
-    width: 120%;
-    background-color: rgba(255, 255, 255, 0);
-      -webkit-transition: all 0.5s ease-in-out;
-         -moz-transition: all 0.5s ease-in-out;
-            transition: all 0.5s ease-in-out;
-  }
+.logo {
+  background-image: linear-gradient(
+    140deg,
+    var(--mainColor),
+    var(--secondColor)
+  );
+  height: 60px;
+  font-size: 2.5em;
+  border-radius: 0px 0px;
+  color: white;
+  padding-bottom: 8px;
+  padding-top: 18px;
+  padding-left: 10px;
+  padding-right: 30px;
+  text-align: center;
+  font-weight: bold;
+  font-family: "Work Sans", sans-serif;
+  transition: 0.1s;
+  outline: none;
+}
 
-  .smallToggleTrue,
+.logo:hover {
+  background-image: linear-gradient(
+    120deg,
+    var(--mainColor),
+    var(--secondColor)
+  );
+  cursor: pointer;
+}
+
+.logo:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 85px;
+  background-color: rgba(255, 255, 255, 0.6);
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none;
+}
+
+.logo:focus:after {
+  width: 120%;
+  background-color: rgba(255, 255, 255, 0);
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.smallToggleTrue,
 .smallToggleFalse {
   border: 0;
   font-size: 1.1em;
@@ -132,7 +128,6 @@
   width: 157px;
 }
 
-
 .settingActive,
 .loginSetting,
 .setting {
@@ -167,7 +162,48 @@
   color: var(--mainColor);
   background-color: rgb(22, 22, 22);
 }
-  
+
 .infoHeader {
   flex-direction: column;
+}
+
+@media only screen and (max-width: 800px) {
+  .settings {
+    width: 100vw;
+    height: 80vh;
+    font-size: 1.3em;
+    box-shadow: 0 20px 30 0 black;
+  }
+
+  .logo {
+    height: auto;
+    padding-bottom: 20px;
+  }
+
+  .settingActive,
+  .loginSetting,
+  .setting:hover,
+  .loginSetting:hover,
+  .setting {
+    width: 100vw;
+    height: auto;
+  }
+
+  .smallToggleTrue:hover,
+  .smallToggleFalse:hover,
+  .smallToggleTrue,
+  .smallToggleFalse {
+    width: 50vw;
+  }
+
+  .smallToggleTrue:hover,
+  .smallToggleFalse:hover {
+    padding-left: 0;
+  }
+
+  .hamburger {
+    display: inline;
+    padding: 20px;
+    padding-top: 30px;
+  }
 }
