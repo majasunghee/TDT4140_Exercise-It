@@ -111,6 +111,7 @@ class ExerciseIt extends React.Component {
                 hiddenExercises={this.state.hideExercises}
                 hiddenWorkouts={this.state.hideWorkouts}
                 token={this.state.token}
+                home={this.homeButton}
               />
             </Route>
             <Route path="/posts">

@@ -49,3 +49,19 @@ export const getUser = async token => {
   const data = await response.json();
   return response.status === 200 ? data : false;
 };
+
+export const userData = async username => {
+  const headers = new Headers();
+  headers.append("Content-Type", "application/json");
+
+  const parameters = {
+    method: 'POST',
+    headers: headers,
+    body: {'username' : username},
+    redirect: 'follow'
+  };
+
+  const response = await fetch("http://localhost:8000/userdata/", parameters);
+  const data = await response.json();
+  return response.status === 200 ? data : false;
+}

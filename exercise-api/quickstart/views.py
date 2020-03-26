@@ -22,14 +22,6 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
-    def getUserExercises(self):
-        queryset = Exercise.objects.all()
-        serializer_class = ExerciseSerializer
-
-    def getUserWorkouts(self):
-        queryset = Workout.objects.all()
-        serializer_class = WorkoutSerializer
-
 
 class LoginView(ObtainAuthToken):
 
@@ -74,6 +66,30 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 
     queryset = Workout.objects.all().order_by('-id')
     serializer_class = WorkoutSerializer
+
+
+class UserPostsViewSet(APIView):
+    permission_classes = ()
+    authentication_classes = ()
+
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, *args, **kwargs):
+        exerciseArray = []
+        exercises = Exercise.objects.filter(user__username=request.data['username']).order_by('-id')
+        for exercise in exercises:
+            exerciseArray.append(exercise)
+        exerciseSerializer = ExerciseSerializer(exerciseArray, many=True)
+
+        workoutArray = []
+        workouts = Workout.objects.filter(user__username=request.data['username']).order_by('-id')
+        for workout in workouts:
+            workoutArray.append(workout)
+        workoutSerializer = WorkoutSerializer(workoutArray, many=True)
+        data = []
+        data.append(exerciseSerializer.data)
+        data.append(workoutSerializer.data)
+        return Response(data)
 
 
 class GetSingleExercise(APIView):

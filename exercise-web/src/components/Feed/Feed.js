@@ -51,6 +51,7 @@ class Feed extends React.Component {
   buildFeed = () => {
     //Disables the publish musclegroup-box if open
     this.setState({ createMusclegroup: false });
+    this.props.home();
     getMusclegroups()
       .then(data => this.setState({ musclegroups: data }))
       .then(() => this.setState({ loadingMusclegroups: false }));
