@@ -288,6 +288,8 @@ class PostLarge extends React.Component {
                 ""
               )}
               <div className={styles.rowSpace}>
+              {!this.state.editing ? 
+              <Rating post={''}/> : ''}
                 <div className={styles.row}>
                   {postData.exercises &&
                     postData.exercises
@@ -373,15 +375,9 @@ class PostLarge extends React.Component {
                 ) : (
                   ""
                 )}
-              
               </div>
             </div>
           </div>
-
-          <div className="starRating">
-            <Rating />
-          </div>
-
           <div className={styles.footer}> Exercise.It © • est. 2020 </div>
         </div>
       </div>

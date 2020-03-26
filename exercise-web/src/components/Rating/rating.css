@@ -1,7 +1,14 @@
 input[type="radio"] {
     display: none;
 }
+ 
 .star {
     cursor: pointer;
+    margin-right: 5px;
     transition: color 200ms;
+}
+
+.wrapper {
+    display: flex;
+    margin-top: 20px;
 }
