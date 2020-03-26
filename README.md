@@ -1,69 +1,66 @@
-# Gruppe 62 - Exercise it!
-# Frontend: node.js
+![Exercise.it](./exercise-web/public/feed.png)
 
-In the frontend directory, you can run:
+# `exercise-web`
 
-### `npm start`
+## Start the frontend-server
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```bash
+cd exercise-web
+npm start
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Runs the app on [http://localhost:3000](http://localhost:3000).
+You will see any errors in the console.
 
-### `npm test`
+## Install the frontend-server in a new local repo
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd exercise-web
+npm install
+npm start
+```
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Advanced Configuration
+# `exercise-api`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+## Start the backend-server
 
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-# Backend: Django
-
-## Start by creating a virtual environment
+MacOS:
 
 ```bash
-virtualenv env
-source exercise.api/env/bin/activate
+source exercise-api/env/bin/activate
+python manage.py runserver
 ```
 
-## Install Django and Django REST into virtualenv
+Windows:
 
 ```bash
-pip install django
-pip install djangorestframework
+source exercise-api/env/Scripts/activate
+python manage.py runserver
 ```
 
-## Sync database
+Runs the app on [http://localhost:8000](http://localhost:8000).
+
+## Start the backend-server in a new virtulenv
 
 ```bash
+virtualenv exercise-api/env
+source exercise-api/env/bin/activate
+pip install -r requirements.txt
+python manage.py runserver
+```
+
+## Migrate database after changes to code
+
+```bash
+python manage.py makemigrations
 python manage.py migrate
 ```
 
-## Start server
+## Learn More
 
-```bash
-python manage.py runserver
-```
+To learn Django, check out the [Django documentation](https://docs.djangoproject.com/en/3.0/).
+To learn Django REST Framework, check out the [documentation](https://www.django-rest-framework.org/).
