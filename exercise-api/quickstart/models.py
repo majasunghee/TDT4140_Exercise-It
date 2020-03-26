@@ -30,7 +30,7 @@ class Post(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     username = models.CharField(max_length=50, null=True, blank=True)
     title = models.CharField(max_length=60)
-    image = models.ImageField(upload_to='frontend/public/images/')
+    image = models.ImageField(upload_to='exercise-web/public/images/')
     content = models.TextField()
     relations = models.CharField(max_length=60, null=True, blank=True)
 

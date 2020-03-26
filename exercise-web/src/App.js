@@ -6,7 +6,7 @@ import PostLarge from "./components/Post/PostLarge";
 import Login from "./components/Login/Login";
 import Info from "./components/Settings/Info";
 import Settings from "./components/Settings/Settings";
-import UserPage from "./components/Settings/UserPage";
+import User from "./components/User/User";
 import { getUser } from "./fetch/user";
 
 //Main class to render the react-app
@@ -125,6 +125,7 @@ class ExerciseIt extends React.Component {
               hiddenExercises={this.state.hideExercises}
               hiddenWorkouts={this.state.hideWorkouts}
               token={this.state.token}
+              home={this.homeButton}
             />
           </Route>
           <Route path="/posts">
@@ -147,15 +148,7 @@ class ExerciseIt extends React.Component {
           </Route>
           <Route exact path="/userpage">
             {this.buildSettings()}
-            <UserPage username={this.state.user.username} />
-            <Feed
-              user={this.state.user}
-              creatingNewExercise={this.state.newExercise}
-              creatingNewWorkout={this.state.newWorkout}
-              hiddenExercises={this.state.hideExercises}
-              hiddenWorkouts={this.state.hideWorkouts}
-              token={this.state.token}
-            />
+            <User user={this.state.user} />
           </Route>
         </Switch>
       </BrowserRouter>
