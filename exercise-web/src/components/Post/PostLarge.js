@@ -88,6 +88,21 @@ class PostLarge extends React.Component {
     }
   }
 
+  download = () => {
+    const downloadData = `${postData.title} av ${postData.user}\n${postData.date}\n\n${postData.content} `
+    var blob = new Blob( [ downloadData ], {
+      type: 'application/octet-stream'
+    });
+    
+    const href = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = href;
+    link.download = `${postData.title}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   filterFound = () => {
     var match = "";
     postData.exercises &&
@@ -322,6 +337,7 @@ class PostLarge extends React.Component {
                       </div>
                     ))}
                 </div>
+
                 {this.props.user.username === postData.user ||
                 this.props.user.username === "admin" ? (
                   this.state.editing ? (
@@ -341,6 +357,10 @@ class PostLarge extends React.Component {
                       </button>
                     </div>
                   ) : (
+                    <div>
+                    <button className= {styles.button} onClick={() => this.download()}>
+                    Last ned 
+                  </button>
                     <button
                       className={styles.button}
                       onClick={() =>
@@ -348,11 +368,12 @@ class PostLarge extends React.Component {
                       }
                     >
                       Rediger
-                    </button>
+                    </button></div>
                   )
                 ) : (
                   ""
                 )}
+              
               </div>
             </div>
           </div>
