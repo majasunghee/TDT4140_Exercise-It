@@ -54,7 +54,7 @@ class ExerciseViewSet(viewsets.ModelViewSet):
 
     parser_classes = (MultiPartParser, FormParser)
 
-    queryset = Exercise.objects.all().order_by('-id')
+    queryset = Exercise.objects.order_by('-date', '-user__role')
     serializer_class = ExerciseSerializer
 
 
@@ -64,7 +64,7 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 
     parser_classes = (MultiPartParser, FormParser)
 
-    queryset = Workout.objects.all().order_by('-id')
+    queryset = Workout.objects.order_by('-date', '-user__role')
     serializer_class = WorkoutSerializer
 
 

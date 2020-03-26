@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "./user.module.css";
-import { userData } from "../../fetch/user"
-import Post from "../Post/Post"
+import { userData } from "../../fetch/user";
+import Post from "../Post/Post";
+import SpinnerPost from "../Spinner/SpinnerPost";
+
+import professional from "../../icons/professional.png";
+import amateur from "../../icons/amateur.png";
 
 import { Link } from "react-router-dom";
-import SpinnerPost from "../Spinner/SpinnerPost";
 
 class UserPage extends React.Component {
   constructor(props) {
@@ -62,7 +65,17 @@ class UserPage extends React.Component {
 
         <div className={styles.stick}>
         <div className={styles.UserContainer}>
-          <div className={styles.PB_frame} />
+          <div className={styles.PB_frame}>
+          <img
+                alt="Exercise-it!"
+                className={styles.icon}
+                src={
+                  this.props.user.role
+                    ? professional
+                    : amateur
+                }
+              />
+            </div>
           <div className={styles.personalia}>
             <p id={styles.Name}>
               {this.props.user.username}
@@ -92,21 +105,7 @@ class UserPage extends React.Component {
               </p>
             </div>
           </div>
-
-
           <div>
-
-        {this.state.posts.length && this.state.posts[0].length ? (
-        <div>
-          <div className={styles.ContentSplitterWrapper}>
-              <p>Mine øvelser</p>
-            </div>
-              <div className={styles.linje} />
-              {this.state.posts.length && this.state.posts[0].map((post, i) => (
-                this.buildPost(post, 'exercise', i)
-                ))}
-                </div> ) : ''}
-
           {this.state.posts.length && this.state.posts[0].length ? (
           <div>
           <div className={styles.ContentSplitterWrapper}>
@@ -117,7 +116,16 @@ class UserPage extends React.Component {
                 this.buildPost(post, 'workout', i)
                 ))}
           </div> ) : ''}
-
+        {this.state.posts.length && this.state.posts[0].length ? (
+        <div>
+          <div className={styles.ContentSplitterWrapper}>
+              <p>Mine øvelser</p>
+            </div>
+              <div className={styles.linje} />
+              {this.state.posts.length && this.state.posts[0].map((post, i) => (
+                this.buildPost(post, 'exercise', i)
+                ))}
+                </div> ) : ''}
           </div>
         </div>
       </div>  
