@@ -51,13 +51,12 @@ export const getUser = async token => {
 };
 
 export const userData = async username => {
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
+  const usernameData = new FormData();
+  usernameData.append("username", username);
 
   const parameters = {
     method: 'POST',
-    headers: headers,
-    body: {'username' : username},
+    body: usernameData,
     redirect: 'follow'
   };
 

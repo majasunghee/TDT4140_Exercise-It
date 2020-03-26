@@ -4,7 +4,7 @@ import anonym from "../../icons/anonym.png";
 import professional from "../../icons/professional.png";
 import amateur from "../../icons/amateur.png";
 
-import months from "../../consts/months"
+import months from "../../consts/months";
 
 const Post = props => {
   return (
@@ -26,7 +26,7 @@ const Post = props => {
           <strong>{props.exercise ? "Øvelse" : "Treningsøkt"}</strong>
         </div>
       </div>
-      <div className={styles.description}>
+      <div className={styles.description} onClick={() => props.goToUserPage()}>
         {props.user ? "Av " + props.user.username : "Anonym"} -{" "}
         {parseInt(props.date.slice(8, 10), 10) +
           ". " +

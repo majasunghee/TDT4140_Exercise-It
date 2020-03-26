@@ -2,9 +2,6 @@ export const getSingleExercise = async id => {
   const idData = new FormData();
   idData.append("id", id);
 
-  const headers = new Headers();
-  headers.append("Content-Type", "application/json");
-
   var parameters = {
     method: "POST",
     body: idData,
