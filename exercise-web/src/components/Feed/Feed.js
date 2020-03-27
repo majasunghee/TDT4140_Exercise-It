@@ -51,7 +51,6 @@ class Feed extends React.Component {
   buildFeed = () => {
     //Disables the publish musclegroup-box if open
     this.setState({ createMusclegroup: false });
-    this.props.home();
     getMusclegroups()
       .then(data => this.setState({ musclegroups: data }))
       .then(() => this.setState({ loadingMusclegroups: false }));
@@ -61,6 +60,7 @@ class Feed extends React.Component {
     getLatestWorkouts()
       .then(data => this.setState({ workouts: data }))
       .then(() => this.setState({ loadingWorkouts: false }));
+    return true;
   }
 
   //Fetches musclegroups again. Used after creating a new one
@@ -105,7 +105,7 @@ class Feed extends React.Component {
               } />
         </div>
         {/* Three exercises are displayed at a time */}
-        {this.state.exercises
+        {this.state.exercises.filter(post => post.visibility || (this.props.user && this.props.user.username))
           .slice(this.state.scroller, this.state.scroller + 3)
           .map((post, i) => (
             <Link key={i} to={"/posts/" + post.id + `?type=exercise`}>
@@ -115,7 +115,8 @@ class Feed extends React.Component {
         {/* Right arrow */}
         <div
           onClick={() =>
-            this.state.scroller + 4 < this.state.exercises.length
+            this.state.scroller + 4 < this.state.exercises
+            .filter(post => post.visibility || (this.props.user && this.props.user.username)).length
               ? this.setState({ scroller: this.state.scroller + 3 })
               : ""
           } >
@@ -123,7 +124,8 @@ class Feed extends React.Component {
             alt=">" src={right}
             className={
               this.state.scroller + 4 <
-              this.state.exercises.length
+              this.state.exercises
+              .filter(post => post.visibility || (this.props.user && this.props.user.username)).length
                 ? styles.arrow
                 : styles.arrowDisabled
             } />
@@ -138,7 +140,7 @@ class Feed extends React.Component {
     return (
       <div className={styles.filterContainer}>
         <input
-          placeholder="Skriv inn nøkkelord"
+          placeholder="Filter"
           autoComplete="off"
           value={ this.state.filter.charAt(0).toUpperCase() + this.state.filter.slice(1) }
           onChange={change => this.setState({ filter: change.target.value })}
@@ -293,8 +295,8 @@ class Feed extends React.Component {
         <div className={ this.feedEmpty() ? styles.headerEmpty : styles.mainHeader }>
           <h1>
             {this.feedEmpty() ? "Ingen treff .."
-              : this.props.user.username
-              ? "Hei, " + this.props.user.username + "!"
+              : (this.props.user && this.props.user.username)
+              ? "Hei, " + (this.props.user && this.props.user.username) + "!"
               : "Velkommen!"}
           </h1>
         </div>
@@ -307,13 +309,13 @@ class Feed extends React.Component {
               createMusclegroup: !this.state.createMusclegroup
             })
           }
-          reFetch={() => this.buildFeed()}
+          reFetch={() => this.buildFeed() && this.props.home()}
           user={this.props.user}
           isCreating={this.props.creatingNewExercise}
         />
         <NewWorkout
           exercises={this.state.exercises}
-          reFetch={() => this.buildFeed()}
+          reFetch={() => this.buildFeed() && this.props.home()}
           user={this.props.user}
           isCreating={this.props.creatingNewWorkout}
         />
@@ -330,11 +332,11 @@ class Feed extends React.Component {
         <div className={styles.feed}>
           {!this.props.hiddenWorkouts
             ? this.state.selectedFilters.length === 0
-              ? this.state.workouts.slice(0, 2).map((post, i) => (
+              ? this.state.workouts.filter(post => post.visibility || (this.props.user && this.props.user.username)).slice(0, 2).map((post, i) => (
                 this.buildPost(post, 'workout', i)
                 ))
               // If any filters are applied, we list all matching posts vertically, starting with workouts
-              : this.state.workouts.map((post, i) =>
+              : this.state.workouts.filter(post => post.visibility || (this.props.user && this.props.user.username)).map((post, i) =>
                   this.checkSelectedFilters(post) ? (
                     this.buildPost(post, 'workout', i)
                   ) : (
@@ -353,7 +355,7 @@ class Feed extends React.Component {
                   this.buildAllExercises()
                 ) : (
                   // When filters are applied, the matching exercises are rendered as regular posts
-                  this.state.exercises.map((post, i) =>
+                  this.state.exercises.filter(post => post.visibility || (this.props.user && this.props.user.username)).map((post, i) =>
                     this.checkSelectedFilters(post) ? (
                       this.buildPost(post, 'exercise', i)
                       ) : ( "" )
@@ -366,7 +368,7 @@ class Feed extends React.Component {
               //All the rest of the workouts are displayed below it
               this.state.selectedFilters.length === 0 &&
                 !this.props.hiddenWorkouts &&
-                this.state.workouts.slice(2).map((post, i) => (
+                this.state.workouts.filter(post => post.visibility || (this.props.user && this.props.user.username)).slice(2).map((post, i) => (
                   this.buildPost(post, 'workout', i)
                 ))}
             </div>

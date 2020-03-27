@@ -7,29 +7,26 @@ import SpinnerPost from "../Spinner/SpinnerPost";
 import professional from "../../icons/professional.png";
 import amateur from "../../icons/amateur.png";
 
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class UserPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      posts: [],
+      username: '',
+      userrole: false,
+      workouts: [],
+      exercises: [],
       loading: true
     };
   }
 
   componentDidMount() {
-    userData(this.props.user.username)
-    .then(data => this.setState({ posts: data }))
+    if (window.location.href.split("userpage/")[1]) {
+    userData(window.location.href.split("userpage/")[1])
+    .then(data => this.setState({ username: data.username, userrole: data.userrole, workouts: data.workouts, exercises: data.exercises }))
     .then(() => this.setState({ loading: false }))
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.user.username) {
-      userData(newProps.user.username)
-      .then(data => this.setState({ posts: data }))
-      .then(() => this.setState({ loading: false }))
     }
   }
 
@@ -48,6 +45,12 @@ class UserPage extends React.Component {
   }
 
   render() {
+  window.scrollTo(0, 0);
+
+  if (this.props.user && !this.props.user.username) {
+    return <Redirect to={'/login'} />
+  }
+
   if (this.state.loading) {
     return (
       <div className={styles.container}>
@@ -57,7 +60,7 @@ class UserPage extends React.Component {
       </div>
     )
   }
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -70,7 +73,7 @@ class UserPage extends React.Component {
                 alt="Exercise-it!"
                 className={styles.icon}
                 src={
-                  this.props.user.role
+                  this.state.userrole
                     ? professional
                     : amateur
                 }
@@ -78,51 +81,54 @@ class UserPage extends React.Component {
             </div>
           <div className={styles.personalia}>
             <p id={styles.Name}>
-              {this.props.user.username}
+              {this.state.username}
             </p>
             <p>
-              {this.props.user.role ? 'Profesjonell' : 'Amatør'}
+              {this.props.user && this.props.user.username === this.state.username ? this.props.user.email : ''}
+            </p>
+            <p>
+              {this.state.userrole ? 'Profesjonell' : 'Amatør'}
             </p>
           </div>
           </div>
           </div>
 
           <div className={styles.statWrapper}>
-            <div> 
-              <p id={styles.stat}>
-                {this.state.posts.length && this.state.posts[0].length}
-              </p>
-              <p id={styles.Hstat}>
-                Øvelser
-              </p>
-            </div>
             <div>
               <p id={styles.stat}>
-              {this.state.posts.length && this.state.posts[1].length}
+              {this.state.workouts.length}
               </p>
               <p id={styles.Hstat}>
                 Økter
               </p>
             </div>
+            <div> 
+              <p id={styles.stat}>
+                {this.state.exercises.length}
+              </p>
+              <p id={styles.Hstat}>
+                Øvelser
+              </p>
+            </div>
           </div>
           <div>
-          {this.state.posts.length && this.state.posts[0].length ? (
+          {this.state.workouts.length ? (
           <div>
           <div className={styles.ContentSplitterWrapper}>
               <p>Mine økter</p>
               </div>
               <div className={styles.linje} />
-              {this.state.posts.length && this.state.posts[1].map((post, i) => (
+              {this.state.workouts.map((post, i) => (
                 this.buildPost(post, 'workout', i)
                 ))}
           </div> ) : ''}
-        {this.state.posts.length && this.state.posts[0].length ? (
+        {this.state.exercises.length ? (
         <div>
           <div className={styles.ContentSplitterWrapper}>
               <p>Mine øvelser</p>
             </div>
               <div className={styles.linje} />
-              {this.state.posts.length && this.state.posts[0].map((post, i) => (
+              {this.state.exercises.map((post, i) => (
                 this.buildPost(post, 'exercise', i)
                 ))}
                 </div> ) : ''}

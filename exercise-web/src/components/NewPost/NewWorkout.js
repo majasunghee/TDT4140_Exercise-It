@@ -10,7 +10,7 @@ const defaultState = {
   content: "",
   duration: "",
   error: false,
-  visibility: true
+  visibility: true,
 };
 
 export default class NewWorkout extends React.Component {
@@ -184,11 +184,12 @@ export default class NewWorkout extends React.Component {
           >
             Velg
           </button></div>
+          {this.props.user.username ?
           <button 
-            className={this.state.visibility ? styles.buttonVis : styles.buttonNotVis} 
+            className={this.state.visibility ? styles.buttonVis : styles.button} 
             onClick={() => this.setState({ visibility: !this.state.visibility })} >
               {this.state.visibility ? "Synlig" : "Skjult"}
-          </button>
+          </button> : ''}
           <button
             className={
               this.checkValidPost() ? styles.button : styles.buttonDisabled

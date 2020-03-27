@@ -11,7 +11,7 @@ const defaultState = {
   sets: "",
   reps: "",
   error: false,
-  visibility: true
+  visibility: true,
 };
 
 export default class NewExercise extends React.Component {
@@ -33,6 +33,7 @@ export default class NewExercise extends React.Component {
       formdata.append("reps", this.state.reps ? this.state.reps : 1);
       formdata.append("image", this.state.image, this.state.image.name);
       formdata.append("relations", this.state.musclegroupsId);
+      formdata.append("visibility", this.state.visibility);
       formdata.append(
         "username",
         this.props.user.username ? this.props.user.username : ""
@@ -207,20 +208,12 @@ export default class NewExercise extends React.Component {
                 ""
               )}
             </div>
-            <button
-              className={
-                this.checkValidPost() ? styles.button : styles.buttonDisabled
-              }
-              onClick={() => this.post()}
-            >
-              Publiser
-            </button>
-         </div>
-          <button 
-            className={this.state.visibility ? styles.buttonVis : styles.buttonNotVis} 
+            {this.props.user.username ?
+            <button 
+            className={this.state.visibility ? styles.buttonVis : styles.button} 
             onClick={() => this.setState({ visibility: !this.state.visibility })} >
               {this.state.visibility ? "Synlig" : "Skjult"}
-          </button>
+          </button>: ''}
           <button
             className={
               this.checkValidPost() ? styles.button : styles.buttonDisabled
@@ -229,6 +222,7 @@ export default class NewExercise extends React.Component {
           >
             Publiser
           </button>
+         </div>
         </div>
         <div className={styles.row}>
           {this.state.musclegroups.map(musclegroup => (

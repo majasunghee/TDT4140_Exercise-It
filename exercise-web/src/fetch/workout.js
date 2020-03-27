@@ -33,10 +33,11 @@ export const getSingleWorkout = async id => {
     return data;
   };
   
-  export const updateWorkout = async (id, content, add, rem) => {
+  export const updateWorkout = async (id, content, visibility, add, rem) => {
     const newdata = new FormData();
     newdata.append("content", content);
     newdata.append("relations", add + "/" + rem);
+    newdata.append("visibility", visibility);
   
     var parameters = {
       method: "PATCH",

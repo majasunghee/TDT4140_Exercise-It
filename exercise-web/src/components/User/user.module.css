@@ -131,7 +131,7 @@
   color: rgb(228, 228, 228);
   width: 150px;
   height: 75px;
-  background-image: linear-gradient( 160deg, var(--mainColor), var(--secondColor));
+  background-image: linear-gradient(160deg, var(--mainColor), var(--secondColor));
   border-radius: 20px;
   cursor: pointer;
 }

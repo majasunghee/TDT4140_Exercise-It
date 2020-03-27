@@ -30,10 +30,11 @@ export const getLatestExercises = async () => {
   return data;
 };
 
-export const updateExercise = async (id, content, add, rem) => {
+export const updateExercise = async (id, content, visibility, add, rem) => {
   const newdata = new FormData();
   newdata.append("content", content);
   newdata.append("relations", add + "/" + rem);
+  newdata.append("visibility", visibility);
 
   var parameters = {
     method: "PATCH",
