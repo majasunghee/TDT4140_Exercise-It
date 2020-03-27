@@ -56,7 +56,7 @@ class Base64ImageField(serializers.ImageField):
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'role', 'visibility', 'password')
+        fields = ('id', 'username', 'email', 'role', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -64,7 +64,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             username=validated_data['username'],
             email=validated_data['email'],
             role=validated_data['role'],
-            visibility=validated_data['visibility'],
         )
         user.set_password(validated_data['password'])
         user.save()
@@ -84,7 +83,7 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Exercise
-        fields = ('id','image','musclegroups','user','date','username','title','content','relations','sets','reps')
+        fields = ('id','image','musclegroups','user','date','username','title','content','relations','sets','reps','visibility')
 
     def create(self, data):
         exercise = super().create(data)
@@ -107,15 +106,15 @@ class ExerciseSerializer(serializers.HyperlinkedModelSerializer):
         if (len(data["relations"]) > 2):
             add = data["relations"].split("/")[0]
             remove = data["relations"].split("/")[1]
-        if (len(add) > 0):
-            for m_name in add.split(" "):
-                group = Musclegroup.objects.get(name=m_name)
-                exercise.musclegroups.add(group) 
-        if (len(remove) > 0):
-            for m_name in remove.split(" "):
-                if (m_name != ""):
+            if (len(add) > 0):
+                for m_name in add.split(" "):
                     group = Musclegroup.objects.get(name=m_name)
-                    exercise.musclegroups.remove(group) 
+                    exercise.musclegroups.add(group) 
+            if (len(remove) > 0):
+                for m_name in remove.split(" "):
+                    if (m_name != ""):
+                        group = Musclegroup.objects.get(name=m_name)
+                        exercise.musclegroups.remove(group) 
 
         exercise.save()
         return exercise
@@ -136,7 +135,7 @@ class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Workout
-        fields = ('id','image','exercises','user','date','username','title','content','relations','duration')
+        fields = ('id','image','exercises','user','date','username','title','content','relations','duration','visibility')
 
     def create(self, data):
         workout = super().create(data)
@@ -159,15 +158,15 @@ class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
         if (len(data["relations"]) > 2):
             add = data["relations"].split("/")[0]
             remove = data["relations"].split("/")[1]
-        if (len(add) > 0):
-            for e_title in add.split(" "):
-                group = Exercise.objects.get(title=e_title)
-                workout.exercises.add(group) 
-        if (len(remove) > 0):
-            for e_title in remove.split(" "):
-                if (e_title != ""):
+            if (len(add) > 0):
+                for e_title in add.split(" "):
                     group = Exercise.objects.get(title=e_title)
-                    workout.exercises.remove(group) 
+                    workout.exercises.add(group) 
+            if (len(remove) > 0):
+                for e_title in remove.split(" "):
+                    if (e_title != ""):
+                        group = Exercise.objects.get(title=e_title)
+                        workout.exercises.remove(group) 
 
         workout.save()
         return workout

@@ -9,7 +9,8 @@ const defaultState = {
   image: "",
   content: "",
   duration: "",
-  error: false
+  error: false,
+  visibility: true,
 };
 
 export default class NewWorkout extends React.Component {
@@ -30,6 +31,7 @@ export default class NewWorkout extends React.Component {
       formdata.append("duration", this.state.duration);
       formdata.append("image", this.state.image, this.state.image.name);
       formdata.append("relations", this.state.exercisesId);
+      formdata.append("visibility", this.state.visibility);
       formdata.append(
         "username",
         this.props.user.username ? this.props.user.username : ""
@@ -182,6 +184,12 @@ export default class NewWorkout extends React.Component {
           >
             Velg
           </button></div>
+          {this.props.user.username ?
+          <button 
+            className={this.state.visibility ? styles.buttonVis : styles.button} 
+            onClick={() => this.setState({ visibility: !this.state.visibility })} >
+              {this.state.visibility ? "Synlig" : "Skjult"}
+          </button> : ''}
           <button
             className={
               this.checkValidPost() ? styles.button : styles.buttonDisabled

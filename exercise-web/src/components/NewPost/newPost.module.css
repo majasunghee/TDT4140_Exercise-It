@@ -9,6 +9,7 @@
     flex-wrap: wrap;
 }
 
+.buttonVis,
 .buttonSmall,
 .buttonSmallDisabled,
 .buttonDisabled,
@@ -227,4 +228,14 @@
 .filterListPost:hover {
   color: rgb(90, 90, 90);
   cursor: pointer;
+}
+
+
+.buttonVis {
+  color: white;
+  background-image: linear-gradient(to bottom right, #f16000, #7500be);
+}
+
+.buttonVis:hover {
+	background: linear-gradient(to bottom right, #7500be, #f16000);
 }

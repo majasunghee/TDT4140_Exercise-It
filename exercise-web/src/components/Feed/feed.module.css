@@ -84,10 +84,6 @@
   background-color: rgb(24, 24, 24);
 }
 
-.filterDisabled {
-  color: rgb(110, 110, 110);
-}
-
 .search {
   position: fixed;
   height: 25px;
@@ -118,6 +114,12 @@
   width: 320px;
   padding-left: 52px;
 }
+
+
+.filterDisabled {
+  color: rgb(110, 110, 110);
+}
+
 
 .buttonFilter,
 .buttonFilterDisabled {

@@ -8,7 +8,6 @@ from rest_framework.authtoken.models import Token
 ''' User table '''
 class CustomUser(AbstractUser):
     role = models.BooleanField(default=False)
-    visibility = models.BooleanField(default=False)
 
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def create_auth_token(sender, instance=None, created=False, **kwargs):
@@ -33,6 +32,8 @@ class Post(models.Model):
     image = models.ImageField(upload_to='exercise-web/public/images/')
     content = models.TextField()
     relations = models.CharField(max_length=60, null=True, blank=True)
+    visibility = models.BooleanField(default=False)
+
 
 class Exercise(Post):
     reps = models.IntegerField(null=True, blank=True)

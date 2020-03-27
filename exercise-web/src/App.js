@@ -8,6 +8,7 @@ import Info from "./components/Settings/Info";
 import Settings from "./components/Settings/Settings";
 import User from "./components/User/User";
 import { getUser } from "./fetch/user";
+import NotFound from "./components/NotFound/NotFound"
 
 //Main class to render the react-app
 //Contains info about the user as state, if logged in
@@ -16,7 +17,7 @@ class ExerciseIt extends React.Component {
     super(props);
 
     this.state = {
-      user: {},
+      user: null,
       token: "",
       //States to control what settings are active
       newExercise: false,
@@ -40,7 +41,7 @@ class ExerciseIt extends React.Component {
   //Function to remove the user from state and cookies
   removeUser = () => {
     localStorage.removeItem("token");
-    this.setState({ user: {}, token: "" });
+    this.setState({ user: {}, token: "" , newExercise: false, newWorkout: false, hideExercises: false, hideWorkouts: false });
   };
 
   //Every time app refreshes, try to log in user from cookies
@@ -146,10 +147,15 @@ class ExerciseIt extends React.Component {
               onCancel={() => this.leaveLogin()}
             />
           </Route>
-          <Route exact path="/userpage">
+          <Route path="/userpage">
             {this.buildSettings()}
             <User user={this.state.user} />
           </Route>
+          <Route path="*">
+          {this.buildSettings()}
+          <NotFound />
+          </Route>
+
         </Switch>
       </BrowserRouter>
     );
