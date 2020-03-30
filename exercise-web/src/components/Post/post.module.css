@@ -57,7 +57,7 @@
   border-bottom: 2px solid #acacaca9;
   width: 200px;
   margin-top: 15px;
-  margin-right: 20px;
+  margin-right: 10px;
   line-height: 2.2em;
   transition: 0.2s;
   outline: none;
@@ -132,7 +132,7 @@
 .buttonSmallDisabled {
   padding: 10px;
   min-width: 100px;
-  margin-left: -10px;
+  margin-left: 0px;
   border-radius: 8px 8px 8px 0;
   margin-right: 20px;
 }
@@ -177,7 +177,7 @@
 }
 
 .iconInfoLeft {
-  margin-left: 755px;
+  padding-left: 755px;
   height: 50px;
   max-width: 50px;
   top: 154px;
@@ -237,12 +237,13 @@
   border-radius: 8px;
   box-shadow: 0px 0px 75px -38px rgb(82, 82, 82);
   background-color: rgb(248, 248, 248);
-  transition: 1.2s;
+  transition: 0.2s;
 }
 
 .postWrapper:hover {
   cursor: pointer;
   box-shadow: 0px 0px 23px -4px rgb(134, 134, 134);
+
 }
 
 .description,
@@ -356,9 +357,31 @@
 }
 
 @media only screen and (max-width: 800px) {
+  .singlePostWrapper,
+  .postWrapperSmall,
   .postWrapper {
     width: auto;
+    margin: 0;
+    margin-top: 30px;
   }
+
+  .container {
+    width: 100vw;
+  }
+
+  .content {
+    margin: 0;
+  }
+
+  .singlePostImage {
+    width: 100vw;
+    height: 250px;
+  }
+
+  .mainHeader {
+    text-align: center;
+  }
+
   .postImage {
     width: auto;
     height: 220px;

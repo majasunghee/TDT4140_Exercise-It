@@ -38,7 +38,7 @@ class Post(models.Model):
 class Exercise(Post):
     reps = models.IntegerField(null=True, blank=True)
     sets = models.IntegerField(null=True, blank=True)
-    musclegroups = models.ManyToManyField(Musclegroup, null=True, blank=True)
+    musclegroups = models.ManyToManyField(Musclegroup, blank=True)
 
     def __str__(self):
         return self.title
@@ -46,7 +46,7 @@ class Exercise(Post):
         
 class Workout(Post):
     duration = models.IntegerField()
-    exercises = models.ManyToManyField(Exercise, null=True, blank=True)
+    exercises = models.ManyToManyField(Exercise, blank=True)
 
 class Feedback(models.Model):
     rating = models.IntegerField()

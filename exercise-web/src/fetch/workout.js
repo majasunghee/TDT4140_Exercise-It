@@ -60,10 +60,11 @@ export const getSingleWorkout = async id => {
       redirect: "follow"
     };
   
-    const response = await fetch(
+    await fetch(
       "http://localhost:8000/workouts/" + id + "/",
       parameters
     );
     console.log("deleting exercise..");
+    return true;
   };
   

@@ -36,7 +36,7 @@ export default class NewExercise extends React.Component {
       formdata.append("visibility", this.state.visibility);
       formdata.append(
         "username",
-        this.props.user.username ? this.props.user.username : ""
+        this.props.user && this.props.user.username ? this.props.user.username : ""
       );
 
       var parameters = {
@@ -197,7 +197,7 @@ export default class NewExercise extends React.Component {
               >
                 Velg
               </button>
-              {this.props.user.username === "admin" ? (
+              {this.props.user && this.props.user.username === "admin" ? (
                 <button
                   className={styles.buttonSmall}
                   onClick={() => this.props.createMusclegroup()}
@@ -208,7 +208,7 @@ export default class NewExercise extends React.Component {
                 ""
               )}
             </div>
-            {this.props.user.username ?
+            {this.props.user && this.props.user.username ?
             <button 
             className={this.state.visibility ? styles.buttonVis : styles.button} 
             onClick={() => this.setState({ visibility: !this.state.visibility })} >
@@ -219,6 +219,7 @@ export default class NewExercise extends React.Component {
               this.checkValidPost() ? styles.button : styles.buttonDisabled
             }
             onClick={() => this.post()}
+            tabIndex="0"
           >
             Publiser
           </button>

@@ -82,6 +82,7 @@ export default class NewMusclegroup extends React.Component {
               : styles.buttonSmallDisabled
           }
           onClick={() => this.post()}
+          tabIndex="0"
         >
           Legg til
         </button>

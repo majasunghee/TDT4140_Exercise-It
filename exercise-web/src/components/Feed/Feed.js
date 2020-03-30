@@ -105,7 +105,7 @@ class Feed extends React.Component {
               } />
         </div>
         {/* Three exercises are displayed at a time */}
-        {this.state.exercises.filter(post => post.visibility || (this.props.user && this.props.user.username))
+        {this.state.exercises.filter(post => this.checkVisibility(post))
           .slice(this.state.scroller, this.state.scroller + 3)
           .map((post, i) => (
             <Link key={i} to={"/posts/" + post.id + `?type=exercise`}>
@@ -116,7 +116,7 @@ class Feed extends React.Component {
         <div
           onClick={() =>
             this.state.scroller + 4 < this.state.exercises
-            .filter(post => post.visibility || (this.props.user && this.props.user.username)).length
+            .filter(post => this.checkVisibility(post)).length
               ? this.setState({ scroller: this.state.scroller + 3 })
               : ""
           } >
@@ -125,7 +125,7 @@ class Feed extends React.Component {
             className={
               this.state.scroller + 4 <
               this.state.exercises
-              .filter(post => post.visibility || (this.props.user && this.props.user.username)).length
+              .filter(post => this.checkVisibility(post)).length
                 ? styles.arrow
                 : styles.arrowDisabled
             } />
@@ -240,21 +240,25 @@ class Feed extends React.Component {
     return match;
   };
 
+  checkVisibility(post) {
+    return (post.visibility || (this.props.user && this.props.user.username))
+  }
+
   //Checks if there are no posts matching the filters
   //Used to display the message "Ingen treff.."
   feedEmpty = () => {
     return (
       //Are there no exercises or workouts matching the filters?
-      (this.state.exercises.filter(post =>
+      (this.state.exercises.filter(post => this.checkVisibility(post)).filter(post =>
         this.checkSelectedFilters(post)).length === 0
-      && this.state.workouts.filter(post =>
+      && this.state.workouts.filter(post => this.checkVisibility(post)).filter(post =>
         this.checkSelectedFilters(post)).length === 0) 
       //Are there no exercises matching, and the workouts are hidden?
-      || (this.state.exercises.filter(post =>
+      || (this.state.exercises.filter(post => this.checkVisibility(post)).filter(post =>
         this.checkSelectedFilters(post)
       ).length === 0 && this.props.hiddenWorkouts)
       //Are there no workouts matching, and the exercises are hidden?
-      || (this.state.workouts.filter(post =>
+      || (this.state.workouts.filter(post => this.checkVisibility(post)).filter(post =>
         this.checkSelectedFilters(post)
       ).length === 0 && this.props.hiddenExercises)
     );
@@ -332,11 +336,11 @@ class Feed extends React.Component {
         <div className={styles.feed}>
           {!this.props.hiddenWorkouts
             ? this.state.selectedFilters.length === 0
-              ? this.state.workouts.filter(post => post.visibility || (this.props.user && this.props.user.username)).slice(0, 2).map((post, i) => (
+              ? this.state.workouts.filter(post => this.checkVisibility(post)).slice(0, 2).map((post, i) => (
                 this.buildPost(post, 'workout', i)
                 ))
               // If any filters are applied, we list all matching posts vertically, starting with workouts
-              : this.state.workouts.filter(post => post.visibility || (this.props.user && this.props.user.username)).map((post, i) =>
+              : this.state.workouts.filter(post => this.checkVisibility(post)).map((post, i) =>
                   this.checkSelectedFilters(post) ? (
                     this.buildPost(post, 'workout', i)
                   ) : (
@@ -355,7 +359,7 @@ class Feed extends React.Component {
                   this.buildAllExercises()
                 ) : (
                   // When filters are applied, the matching exercises are rendered as regular posts
-                  this.state.exercises.filter(post => post.visibility || (this.props.user && this.props.user.username)).map((post, i) =>
+                  this.state.exercises.filter(post => this.checkVisibility(post)).map((post, i) =>
                     this.checkSelectedFilters(post) ? (
                       this.buildPost(post, 'exercise', i)
                       ) : ( "" )
@@ -368,7 +372,7 @@ class Feed extends React.Component {
               //All the rest of the workouts are displayed below it
               this.state.selectedFilters.length === 0 &&
                 !this.props.hiddenWorkouts &&
-                this.state.workouts.filter(post => post.visibility || (this.props.user && this.props.user.username)).slice(2).map((post, i) => (
+                this.state.workouts.filter(post => this.checkVisibility(post)).slice(2).map((post, i) => (
                   this.buildPost(post, 'workout', i)
                 ))}
             </div>

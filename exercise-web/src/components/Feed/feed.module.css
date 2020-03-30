@@ -163,17 +163,35 @@
   .container {
     width: auto;
   }
+  
   .content {
     margin-left: 15px;
     margin-right: 15px;
     width: auto;
   }
+
+  .mainHeader {
+    text-align: center;
+  }
+
   .horizontalFeed {
     width: auto;
     flex-direction: column;
     margin-left: 0;
   }
+
   .filterContainer {
     display: none;
+  }
+
+  .arrow,
+  .arrowDisabled {
+    display: none;
+  }
+  
+  .horizontalFeed {
+    margin: 0;
+    padding: 0;
+    width: auto;
   }
 }

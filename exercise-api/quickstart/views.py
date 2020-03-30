@@ -24,7 +24,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class LoginView(ObtainAuthToken):
-
     def post(self, request, *args, **kwargs):
         response = super(LoginView, self).post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
@@ -155,35 +154,3 @@ class FeedbackViewSet(viewsets.ModelViewSet):
 #     def getPopularPublicWorkouts():
 #         queryset = Workout.objects.all()
 #         serializer_class = WorkoutSerializer
-
-#     def getPopularProfessionalExercises():
-#         queryset = Exercise.objects.all()
-#         serializer_class = ExerciseSerializer
-
-#     def getPopularProfessionalWorkouts():
-#         queryset = Workout.objects.all()
-#         serializer_class = WorkoutSerializer
-
-#     def getLatestExercises():
-#         queryset = Exercise.objects.all()
-#         serializer_class = ExerciseSerializer
-
-#     def getLatestWorkouts():
-#         queryset = Workout.objects.all()
-#         serializer_class = WorkoutSerializer
-
-#     def getHighestRatedExercises():
-#         queryset = Exercise.objects.all()
-#         serializer_class = ExerciseSerializer
-
-#     def getHighestRatedWorkouts():
-#         queryset = Workout.objects.all()
-#         serializer_class = WorkoutSerializer
-
-#     def getExercisesByMuscles():
-#         queryset = Exercise.objects.all()
-#         serializer_class = UserSerializer
-
-#     def getWorkoutsByExercises():
-#         queryset = Workout.objects.all()
-#         serializer_class = UserSerializer

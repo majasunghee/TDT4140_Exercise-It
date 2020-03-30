@@ -117,11 +117,6 @@
 
 
 
-
-
-
-
-
 .postWrapperEmpty,
 .postWrapperPublish,
 .postWrapperExtra {
@@ -238,4 +233,30 @@
 
 .buttonVis:hover {
 	background: linear-gradient(to bottom right, #7500be, #f16000);
+}
+
+
+@media only screen and (max-width: 800px) {
+  .postWrapperEmpty,
+  .postWrapperPublish {
+    width: 80vw;
+    margin: 0;
+  }
+
+
+  .gradientPublish {
+    width: 80vw;
+  }
+
+  .postImagePublish {
+    width: 80vw;
+  }
+
+  .inputField {
+    min-width: 70vw;
+  }
+
+  .input {
+    width: 80vw;
+  }
 }

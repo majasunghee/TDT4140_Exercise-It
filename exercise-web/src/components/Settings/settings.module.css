@@ -1,9 +1,3 @@
-.rowSpace {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
 .container {
   text-align: center;
   background-color: rgb(228, 228, 228);
@@ -12,11 +6,25 @@
   padding-top: 20px;
 }
 
+.content {
+  margin-left: 330px;
+  display: inline-block;
+  text-align: start;
+}
+
+.rowSpace {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .mainHeader {
-  font-size: 1.4em;
+  margin-top: 18vh;
+  font-size: 8em;
   color: #5d5d5d;
   cursor: default;
-  margin-bottom: -10px;
+  font-weight: bold;
+  font-family: "Work Sans", sans-serif;
 }
 
 .mainHeader:hover {
@@ -25,6 +33,14 @@
   -webkit-text-fill-color: transparent;
 }
 
+.text {
+  font-size: 1.6em;
+  color: #5d5d5d;
+  margin-top: 30px;
+  margin-left: 10px;
+}
+
+.hidden,
 .settings {
   background-color: rgb(20, 20, 20);
   height: 100vh;
@@ -131,12 +147,11 @@
 .settingActive,
 .loginSetting,
 .setting {
-  text-align: center;
   width: 330px;
   text-align: center;
   font-size: 1.1em;
-  padding-top: 23px;
-  padding-bottom: 23px;
+  padding-top: 21px;
+  padding-bottom: 21px;
   background-color: rgb(26, 26, 26);
   transition: 0.2s;
   border-bottom: 1px solid rgb(37, 37, 37);
@@ -145,16 +160,16 @@
 .settingActive,
 .loginSetting:hover,
 .setting:hover {
-  padding-left: 10px;
-  width: 320px;
+  padding-left: 8px;
+  width: 322px;
   cursor: pointer;
   color: #a700ff;
-  background-color: rgb(24, 24, 24);
+  background-color: rgb(22, 22, 22);
 }
 
 .loginSetting {
-  padding-top: 17px;
-  padding-bottom: 17px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   background-color: rgb(22, 22, 22);
 }
 
@@ -163,8 +178,13 @@
   background-color: rgb(22, 22, 22);
 }
 
-.infoHeader {
-  flex-direction: column;
+.plus {
+  color: white;
+  background-color: var(--secondColor);
+  padding: 2px;
+  padding-left: 6px;
+  padding-right: 6px;
+  border-radius: 8px;
 }
 
 @media only screen and (max-width: 800px) {
@@ -173,11 +193,16 @@
     height: 80vh;
     font-size: 1.3em;
     box-shadow: 0 20px 30 0 black;
+    position: relative;
   }
 
   .logo {
     height: auto;
     padding-bottom: 20px;
+  }
+
+  .plus {
+    display: none;
   }
 
   .settingActive,

@@ -12,19 +12,6 @@
   padding-top: 20px;
 }
 
-.mainHeader {
-  font-size: 1.4em;
-  color: #5d5d5d;
-  cursor: default;
-  margin-bottom: -10px;
-}
-
-.mainHeader:hover {
-  background: -webkit-linear-gradient(30deg, #5d5d5d, var(--secondColor) 50%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .content {
   margin-left: 330px;
   display: inline-block;
@@ -49,7 +36,7 @@
   box-shadow: 10px -20px 70px -40px rgb(82, 82, 82),
   10px 30px 70px -20px rgb(255, 255, 255);
   font-family: "Work Sans", sans-serif;
-  padding-bottom: 30px;
+  padding-bottom: 45px;
 }
 
 .stick {
@@ -66,8 +53,8 @@
 
 .icon {
   filter: brightness(700%);
-  margin-top: 40px;
-  height: 120px;
+  margin-top: 30px;
+  height: 110px;
   transition: 0.3s;
 }
 
@@ -75,23 +62,23 @@
   border-radius: 50%;
   background-color: rgb(41, 20, 100);
   box-shadow: 10px 0px 75px -25px rgb(82, 82, 82);
-  width: 200px;
-  height: 200px;
+  width: 170px;
+  height: 170px;
   margin-left: auto;
   margin-right: auto;
   margin-top: -110px;
   transition: 0.3s;
-  margin-bottom: 20px;
+  margin-bottom: -15px;
 }
 
 .UserContainer:hover > .PB_frame{
-  width: 210px;
-  height: 210px;
+  width: 180px;
+  height: 180px;
   margin-top: -115px;
 }
 
 .UserContainer:hover > .PB_frame > .icon{
-  height: 130px;
+  height: 120px;
 }
 
 .UserContainer:hover > .personalia{
@@ -117,8 +104,8 @@
 }
 
 .statWrapper{
-  height: 100px;
-  padding-top: 30px;
+  height: 90px;
+  padding-top: 20px;
   display: flex;
   justify-content: space-evenly;
   background-color: rgb(242, 242, 242);
@@ -131,7 +118,7 @@
   color: rgb(228, 228, 228);
   width: 150px;
   height: 75px;
-  background-image: linear-gradient(160deg, var(--mainColor), var(--secondColor));
+  background-image: linear-gradient(150deg, var(--mainColor), var(--secondColor));
   border-radius: 20px;
   cursor: pointer;
 }
@@ -166,7 +153,8 @@
 .linje{
   margin: auto;
   height: 5px;
-  width: 800px;
+  width: 850px;
   border-radius: 4px;
+  filter: opacity(60%);
   background-image: linear-gradient( 220deg, var(--mainColor), var(--secondColor) 50%);
 }

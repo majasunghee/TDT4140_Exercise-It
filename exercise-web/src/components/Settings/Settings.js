@@ -89,7 +89,7 @@ const Settings = props => {
                   : styles.setting
               }
             >
-              Legg til øvelse <strong>+</strong>
+              Legg til øvelse <strong className={styles.plus}>+</strong>
             </div>
             <div
               onClick={() => newWorkout()}
@@ -97,7 +97,7 @@ const Settings = props => {
                 props.creatingNewWorkout ? styles.settingActive : styles.setting
               }
             >
-              Opprett økt <strong>+</strong>
+              Opprett økt <strong className={styles.plus}>+</strong>
             </div>{" "}
           </div>
         {props.user && props.user.username === "admin" ? (

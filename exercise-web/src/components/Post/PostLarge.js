@@ -360,20 +360,19 @@ class PostLarge extends React.Component {
                 <button className= {styles.button} onClick={() => this.download()}>
                     Last ned 
                   </button>) : ''}
-                {this.props.user && this.props.user.username === postData.user ||
-                this.props.user && this.props.user.username === "admin" ? (
+                {(this.props.user && this.props.user.username === postData.user) ||
+                (this.props.user && this.props.user.username) === "admin" ? (
                   this.state.editing ? (
                     <div>
                     <div>
                       <button
-                        className={styles.edit}
+                        className={styles.buttonSmall}
                         onClick={() => this.updatePost()}
                       >
                         Lagre
                       </button>
-                      /
                       <button
-                        className={styles.edit}
+                        className={styles.buttonSmall}
                         onClick={() => this.deletePost()}
                       >
                         Slett
