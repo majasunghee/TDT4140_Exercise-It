@@ -11,6 +11,11 @@ class Rating extends React.Component {
         }
     }
 
+    setRating(value) {
+        this.setState({ rating: value });
+        this.props.getRating(value);
+    }
+
     render() {
     return <div className="wrapper">
         {[...Array(5)].map((star,i) => {
@@ -22,13 +27,13 @@ class Rating extends React.Component {
                     type ="radio"
                     name="rating"
                     value={ratingValue}
-                    onClick = {() => this.setState({ rating: ratingValue })}
+                    onClick = {() => this.setRating(ratingValue === this.state.rating ? 0 : ratingValue)}
                     />
                     <FaStar className="star"
                     color={ratingValue <= (this.state.hover || this.state.rating) ? "#952BD2" : "#A7AAAC"}
                     size={32}
                     onMouseEnter = {() => this.setState({ hover: ratingValue })}
-                    onMouseLeave = {() => this.setState({ rating: null })}
+                    onMouseLeave = {() => this.setState({ hover: this.state.rating})}
                     />
                 </label>
             )
