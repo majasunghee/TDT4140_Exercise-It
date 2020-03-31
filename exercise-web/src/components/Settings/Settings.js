@@ -67,16 +67,16 @@ const Settings = props => {
           </div>
       </div>
       <div>
-      {props.user.username ? (
-          <Link to="/userpage">
+      {props.user && props.user.username ? (
+        <Link to={`/userpage/${props.user ? props.user.username : ''}`}>
             <div
               className={
-                window.location.href.indexOf("userpage") > -1
+                window.location.href.indexOf(`userpage/${props.user.username}`) > -1
                   ? styles.settingActive
                   : styles.setting
               }
             >
-              Min Profil
+              Min profil
             </div>
           </Link>
         ) : null}
@@ -100,7 +100,7 @@ const Settings = props => {
               Opprett økt <strong>+</strong>
             </div>{" "}
           </div>
-        {props.user.username === "admin" ? (
+        {props.user && props.user.username === "admin" ? (
           <a target="_self" href="http://localhost:8000/admin">
             <div className={styles.setting}>Django-Admin</div>
           </a>
@@ -120,7 +120,7 @@ const Settings = props => {
         )}
         <Link to="/login">
           <div className={styles.loginSetting} onClick={() => props.login()}>
-            {props.user.username ? "Logg ut" : "Logg inn"}
+            {props.user && props.user.username ? "Logg ut" : "Logg inn"}
           </div>{" "}
         </Link>
       </div>

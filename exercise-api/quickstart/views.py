@@ -37,7 +37,7 @@ class GetMeView(viewsets.ModelViewSet):
 
     def list(self, request):
         user = CustomUser.objects.get(username=request.user.username)
-        return Response({'username': user.username, 'email': user.email, 'role': user.role, 'visibility': user.visibility})
+        return Response({'username': user.username, 'email': user.email, 'role': user.role})
 
 
 class MusclegroupViewSet(viewsets.ModelViewSet):
@@ -54,7 +54,7 @@ class ExerciseViewSet(viewsets.ModelViewSet):
 
     parser_classes = (MultiPartParser, FormParser)
 
-    queryset = Exercise.objects.all().order_by('-id')
+    queryset = Exercise.objects.order_by('-date', '-user__role')
     serializer_class = ExerciseSerializer
 
 
@@ -64,7 +64,7 @@ class WorkoutViewSet(viewsets.ModelViewSet):
 
     parser_classes = (MultiPartParser, FormParser)
 
-    queryset = Workout.objects.all().order_by('-id')
+    queryset = Workout.objects.order_by('-date', '-user__role')
     serializer_class = WorkoutSerializer
 
 
@@ -75,21 +75,19 @@ class UserPostsViewSet(APIView):
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, *args, **kwargs):
+        user = CustomUser.objects.get(username=request.data['username'])
         exerciseArray = []
         exercises = Exercise.objects.filter(user__username=request.data['username']).order_by('-id')
         for exercise in exercises:
             exerciseArray.append(exercise)
         exerciseSerializer = ExerciseSerializer(exerciseArray, many=True)
-
         workoutArray = []
         workouts = Workout.objects.filter(user__username=request.data['username']).order_by('-id')
         for workout in workouts:
             workoutArray.append(workout)
         workoutSerializer = WorkoutSerializer(workoutArray, many=True)
         data = []
-        data.append(exerciseSerializer.data)
-        data.append(workoutSerializer.data)
-        return Response(data)
+        return Response({'username': user.username, 'userrole': user.role, 'workouts': workoutSerializer.data, 'exercises': exerciseSerializer.data})
 
 
 class GetSingleExercise(APIView):
@@ -109,7 +107,7 @@ class GetSingleExercise(APIView):
             pusername = post.user.username
         if (post.user):
             prole = post.user.role
-        return Response({'title': post.title, 'musclegroups': musclegroups, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'sets': post.sets, 'reps': post.reps})
+        return Response({'title': post.title, 'musclegroups': musclegroups, 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'visibility': post.visibility, 'sets': post.sets, 'reps': post.reps})
 
 
 class GetSingleWorkout(APIView):
@@ -134,7 +132,7 @@ class GetSingleWorkout(APIView):
             pusername = post.user.username
         if (post.user):
             prole = post.user.role
-        return Response({'title': post.title, 'exercises': exercises, 'musclegroups': list(set(musclegroups)), 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'duration': post.duration})
+        return Response({'title': post.title, 'exercises': exercises, 'musclegroups': list(set(musclegroups)), 'image': post.image.url, 'content': post.content, 'date': post.date, 'user': pusername, 'userrole': prole, 'visibility': post.visibility, 'duration': post.duration})
 
 
 class FeedbackViewSet(viewsets.ModelViewSet):

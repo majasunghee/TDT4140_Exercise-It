@@ -26,16 +26,16 @@ const Post = props => {
           <strong>{props.exercise ? "Øvelse" : "Treningsøkt"}</strong>
         </div>
       </div>
-      <div className={styles.description} onClick={() => props.goToUserPage()}>
+      <div className={styles.description}>
         {props.user ? "Av " + props.user.username : "Anonym"} -{" "}
         {parseInt(props.date.slice(8, 10), 10) +
           ". " +
           months[parseInt(props.date.slice(5, 7), 10) - 1]}
-      </div>
+     </div>
       <div
         className={styles.postImage}
         style={{
-          backgroundImage: "url(" + props.image.split("public/")[1] + ")"
+          backgroundImage: "url(/" + props.image.split("public/")[1] + ")"
         }}
       >
         <div className={styles.gradient} />
@@ -43,6 +43,8 @@ const Post = props => {
       <div className={styles.text}>
         {props.content.slice(0, 210)}
         {props.content.length > 210 ? ".." : ""}
+      </div>
+      <div>
       </div>
     </div>
   );

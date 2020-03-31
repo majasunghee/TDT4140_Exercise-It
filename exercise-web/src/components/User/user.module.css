@@ -35,6 +35,7 @@
 
 
 
+
 .wrapper {
   padding-top: 80px;
 }
@@ -46,7 +47,7 @@
   background-color: rgb(246, 246, 246);
   padding-top: 30px;
   box-shadow: 10px -20px 70px -40px rgb(82, 82, 82),
-  10px 20px 70px -20px rgb(255, 255, 255);
+  10px 30px 70px -20px rgb(255, 255, 255);
   font-family: "Work Sans", sans-serif;
   padding-bottom: 30px;
 }
@@ -63,9 +64,16 @@
   background-color: rgb(228, 228, 228);
 }
 
+.icon {
+  filter: brightness(700%);
+  margin-top: 40px;
+  height: 120px;
+  transition: 0.3s;
+}
+
 .PB_frame{
   border-radius: 50%;
-  background-color: rgb(20,20,100);
+  background-color: rgb(41, 20, 100);
   box-shadow: 10px 0px 75px -25px rgb(82, 82, 82);
   width: 200px;
   height: 200px;
@@ -80,6 +88,10 @@
   width: 210px;
   height: 210px;
   margin-top: -115px;
+}
+
+.UserContainer:hover > .PB_frame > .icon{
+  height: 130px;
 }
 
 .UserContainer:hover > .personalia{
@@ -119,7 +131,7 @@
   color: rgb(228, 228, 228);
   width: 150px;
   height: 75px;
-  background-image: linear-gradient( 160deg, var(--mainColor), var(--secondColor));
+  background-image: linear-gradient(160deg, var(--mainColor), var(--secondColor));
   border-radius: 20px;
   cursor: pointer;
 }
@@ -155,5 +167,6 @@
   margin: auto;
   height: 5px;
   width: 800px;
-  background-image: linear-gradient( 160deg, var(--mainColor), var(--secondColor));
+  border-radius: 4px;
+  background-image: linear-gradient( 220deg, var(--mainColor), var(--secondColor) 50%);
 }

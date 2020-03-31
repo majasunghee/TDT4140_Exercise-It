@@ -46,6 +46,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
+  z-index: 10;
 }
 
 .inputMedium,
@@ -98,10 +99,7 @@
   border: 1.5px solid var(--mainColor);
 }
 
-.inputFieldMedium:hover {
-  border: 1.5px solid var(--secondColor);
-}
-
+.buttonVis,
 .buttonSmall,
 .buttonSmallDisabled,
 .buttonDisabled,
@@ -164,11 +162,16 @@
 }
 
 .iconLarge {
-  padding-left: 20px;
   height: 60px;
   max-width: 60px;
-  top: 152px;
+  top: 175px;
   position: absolute;
+  z-index: 10;
+}
+
+.iconLarge:hover {
+  transition: 0.2s;
+  filter: grayscale(30%)
 }
 
 .iconInfo {
@@ -180,7 +183,7 @@
 }
 
 .iconInfoLeft {
-  padding-left: 755px;
+  margin-left: 755px;
   height: 50px;
   max-width: 50px;
   top: 154px;
@@ -189,7 +192,7 @@
 
 .reps,
 .duration {
-  padding-left: 880px;
+  margin-left: 880px;
   font-size: 1.2em;
   top: 184px;
   position: absolute;
@@ -197,7 +200,7 @@
 }
 
 .reps {
-  padding-left: 800px;
+  margin-left: 800px;
 }
 
 .postWrapperSmall {
@@ -253,6 +256,13 @@
 .singlePostWrapper > .title {
   margin-left: 70px;
 }
+
+.singlePostWrapper > .title:hover {
+  
+  transition: 0.2s;
+  color: rgb(138, 120, 148);
+}
+
 
 .subtitle {
   color: rgb(138, 120, 148);
@@ -366,4 +376,14 @@
   .subtitle {
     display: none;
   }
+}
+
+
+.buttonVis {
+  color: white;
+  background-image: linear-gradient(to bottom right, #f16000, #7500be);
+}
+
+.buttonVis:hover {
+	background: linear-gradient(to bottom right, #7500be, #f16000);
 }

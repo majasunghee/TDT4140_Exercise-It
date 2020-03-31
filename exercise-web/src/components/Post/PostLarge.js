@@ -16,8 +16,14 @@ import { getSingleWorkout, updateWorkout, deleteWorkout } from "../../fetch/work
 
 import { getMusclegroups } from "../../fetch/musclegroup";
 
+<<<<<<< HEAD
 //fetch functions for feedback
 import { postFeedback, getFeedbackForPost, deleteFeedback } from "../../fetch/feedback";
+=======
+import { Link } from "react-router-dom";
+
+import { getSingleWorkout, updateWorkout, deleteWorkout } from "../../fetch/workout";
+>>>>>>> a77788bfb6aa2e8be7c6fe7a04e48286a6fc31e9
 
 var postData = "";
 
@@ -35,9 +41,13 @@ class PostLarge extends React.Component {
       musclegroups: {},
       exercises: {},
       postFilters: [],
+<<<<<<< HEAD
       //
       rating: 0,
       comment: "",
+=======
+      visibility: true
+>>>>>>> a77788bfb6aa2e8be7c6fe7a04e48286a6fc31e9
     };
   }
 
@@ -57,12 +67,12 @@ class PostLarge extends React.Component {
       getSingleWorkout(window.location.href.split("?")[0].split("posts/")[1])
         .then(data => (postData = data))
         .then(() => this.setState({ loading: false }))
-        .then(() => this.setState({ content: postData.content }));
+        .then(() => this.setState({ content: postData.content, visibility: postData.visibility }));
     } else if (window.location.href.split("?")[1] === "type=exercise") {
       getSingleExercise(window.location.href.split("?")[0].split("posts/")[1])
         .then(data => (postData = data))
         .then(() => this.setState({ loading: false }))
-        .then(() => this.setState({ content: postData.content }));
+        .then(() => this.setState({ content: postData.content, visibility: postData.visibility }));
     }
   }
 
@@ -71,6 +81,7 @@ class PostLarge extends React.Component {
       updateWorkout(
         window.location.href.split("?")[0].split("posts/")[1],
         this.state.content,
+        this.state.visibility,
         this.state.newRelations,
         this.state.removeRelations
       ).then(() => this.forceUpdate());
@@ -78,6 +89,7 @@ class PostLarge extends React.Component {
       updateExercise(
         window.location.href.split("?")[0].split("posts/")[1],
         this.state.content,
+        this.state.visibility,
         this.state.newRelations,
         this.state.removeRelations
       ).then(() => this.forceUpdate());
@@ -101,7 +113,7 @@ class PostLarge extends React.Component {
   }
 
   download = () => {
-    const downloadData = `${postData.title} av ${postData.user}\n${postData.date}\n\n${postData.content} `
+    const downloadData = `${postData.title} av ${postData.user ? postData.user : 'anonym'}\n${postData.date}\n\n${postData.content} `
     var blob = new Blob( [ downloadData ], {
       type: 'application/octet-stream'
     });
@@ -192,19 +204,29 @@ class PostLarge extends React.Component {
               <h1>{postData.title}</h1>
             </div>
             <div className={styles.singlePostWrapper}>
+              
+            {postData.user ?
+            <Link to={`/userpage/${postData.user}`}>
               <img
                 alt="Exercise-it!"
                 className={styles.iconLarge}
                 src={
-                  postData.user
-                    ? postData.userrole
-                      ? professional
-                      : amateur
-                    : anonym
+                  postData.userrole
+                  ? professional
+                  : amateur
                 }
-              />
-              <div className={styles.title}>
-                <strong>{postData.user ? postData.user : "Anonym"}</strong>
+              /></Link> : 
+              <div>
+              <img
+              alt="Exercise-it!"
+              className={styles.iconLarge}
+              src={anonym}
+              /></div> }
+              <div className={styles.title}>  
+                <strong> {postData.user ? 
+                  <Link to={`/userpage/${postData.user}`}>{postData.user}</Link>
+                  : "Anonym"}
+                  </strong>
               </div>
               <div className={styles.description}>
                 {parseInt(postData.date.slice(8, 10), 10) +
@@ -296,6 +318,11 @@ class PostLarge extends React.Component {
                   >
                     Velg
                   </button>
+                  <button 
+                        className={this.state.visibility ? styles.buttonVis : styles.button} 
+                        onClick={() => this.setState({ visibility: !this.state.visibility })} >
+                      {this.state.visibility ? "Synlig" : "Skjult"}
+                  </button>
                 </div>
               ) : (
                 ""
@@ -350,10 +377,15 @@ class PostLarge extends React.Component {
                       </div>
                     ))}
                 </div>
-
-                {this.props.user.username === postData.user ||
-                this.props.user.username === "admin" ? (
+                <div>
+                  {!this.state.editing ? (
+                <button className= {styles.button} onClick={() => this.download()}>
+                    Last ned 
+                  </button>) : ''}
+                {this.props.user && this.props.user.username === postData.user ||
+                this.props.user && this.props.user.username === "admin" ? (
                   this.state.editing ? (
+                    <div>
                     <div>
                       <button
                         className={styles.edit}
@@ -369,11 +401,8 @@ class PostLarge extends React.Component {
                         Slett
                       </button>
                     </div>
+                  </div>
                   ) : (
-                    <div>
-                    <button className= {styles.button} onClick={() => this.download()}>
-                    Last ned 
-                  </button>
                     <button
                       className={styles.button}
                       onClick={() =>
@@ -381,11 +410,15 @@ class PostLarge extends React.Component {
                       }
                     >
                       Rediger
-                    </button></div>
+                    </button>
                   )
                 ) : (
                   ""
                 )}
+<<<<<<< HEAD
+=======
+              </div>
+>>>>>>> a77788bfb6aa2e8be7c6fe7a04e48286a6fc31e9
               </div>
             </div>
           </div> 
