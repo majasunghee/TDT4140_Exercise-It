@@ -72,6 +72,7 @@
   color: gray;
 }
 
+.inputFieldMedium,
 .inputFieldLarge {
   font-size: 1em;
   border: 1.5px solid #acacaca9;
@@ -86,6 +87,12 @@
   min-width: 925px;
   max-width: 925px;
   height: 140px;
+}
+
+.inputFieldMedium {
+  min-width: 720px;
+  max-width: 720px;
+  height: 100px;
 }
 
 .inputFieldLarge:hover {
@@ -116,7 +123,6 @@
 .buttonSmallDisabled,
 .buttonDisabled {
   background-color: rgba(107, 107, 107, 0.657);
-  min-width: 120px;
 }
 
 .buttonSmall:hover,
