@@ -16,7 +16,7 @@ import { getSingleWorkout, updateWorkout, deleteWorkout } from "../../fetch/work
 
 import { getMusclegroups } from "../../fetch/musclegroup";
 
-import { getFeedbackForPost, postFeedback, deleteFeedback } from "../../fetch/feedback";
+import { postFeedback } from "../../fetch/feedback";
 
 import { Link } from "react-router-dom";
 

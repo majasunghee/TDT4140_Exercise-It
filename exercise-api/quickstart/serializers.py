@@ -129,7 +129,7 @@ class SimpleExerciseSerializer(serializers.ModelSerializer):
 
 
 class WorkoutSerializer(serializers.HyperlinkedModelSerializer):
-    image = Base64ImageField(max_length=None, use_url=True,)
+    image = Base64ImageField(max_length=None, use_url=True)
     exercises = SimpleExerciseSerializer(many=True, read_only=True)
     user = UserSerializer(read_only=True)
 
