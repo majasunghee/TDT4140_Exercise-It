@@ -1,0 +1,7 @@
+--- 
+web-testing: 
+  script: 
+    - "echo running web tests"
+    - npmtest.sh
+  tags: 
+    - ci
