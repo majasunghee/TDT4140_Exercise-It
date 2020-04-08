@@ -2,6 +2,5 @@
 web-testing: 
   script:
     cmd: /npmtest.sh
-    - "running web tests"
   tags: 
     - ci
