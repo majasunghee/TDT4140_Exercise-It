@@ -4,6 +4,7 @@ web-testing:
   script: 
     - "echo running web tests"
     - cd exercise-web
+    - npm install
     - npm run build
     - npm test
   tags: 
