@@ -1,66 +1,51 @@
 ![Exercise.it](./exercise-web/public/feed.png)
 
-# `exercise-web`
+# `macOS`
 
-## Install the frontend-server in a new local repo
+## Start Exercise.it
 
-```bash
-cd exercise-web
-npm install
-npm start
-```
-
-## Start the frontend-server
+Open your terminal, and cd into the project directory.
+Start exercise.web:
 
 ```bash
-cd exercise-web
-npm start
+bash npmstart.sh
 ```
 
-Runs the app on [http://localhost:3000](http://localhost:3000).
-You will see any errors in the console.
+Open another terminal, and cd into the project directory:
+Start exercise.api:
 
-## Learn More
+```bash
+bash runserver.sh
+```
+
+## Info
+
+If you miss node_modules or a virtualenv, these will be installed.
+
+Runs the web app on [http://localhost](http://localhost).
+Runs the api server on [http://localhost:8000](http://localhost:8000).
+
+# `Windows`
+
+## Start Exercise.it
+
+Make sure you have a bash-terminal installed.
+Open the project in Windows Explorer.
+
+Run the launch-file:
+> exercise-run.cmd
+
+## Info
+
+If you miss node_modules or a virtualenv, these will be installed.
+
+Runs the web app on [http://localhost](http://localhost).
+Runs the api server on [http://localhost:8000](http://localhost:8000).
+
+# Learn More
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-# `exercise-api`
-
-## Setup and start the backend-server in a new virtulenv
-
-```bash
-virtualenv exercise-api/env
-source exercise-api/env/bin/activate
-pip install -r requirements.txt
-python manage.py runserver
-```
-
-## Start the backend-server
-
-MacOS:
-
-```bash
-source exercise-api/env/bin/activate
-python manage.py runserver
-```
-
-Windows:
-
-```bash
-source exercise-api/env/Scripts/activate
-python manage.py runserver
-```
-
-Runs the app on [http://localhost:8000](http://localhost:8000).
-
-## Migrate database after changes to code
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-## Learn More
-
 To learn Django, check out the [Django documentation](https://docs.djangoproject.com/en/3.0/).
 To learn Django REST Framework, check out the [documentation](https://www.django-rest-framework.org/).
+
+**Happy exercising!**
