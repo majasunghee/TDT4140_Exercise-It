@@ -1,7 +1,7 @@
 --- 
 web-testing: 
   script: 
-    - "running web tests"
+    - "echo running web tests"
     - cd exercise-web
     - npm run build
     - npm test
@@ -9,6 +9,7 @@ web-testing:
     - ci
 api-testing: 
   script: 
-    - "running api tests"
+    - "echo running api tests"
+    - pip install django
   tags: 
     - ci
