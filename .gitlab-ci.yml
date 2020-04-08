@@ -1,9 +1,5 @@
 image: node:12.15.0
 
-before_script:  
-  - apt-get update -qq
-  - apt-get install
-
 web-testing: 
   before_script: 
     - yarn config set cache-folder .yarn
