@@ -1,6 +1,6 @@
 cd exercise-api
-if [ -d "$env" ]; then echo "env exists"; else python3 -m virtualenv env || python -m virtualenv env; fi
+if [ -d env/ ]; then echo "env exists"; else virtualenv env || python3 -m virtualenv env; fi
+if [ -d env/bin/ ]; then source env/bin/activate; else source env/Scripts/activate; fi
 cd ..
-source exercise-api/env/bin/activate || source exercise-api/env/Scripts/activate
 pip install -r requirements.txt
-python3 manage.py runserver || python manage.py runserver
+if python3 --version; then python3 manage.py runserver; else python manage.py runserver; fi
