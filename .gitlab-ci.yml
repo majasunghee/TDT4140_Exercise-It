@@ -2,7 +2,13 @@
 web-testing: 
   script: 
     - "running web tests"
-    - cd exercise-web && npm run build
-    - cd exercise-web && npm test
+    - cd exercise-web
+    - npm run build
+    - npm test
+  tags: 
+    - ci
+api-testing: 
+  script: 
+    - "running api tests"
   tags: 
     - ci
