@@ -2,7 +2,6 @@ image: node:12.15.0
 
 web-testing: 
   script: 
-    - "echo running web tests"
     - cd exercise-web
     - npm install
     - npm run build
@@ -12,7 +11,6 @@ web-testing:
 
 api-testing: 
   script: 
-    - "echo running api tests"
     - python manage.py check
   tags: 
     - ci

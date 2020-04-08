@@ -21,7 +21,7 @@ const Post = props => {
         }
       />
       <div className={styles.title}>
-        <strong>tesster</strong>
+        <strong>{props.title}</strong>
         <div className={styles.subtitle}>
           <strong>{props.exercise ? "Øvelse" : "Treningsøkt"}</strong>
         </div>
