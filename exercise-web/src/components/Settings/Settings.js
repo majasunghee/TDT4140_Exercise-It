@@ -6,6 +6,8 @@ import { withRouter } from "react-router";
 
 import styles from "./settings.module.css";
 
+import url from "../../consts/django-url"
+
 const Settings = props => {
   const newWorkout = () => {
     props.newWorkout();
@@ -31,9 +33,37 @@ const Settings = props => {
     props.history.push("/");
   };
 
-  return (
-    <div className={styles.settings}>
+  if (props.hiddenSettings) {
+    return  (
+      <div className={styles.row}>
+        <div
+          className={styles.hamburger}
+          onClick={() => props.hideSettings()}
+        >
+          |||
+        </div>
+        <Link to="/">
+        <div
+          className={styles.logo}
+          onClick={() => props.goHome()}
+          tabIndex="0"
+        >
+          Exercise.it!
+        </div>
+        </Link>
+      </div>
+  )}
+
+    return (
+      <div className={styles.settings}>
       <div>
+      <div className={styles.row}>
+      <div
+            className={styles.hamburger}
+            onClick={() => props.hideSettings()}
+          >
+            |||
+          </div>
         <Link to="/">
           <div
             className={styles.logo}
@@ -43,6 +73,7 @@ const Settings = props => {
             Exercise.it!
           </div>
         </Link>
+        </div>
           <div className={styles.rowSpace}>
             <div
               onClick={() => hideExercises()}
@@ -101,7 +132,7 @@ const Settings = props => {
             </div>{" "}
           </div>
         {props.user && props.user.username === "admin" ? (
-          <a target="_self" href="http://localhost:8000/admin">
+          <a target="_self" href={url}>
             <div className={styles.setting}>Django-Admin</div>
           </a>
         ) : (
@@ -125,7 +156,7 @@ const Settings = props => {
         </Link>
       </div>
     </div>
-  );
+  )
 };
 
 export default withRouter(Settings);

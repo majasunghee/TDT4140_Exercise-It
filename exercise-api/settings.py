@@ -14,7 +14,7 @@ SECRET_KEY = 'r&^tq2a#ublb404sk^$c=askk$(a6$h@%9p^#9r%-aa0nk7j_%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [

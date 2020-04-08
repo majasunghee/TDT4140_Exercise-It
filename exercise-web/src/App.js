@@ -23,7 +23,9 @@ class ExerciseIt extends React.Component {
       newExercise: false,
       newWorkout: false,
       hideExercises: false,
-      hideWorkouts: false
+      hideWorkouts: false,
+      //
+      hideSettings: false,
     };
   }
 
@@ -41,7 +43,7 @@ class ExerciseIt extends React.Component {
   //Function to remove the user from state and cookies
   removeUser = () => {
     localStorage.removeItem("token");
-    this.setState({ user: {}, token: "" , newExercise: false, newWorkout: false, hideExercises: false, hideWorkouts: false });
+    this.setState({ user: null, token: "" , newExercise: false, newWorkout: false, hideExercises: false, hideWorkouts: false });
   };
 
   //Every time app refreshes, try to log in user from cookies
@@ -61,6 +63,8 @@ class ExerciseIt extends React.Component {
         newWorkout={() => this.newWorkout()}
         creatingNewExercise={this.state.newExercise}
         creatingNewWorkout={this.state.newWorkout}
+        hideSettings={() => this.setState({ hideSettings: !this.state.hideSettings})}
+        hiddenSettings={this.state.hideSettings}
         hideExercises={() =>
           this.setState({
             hideExercises: !this.state.hideExercises,
@@ -127,6 +131,7 @@ class ExerciseIt extends React.Component {
               hiddenWorkouts={this.state.hideWorkouts}
               token={this.state.token}
               home={this.homeButton}
+              hideSettings={this.state.hideSettings}
             />
           </Route>
           <Route path="/posts">
@@ -135,6 +140,7 @@ class ExerciseIt extends React.Component {
               user={this.state.user}
               token={this.state.token}
               onDelete={() => this.forceUpdate()}
+              hideSettings={this.state.hideSettings}
             />
           </Route>
           <Route exact path="/info">
@@ -149,13 +155,15 @@ class ExerciseIt extends React.Component {
           </Route>
           <Route path="/userpage">
             {this.buildSettings()}
-            <User user={this.state.user} />
+            <User
+              user={this.state.user} 
+              hideSettings={this.state.hideSettings}
+            />
           </Route>
           <Route path="*">
           {this.buildSettings()}
           <NotFound />
           </Route>
-
         </Switch>
       </BrowserRouter>
     );

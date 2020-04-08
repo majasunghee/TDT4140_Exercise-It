@@ -6,14 +6,19 @@ import amateur from "../../icons/amateur.png";
 import duration from "../../icons/duration.png";
 import reps from "../../icons/reps.png";
 
+import Rating from "../Rating/Rating";
+
 import months from "../../consts/months"
 
+//fetch functions for getting and updating posts
 import { getLatestExercises, getSingleExercise, updateExercise, deleteExercise } from "../../fetch/exercise";
+import { getSingleWorkout, updateWorkout, deleteWorkout } from "../../fetch/workout";
+
 import { getMusclegroups } from "../../fetch/musclegroup";
 
-import { Link } from "react-router-dom";
+import { getFeedbackForPost, postFeedback, deleteFeedback } from "../../fetch/feedback";
 
-import { getSingleWorkout, updateWorkout, deleteWorkout } from "../../fetch/workout";
+import { Link } from "react-router-dom";
 
 var postData = "";
 
@@ -31,7 +36,10 @@ class PostLarge extends React.Component {
       musclegroups: {},
       exercises: {},
       postFilters: [],
-      visibility: true
+      visibility: true,
+      //
+      rating: 0,
+      comment: ""
     };
   }
 
@@ -89,6 +97,11 @@ class PostLarge extends React.Component {
       deleteExercise(window.location.href.split("?")[0].split("posts/")[1]);
       this.props.onDelete();
     }
+  }
+
+  postFeedback() {
+    postFeedback(window.location.href.split("?")[0].split("posts/")[1],
+      this.props.user.username, this.state.rating, this.state.comment)
   }
 
   download = () => {
@@ -176,7 +189,7 @@ class PostLarge extends React.Component {
 
     return (
       <div className={styles.container}>
-        <div className={styles.content}>
+        <div className={!this.props.hideSettings ? styles.hide : styles.content}>
           <div>
             <div className={styles.mainHeader}>
               <h1>{postData.title}</h1>
@@ -395,7 +408,33 @@ class PostLarge extends React.Component {
               </div>
               </div>
             </div>
-          </div>
+          </div> 
+          {!this.state.editing && this.props.user && postData.user !== this.props.user.username ? 
+          <div className={styles.singlePostWrapper}>
+          <div>  
+              <strong>
+              Vurdering og kommentar
+              </strong>
+              <div className={styles.rowSpace}>
+              <textarea
+                  value={this.state.comment}
+                  className={styles.inputFieldMedium}
+                  onChange={change =>
+                    this.setState({ comment: change.target.value })
+                  }
+                />
+              <div className={styles.col}>
+              <Rating getRating={rating => this.setState({rating: rating})}/>
+                <button
+                  className={this.state.comment.length > 3 || this.state.rating ? styles.button : styles.buttonDisabled}
+                  onClick={() => this.postFeedback()}
+                >
+                  Send inn
+                </button>
+              </div>
+              </div>
+              </div>
+          </div> : ''}
           <div className={styles.footer}> Exercise.It © • est. 2020 </div>
         </div>
       </div>

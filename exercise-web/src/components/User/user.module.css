@@ -12,6 +12,7 @@
   padding-top: 20px;
 }
 
+.hide,
 .content {
   margin-left: 330px;
   display: inline-block;
@@ -157,4 +158,39 @@
   border-radius: 4px;
   filter: opacity(60%);
   background-image: linear-gradient( 220deg, var(--mainColor), var(--secondColor) 50%);
+}
+
+
+@media only screen and (max-width: 800px) {
+  .wrapper,
+  .linje,
+  .personalia,
+  .UserContainer,
+  .content,
+  .ContentSplitterWrapper,
+  .statWrapper{
+    width: 100vw;
+  }
+
+  .container {
+    width: 100vw;
+  }
+
+  .content {
+    margin-left: 0;
+  }
+
+  .stick {
+    position: relative;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+  }
+
+  .hide {
+    display: none;
+    height: 0;
+  }
+
 }

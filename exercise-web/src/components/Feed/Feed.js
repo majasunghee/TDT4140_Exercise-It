@@ -81,6 +81,7 @@ class Feed extends React.Component {
           title={post.title}
           image={post.image}
           content={post.content}
+          exercise={type==="exercise"}
         />
       </Link>
     );
@@ -137,6 +138,9 @@ class Feed extends React.Component {
   //Fuction to build the search-field and filtering on the left side
   //Is visually a part of the settings, but actually built into the feed component
   buildFilter = () => {
+    if (this.props.hideSettings) {
+      return <div></div>
+    }
     return (
       <div className={styles.filterContainer}>
         <input
@@ -275,7 +279,7 @@ class Feed extends React.Component {
     ) {
       return (
         <div className={styles.container}>
-          <div className={styles.content}>
+        <div className={!this.props.hideSettings ? styles.hide : styles.content}>
             <SpinnerPost />
             <div className={styles.footer}> Exercise.It © • estb. 2020 </div>
             <div className={styles.filterContainer}>
@@ -292,9 +296,10 @@ class Feed extends React.Component {
           </div>
       );
     }
+
     return (
     <div className={styles.container}>
-      <div className={styles.content}>
+      <div className={!this.props.hideSettings ? styles.hide : styles.content}>
         {/* The header displays a greeting message unless the feed is empty */}
         <div className={ this.feedEmpty() ? styles.headerEmpty : styles.mainHeader }>
           <h1>
@@ -378,8 +383,8 @@ class Feed extends React.Component {
             </div>
           </div>
         <div className={styles.footer}> Exercise.It © • est. 2020 </div>
-        {this.buildFilter()}
         </div>
+        {this.buildFilter()}
       </div>
     );
   }

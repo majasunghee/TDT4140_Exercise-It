@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./newPost.module.css";
+import url from "../../consts/django-url";
 
 export default class NewMusclegroup extends React.Component {
   constructor(props) {
@@ -18,7 +19,7 @@ export default class NewMusclegroup extends React.Component {
       redirect: "follow"
     };
     const response = await fetch(
-      "http://localhost:8000/musclegroups/",
+      `http://${url}:8000/musclegroups/`,
       parameters
     );
     const data = await response.json();

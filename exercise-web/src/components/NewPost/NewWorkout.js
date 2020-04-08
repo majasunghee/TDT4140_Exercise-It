@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./newPost.module.css";
+import url from "../../consts/django-url";
 
 const defaultState = {
   title: "",
@@ -43,7 +44,7 @@ export default class NewWorkout extends React.Component {
         redirect: "follow"
       };
       const response = await fetch(
-        "http://localhost:8000/workouts/",
+        `http://${url}:8000/workouts/`,
         parameters
       );
       const data = await response.json();

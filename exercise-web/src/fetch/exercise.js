@@ -1,3 +1,5 @@
+import url from "../consts/django-url"
+
 export const getSingleExercise = async id => {
   const idData = new FormData();
   idData.append("id", id);
@@ -8,7 +10,7 @@ export const getSingleExercise = async id => {
     redirect: "follow"
   };
 
-  const response = await fetch("http://localhost:8000/exercise/", parameters);
+  const response = await fetch(`http://${url}:8000/exercise/`, parameters);
   const data = await response.json();
   console.log("getting single exercise..");
   return data;
@@ -24,7 +26,7 @@ export const getLatestExercises = async () => {
     redirect: "follow"
   };
 
-  const response = await fetch("http://localhost:8000/exercises/", parameters);
+  const response = await fetch(`http://${url}:8000/exercises/`, parameters);
   const data = await response.json();
   console.log("getting latest exercises..");
   return data;
@@ -43,7 +45,7 @@ export const updateExercise = async (id, content, visibility, add, rem) => {
   };
 
   const response = await fetch(
-    "http://localhost:8000/exercises/" + id + "/",
+    `http://${url}:8000/exercises/` + id + "/",
     parameters
   );
   const data = await response.json();
@@ -58,7 +60,7 @@ export const deleteExercise = async id => {
   };
 
   await fetch(
-    "http://localhost:8000/exercises/" + id + "/",
+    `http://${url}:8000/exercises/` + id + "/",
     parameters
   );
   console.log("deleting exercise..");

@@ -1,3 +1,4 @@
+.hide,
 .content {
   margin-left: 330px;
   display: inline-block;
@@ -7,7 +8,6 @@
 .container {
   text-align: center;
   background-color: rgb(228, 228, 228);
-  min-height: 96vh;
   padding-bottom: 100px;
   padding-top: 20px;
 }
@@ -72,6 +72,7 @@
   color: gray;
 }
 
+.inputFieldMedium,
 .inputFieldLarge {
   font-size: 1em;
   border: 1.5px solid #acacaca9;
@@ -86,6 +87,12 @@
   min-width: 925px;
   max-width: 925px;
   height: 140px;
+}
+
+.inputFieldMedium {
+  min-width: 720px;
+  max-width: 720px;
+  height: 100px;
 }
 
 .inputFieldLarge:hover {
@@ -116,7 +123,6 @@
 .buttonSmallDisabled,
 .buttonDisabled {
   background-color: rgba(107, 107, 107, 0.657);
-  min-width: 120px;
 }
 
 .buttonSmall:hover,
@@ -365,6 +371,11 @@
     margin-top: 30px;
   }
 
+  .hide {
+    display: none;
+    height: 0;
+  }
+
   .container {
     width: 100vw;
   }
@@ -373,12 +384,27 @@
     margin: 0;
   }
 
+  .postWrapperSmall {
+    height: 280px;
+  }
+
+  .postWrapperSmall:hover {
+    margin-top: 30px;
+  }
+
+  .singlePostWrapper {
+    box-shadow: 0 0 0;
+    background-color: transparent;
+    font-size: 1.2em;
+  }
+
   .singlePostImage {
     width: 100vw;
     height: 250px;
   }
 
   .mainHeader {
+    font-size: 0.8em;
     text-align: center;
   }
 
@@ -386,11 +412,18 @@
     width: auto;
     height: 220px;
   }
+  
   .gradient {
     display: none;
   }
 
   .subtitle {
+    display: none;
+  }
+  .reps,
+  .duration,
+  .iconInfo,
+  .iconInfoLeft {
     display: none;
   }
 }

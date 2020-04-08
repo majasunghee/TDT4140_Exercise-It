@@ -1,3 +1,4 @@
+.hide,
 .content {
   margin-left: 330px;
   display: inline-block;
@@ -7,9 +8,9 @@
 .container {
   text-align: center;
   background-color: rgb(228, 228, 228);
-  min-height: 96vh;
   padding-bottom: 100px;
   padding-top: 20px;
+  min-height: 96vh;
 }
 
 .footer {
@@ -163,6 +164,11 @@
   .container {
     width: auto;
   }
+
+  .hide {
+    display: none;
+    height: 0;
+  }
   
   .content {
     margin-left: 15px;
@@ -172,6 +178,7 @@
 
   .mainHeader {
     text-align: center;
+    font-size: 0.8em;
   }
 
   .horizontalFeed {
@@ -181,7 +188,15 @@
   }
 
   .filterContainer {
-    display: none;
+    width: 100vw;
+    top: 70px;
+    margin-top: 3.5em;
+  }
+
+  .filterEnabled,
+  .filterDisabled {
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 
   .arrow,
@@ -193,5 +208,9 @@
     margin: 0;
     padding: 0;
     width: auto;
+  }
+
+  .search {
+    top: 140px;
   }
 }

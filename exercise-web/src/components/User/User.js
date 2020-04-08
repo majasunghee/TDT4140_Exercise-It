@@ -63,7 +63,7 @@ class UserPage extends React.Component {
   
   return (
     <div className={styles.container}>
-      <div className={styles.content}>
+      <div className={!this.props.hideSettings ? styles.hide : styles.content}>
       <div className={styles.wrapper}>
 
         <div className={styles.stick}>

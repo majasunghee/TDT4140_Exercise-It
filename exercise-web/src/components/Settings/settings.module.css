@@ -18,6 +18,9 @@
   flex-wrap: wrap;
 }
 
+
+
+
 .mainHeader {
   margin-top: 18vh;
   font-size: 8em;
@@ -60,7 +63,7 @@
   background-image: linear-gradient(
     140deg,
     var(--mainColor),
-    var(--secondColor)
+    var(--secondColor) 70%
   );
   height: 60px;
   font-size: 2.5em;
@@ -81,8 +84,9 @@
   background-image: linear-gradient(
     120deg,
     var(--mainColor),
-    var(--secondColor)
+    var(--secondColor) 85%
   );
+  filter: grayscale(15%);
   cursor: pointer;
 }
 
@@ -105,6 +109,16 @@
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
+}
+
+.logo:focus:hover {
+  background-image: linear-gradient(
+    140deg,
+    var(--mainColor),
+    var(--secondColor) 70%
+  );
+  filter: none;
+  cursor: default;
 }
 
 .smallToggleTrue,
@@ -187,18 +201,32 @@
   border-radius: 8px;
 }
 
+.hamburger {
+  display: none;
+}
+
 @media only screen and (max-width: 800px) {
+  .row {
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    background-color: rgb(20, 20, 20);
+  }
+
   .settings {
     width: 100vw;
-    height: 80vh;
-    font-size: 1.3em;
     box-shadow: 0 20px 30 0 black;
-    position: relative;
+    position: sticky;
+    top: 0;
+    min-height: 570px;
   }
 
   .logo {
-    height: auto;
-    padding-bottom: 20px;
+    height: 40px;
+    padding: 15px;
+    width: 70vw;
+    font-size: 2em;
+
   }
 
   .plus {
@@ -210,8 +238,16 @@
   .setting:hover,
   .loginSetting:hover,
   .setting {
+    padding-top: 16px;
+    padding-bottom: 16px;
     width: 100vw;
     height: auto;
+  }
+
+  .settingActive,
+  .loginSetting:hover,
+  .setting:hover {
+    padding-left: 0; 
   }
 
   .smallToggleTrue:hover,
@@ -227,8 +263,20 @@
   }
 
   .hamburger {
+    width: 12vw;
+    transform: rotate(90deg);
+    font-size: 1.4em;
+    text-align: center;
     display: inline;
-    padding: 20px;
-    padding-top: 30px;
+    color: rgb(192, 192, 192);
+    font-size: 2em;
+  }
+
+  .logo:after {
+    display: none;
+  }
+  
+  .logo:focus:after {
+    display: none;
   }
 }

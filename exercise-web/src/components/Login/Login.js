@@ -108,7 +108,7 @@ class Login extends React.Component {
               {this.state.register ? (
                 <div>
                   <input
-                  spellcheck="false"
+                    spellcheck="false"
                     name="email"
                     onChange={this.onChange}
                     placeholder="E-post"

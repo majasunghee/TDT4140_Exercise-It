@@ -1,3 +1,5 @@
+import url from "../consts/django-url"
+
 export const getMusclegroups = async () => {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -8,7 +10,7 @@ export const getMusclegroups = async () => {
       redirect: "follow"
     };
   
-    const response = await fetch("http://localhost:8000/musclegroups/", parameters);
+    const response = await fetch(`http://${url}:8000/musclegroups/`, parameters);
     const data = await response.json();
     console.log("getting all musclegroups..");
     return data;
