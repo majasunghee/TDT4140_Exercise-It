@@ -1,9 +1,6 @@
 image: node:12.15.0
 
 web-testing: 
-  before_script: 
-    - yarn config set cache-folder .yarn
-    - yarn install 
   script: 
     - "echo running web tests"
     - cd exercise-web
