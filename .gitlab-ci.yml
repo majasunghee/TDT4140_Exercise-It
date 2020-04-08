@@ -1,8 +1,7 @@
 --- 
 web-testing: 
-  - name: "running web testing"
-    script:
-      cmd: /npmtest.sh
-      - "running web tests"
+  script:
+    cmd: /npmtest.sh
+    - "running web tests"
   tags: 
     - ci
