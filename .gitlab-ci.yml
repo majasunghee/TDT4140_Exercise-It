@@ -10,12 +10,11 @@ web-testing:
     - npm run build
     - npm test
   tags: 
-    - node
     - ci
 
 api-testing: 
   script: 
     - "echo running api tests"
-    - pip install django
+    - python manage.py check
   tags: 
     - ci
