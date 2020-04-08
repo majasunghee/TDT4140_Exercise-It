@@ -1,12 +1,21 @@
---- 
+image: node:12.15.0
+
+before_script:  
+  - apt-get update -qq && apt-get install
+
 web-testing: 
+  before_script: 
+    - yarn config set cache-folder .yarn
+    - yarn install 
   script: 
     - "echo running web tests"
     - cd exercise-web
     - npm run build
     - npm test
   tags: 
+    - node
     - ci
+
 api-testing: 
   script: 
     - "echo running api tests"
